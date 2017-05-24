@@ -48,37 +48,6 @@
   </entry>
   
   <entry>
-    <title>测试</title>
-    <link href="https://www.lijiawang.org/posts/example-blog.html"/>
-    <id>https://www.lijiawang.org/posts/example-blog.html</id>
-    <published>2017-05-17T08:00:05.000Z</published>
-    <updated>2017-05-17T08:05:11.846Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>  测试<br><a id="more"></a></p>
-<ul>
-<li>qqqqq</li>
-<li>ccccc</li>
-<li>ddddd<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ls -al</div><div class="line">w</div><div class="line"><span class="built_in">pwd</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot; title=&quot;写在前面&quot;&gt;&lt;/a&gt;写在前面&lt;/h3&gt;&lt;p&gt;  测试&lt;br&gt;
-    
-    </summary>
-    
-      <category term="示例" scheme="https://www.lijiawang.org/categories/%E7%A4%BA%E4%BE%8B/"/>
-    
-    
-      <category term="测试" scheme="https://www.lijiawang.org/tags/%E6%B5%8B%E8%AF%95/"/>
-    
-      <category term="博客" scheme="https://www.lijiawang.org/tags/%E5%8D%9A%E5%AE%A2/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Hello World</title>
     <link href="https://www.lijiawang.org/posts/hello-world.html"/>
     <id>https://www.lijiawang.org/posts/hello-world.html</id>
