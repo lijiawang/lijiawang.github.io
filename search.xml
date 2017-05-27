@@ -4,7 +4,7 @@
     
     <entry>
       <title><![CDATA[Openstack Ocata vxlan模式搭建]]></title>
-      <url>/posts/ocata-blog.html</url>
+      <url>/posts/openstack-ocata.html</url>
       <content type="html"><![CDATA[<h3 id="手动搭建分布式Openstack-Ocata-vxlan模式"><a href="#手动搭建分布式Openstack-Ocata-vxlan模式" class="headerlink" title="手动搭建分布式Openstack Ocata vxlan模式"></a>手动搭建分布式Openstack Ocata vxlan模式</h3><a id="more"></a>
 <h4 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h4><h5 id="1、前提准备"><a href="#1、前提准备" class="headerlink" title="1、前提准备"></a>1、前提准备</h5><p>  安装vmaware workstation12.50，虚拟机三台，配置至少cpu4c MEM 4G虚拟机</p>
 <h5 id="2、更改hostname"><a href="#2、更改hostname" class="headerlink" title="2、更改hostname"></a>2、更改hostname</h5><p>  如果是controller就运行<br>  <code># hostnameecal set-hostname controller</code></p>
