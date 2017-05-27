@@ -23,7 +23,9 @@
 <h3 id="优劣比较"><a href="#优劣比较" class="headerlink" title="优劣比较"></a>优劣比较</h3><p>7中bond模式对比如下<br><img src="https://ljw.howieli.cn/blog/2017-5-27/bond.png" alt=""><br>  在7种模式中，最为常用的是bond0和bond1。在网络流量较大的场景下推荐使用bond0；在可靠性要求较高的场景下推荐使用bond1。</p>
 <h3 id="实践操作"><a href="#实践操作" class="headerlink" title="实践操作"></a>实践操作</h3><p>下面以bond0为例，介绍一下bond的基本配置。具体步骤如下：</p>
 <ol>
-<li>配置前查看是否开启bond模块：modinfo bonding。</li>
+<li><p>配置前查看是否开启bond模块：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">modinfo bonding</div></pre></td></tr></table></figure>
+</li>
 <li><p>创建bond0网卡配置文件如下：  </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">vim/etc/sysconfig/network-scripts/ifcfg-bond0:</div><div class="line">    DEVICE=bond0</div><div class="line">    ONBOOT=yes #自动启动</div><div class="line">    BOOTPROTO=dhcp #可以选择dhcp，static，none</div><div class="line">    USERCTL=no #该设备只能由root控制</div><div class="line">    NM_CONTROLLED=no #不需要重启网卡，实时生效</div><div class="line">    TYPE=Ethernet    #如选DHCP则需要配置IP地址等信息</div><div class="line">    #IPADDR=10.0.2.10</div><div class="line">    #NETMASK=255.255.255.0</div><div class="line">    #GATEWAY=10.0.2.1</div><div class="line">    #BONDING_OPTS="mode=0 miimon=100fail_over_mac=1"</div><div class="line">    #如果使用了BONDING_OPTS选项，则不需要再使用/etc/modprobe.conf 配置文件对绑定设备进行配置。</div></pre></td></tr></table></figure>
 </li>
