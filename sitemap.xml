@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/linux-bond.html</loc>
+    
+    <lastmod>2017-05-27T10:56:52.522Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/linux-tmux.html</loc>
     
     <lastmod>2017-05-27T10:26:12.593Z</lastmod>
