@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/linux-tmux.html</loc>
+    
+    <lastmod>2017-05-27T10:26:12.593Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/openstack-ocata.html</loc>
     
-    <lastmod>2017-05-27T04:35:05.290Z</lastmod>
+    <lastmod>2017-05-27T04:35:49.751Z</lastmod>
     
   </url>
   

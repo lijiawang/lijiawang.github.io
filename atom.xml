@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.lijiawang.org/"/>
-  <updated>2017-05-27T04:35:05.290Z</updated>
+  <updated>2017-05-27T10:26:12.593Z</updated>
   <id>https://www.lijiawang.org/</id>
   
   <author>
@@ -16,11 +16,36 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Tmux Linux 分屏工具</title>
+    <link href="https://www.lijiawang.org/posts/linux-tmux.html"/>
+    <id>https://www.lijiawang.org/posts/linux-tmux.html</id>
+    <published>2017-05-27T10:13:32.000Z</published>
+    <updated>2017-05-27T10:26:12.593Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="tmux介绍"><a href="#tmux介绍" class="headerlink" title="tmux介绍"></a>tmux介绍</h3><a id="more"></a>
+<p>tmux是指通过一个终端登录远程主机并运行后，在其中可以开启多个控制台的终端复用软件。<br>有一本关于Tmux的书tmux：<a href="https://www.amazon.com/tmux-Productive-Development-Brian-Hogan/dp/1934356964" target="_blank" rel="external">Productive Mouse-Free Development</a><br>自己在centos7.2系统上简单的使用了一下</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> yum install tmux -y</div></pre></td></tr></table></figure>
+<h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">Ctrl+b ? 显示快捷键帮助</div><div class="line">Ctrl+b C-o 调换窗口位置，类似与vim 里的C-w</div><div class="line">Ctrl+b 空格键 采用下一个内置布局</div><div class="line">Ctrl+b ! 把当前窗口变为新窗口</div><div class="line">Ctrl+b “ 横向分隔窗口</div><div class="line">Ctrl+b % 纵向分隔窗口</div><div class="line">Ctrl+b q 显示分隔窗口的编号</div><div class="line">Ctrl+b o 跳到下一个分隔窗口</div><div class="line">Ctrl+b 上下键 上一个及下一个分隔窗口</div><div class="line">Ctrl+b C-方向键 调整分隔窗口大小</div><div class="line">Ctrl+b c 创建新窗口</div><div class="line">Ctrl+b 0~9 选择几号窗口</div><div class="line">Ctrl+b c 创建新窗口</div><div class="line">Ctrl+b n 选择下一个窗口</div><div class="line">Ctrl+b l 切换到最后使用的窗口</div><div class="line">Ctrl+b p 选择前一个窗口</div><div class="line">Ctrl+b w 以菜单方式显示及选择窗口</div><div class="line">Ctrl+b t 显示时钟</div><div class="line">Ctrl+b ; 切换到最后一个使用的面板</div><div class="line">Ctrl+b x 关闭面板</div><div class="line">Ctrl+b &amp; 关闭窗口</div><div class="line">Ctrl+b s 以菜单方式显示和选择会话</div><div class="line">Ctrl+b d 退出tumx，并保存当前会话，这时，tmux仍在后台运行，可以通过tmux attach进入 到指定的会话</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;tmux介绍&quot;&gt;&lt;a href=&quot;#tmux介绍&quot; class=&quot;headerlink&quot; title=&quot;tmux介绍&quot;&gt;&lt;/a&gt;tmux介绍&lt;/h3&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://www.lijiawang.org/categories/Linux/"/>
+    
+    
+      <category term="tmux" scheme="https://www.lijiawang.org/tags/tmux/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Openstack Ocata vxlan模式搭建</title>
     <link href="https://www.lijiawang.org/posts/openstack-ocata.html"/>
     <id>https://www.lijiawang.org/posts/openstack-ocata.html</id>
     <published>2017-05-27T03:17:20.000Z</published>
-    <updated>2017-05-27T04:35:05.290Z</updated>
+    <updated>2017-05-27T04:35:49.751Z</updated>
     
     <content type="html"><![CDATA[<h3 id="手动搭建分布式Openstack-Ocata-vxlan模式"><a href="#手动搭建分布式Openstack-Ocata-vxlan模式" class="headerlink" title="手动搭建分布式Openstack Ocata vxlan模式 "></a>手动搭建分布式Openstack Ocata vxlan模式 <a id="more"></a></h3><h4 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h4><h5 id="1、前提准备"><a href="#1、前提准备" class="headerlink" title="1、前提准备"></a>1、前提准备</h5><p>  安装vmaware workstation12.50，虚拟机三台，配置至少cpu4c MEM 4G虚拟机</p>
 <h5 id="2、更改hostname"><a href="#2、更改hostname" class="headerlink" title="2、更改hostname"></a>2、更改hostname</h5><p>  如果是controller就运行<br>  <code># hostnameecal set-hostname controller</code><br>参考文章<a href="https://docs.openstack.org/ocata/install-guide-rdo/" target="_blank" rel="external">openstack</a></p>
