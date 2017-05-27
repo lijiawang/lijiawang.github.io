@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.lijiawang.org/"/>
-  <updated>2017-05-27T11:09:49.686Z</updated>
+  <updated>2017-05-27T11:13:31.830Z</updated>
   <id>https://www.lijiawang.org/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://www.lijiawang.org/posts/linux-bond.html"/>
     <id>https://www.lijiawang.org/posts/linux-bond.html</id>
     <published>2017-05-27T10:33:51.000Z</published>
-    <updated>2017-05-27T11:09:49.686Z</updated>
+    <updated>2017-05-27T11:13:31.830Z</updated>
     
     <content type="html"><![CDATA[<h3 id="网卡Bond介绍"><a href="#网卡Bond介绍" class="headerlink" title="网卡Bond介绍"></a>网卡Bond介绍</h3><a id="more"></a>
 <h3 id="总括"><a href="#总括" class="headerlink" title="总括"></a>总括</h3><p>  Bond技术即bonding，它是一个Linux内核的一个模块，能将多块物理网卡绑定到一张虚拟网卡上的技术，并通过修改Linux的网口驱动让多块网卡看起来是一个单独的以太网接口设备并具有相同的 IP 地址。Bond技术一般用于解决网卡的单点故障或用于网卡负载较高的场景。</p>
@@ -62,7 +62,7 @@
     
     </summary>
     
-      <category term="linux" scheme="https://www.lijiawang.org/categories/linux/"/>
+      <category term="Linux" scheme="https://www.lijiawang.org/categories/Linux/"/>
     
     
       <category term="linux bond" scheme="https://www.lijiawang.org/tags/linux-bond/"/>
