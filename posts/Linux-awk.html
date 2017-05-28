@@ -99,7 +99,7 @@
 <meta property="og:url" content="https://www.lijiawang.org/posts/Linux-awk.html">
 <meta property="og:site_name" content="李家旺">
 <meta property="og:description" content="在linux系统下使用awk工具详解">
-<meta property="og:updated_time" content="2017-05-28T04:24:19.147Z">
+<meta property="og:updated_time" content="2017-05-28T07:49:27.100Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在linux系统下使用awk工具详解">
 <meta name="twitter:description" content="在linux系统下使用awk工具详解">
@@ -428,8 +428,7 @@
 
       
         <h3 id="在linux系统下使用awk工具详解"><a href="#在linux系统下使用awk工具详解" class="headerlink" title="在linux系统下使用awk工具详解"></a>在linux系统下使用awk工具详解</h3><a id="more"></a>
-<h3 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h3><pre><code>awk 是一个强大的文本分析工具。它不仅是 Linux 中，也是任何环境中现有的功能最强大的数据处理引擎之一。相对于 grep 的查找，sed的编辑，awk在其对数据分析并生成报告时，显得尤为强大。
-</code></pre><p>当你第一次拿起双手在电脑上使用 awk 命令处理一个或者多个文件的时候，它会依次读取文件的每一行内容, 然后对其进行处理，awk 命令默认从 stdio 标准输入获取文件内容, awk 使用一对单引号来表示 一些可执行的脚本代码，在可执行脚本代码里面，使用一对花括号来表示一段可执行代码块，可以同时存在多个代码块。 awk 的每个花括号内同时又可以有多个指令，每一个指令用分号分隔，awk 其实就是一个脚本编程语言。说了这么多，你肯定还是一脸的懵逼。</p>
+<h3 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h3><p>awk 是一个强大的文本分析工具。它不仅是 Linux 中，也是任何环境中现有的功能最强大的数据处理引擎之一。相对于 grep 的查找，sed的编辑，awk在其对数据分析并生成报告时，显得尤为强大。<br>当你第一次拿起双手在电脑上使用 awk 命令处理一个或者多个文件的时候，它会依次读取文件的每一行内容, 然后对其进行处理，awk 命令默认从 stdio 标准输入获取文件内容, awk 使用一对单引号来表示 一些可执行的脚本代码，在可执行脚本代码里面，使用一对花括号来表示一段可执行代码块，可以同时存在多个代码块。 awk 的每个花括号内同时又可以有多个指令，每一个指令用分号分隔，awk 其实就是一个脚本编程语言。说了这么多，你肯定还是一脸的懵逼。</p>
 <h3 id="awk-命令的基本格式"><a href="#awk-命令的基本格式" class="headerlink" title="awk 命令的基本格式"></a>awk 命令的基本格式</h3><p><code>awk [options] &#39;program&#39; file</code><br>options 这个表示一些可选的参数选项，反正就是你爱用不用，不用可以拉到。。。<br>program 这个表示 awk 的可执行脚本代码，这个是必须要有的。 file 这个表示 awk 需要处理的文件，注意是纯文本文件，不是你的 mp3，也不是 mp4 啥的。。</p>
 
       
