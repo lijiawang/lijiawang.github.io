@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/Openstack-DevStack.html</loc>
+    
+    <lastmod>2017-06-20T12:41:57.227Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/openstack.html</loc>
     
-    <lastmod>2017-06-19T13:15:29.500Z</lastmod>
+    <lastmod>2017-06-19T13:17:18.294Z</lastmod>
     
   </url>
   
