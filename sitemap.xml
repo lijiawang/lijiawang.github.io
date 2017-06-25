@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/about/index.html</loc>
+    
+    <lastmod>2017-06-25T01:44:08.774Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/openstack.html</loc>
     
     <lastmod>2017-06-25T00:24:39.055Z</lastmod>
