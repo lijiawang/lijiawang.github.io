@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linux bond" />
+  <meta name="keywords" content="openstack kolla ocata" />
 
 
 
@@ -92,19 +92,19 @@
 
 
 
-<meta name="description" content="网卡Bond介绍">
-<meta name="keywords" content="linux bond">
+<meta name="description" content="利用kolla快速安装openstack-ocata单节点">
+<meta name="keywords" content="openstack kolla ocata">
 <meta property="og:type" content="article">
-<meta property="og:title" content="网卡Bond介绍">
-<meta property="og:url" content="https://www.lijiawang.org/posts/linux-bond.html">
+<meta property="og:title" content="利用kolla快速搭建openstack-ocata单节点">
+<meta property="og:url" content="https://www.lijiawang.org/posts/kolla-openstack-ocata.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="网卡Bond介绍">
-<meta property="og:image" content="https://ljw.howieli.cn/blog/2017-5-27/bond.png">
-<meta property="og:updated_time" content="2017-05-27T14:03:26.167Z">
+<meta property="og:description" content="利用kolla快速安装openstack-ocata单节点">
+<meta property="og:image" content="https://ljw.howieli.cn/blog/2017-6-23/dashboard.jpg">
+<meta property="og:updated_time" content="2017-06-25T00:17:04.162Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="网卡Bond介绍">
-<meta name="twitter:description" content="网卡Bond介绍">
-<meta name="twitter:image" content="https://ljw.howieli.cn/blog/2017-5-27/bond.png">
+<meta name="twitter:title" content="利用kolla快速搭建openstack-ocata单节点">
+<meta name="twitter:description" content="利用kolla快速安装openstack-ocata单节点">
+<meta name="twitter:image" content="https://ljw.howieli.cn/blog/2017-6-23/dashboard.jpg">
 
 
 
@@ -132,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="https://www.lijiawang.org/posts/linux-bond.html"/>
+  <link rel="canonical" href="https://www.lijiawang.org/posts/kolla-openstack-ocata.html"/>
 
 
 
 
 
-  <title>网卡Bond介绍 | 李家旺</title>
+  <title>利用kolla快速搭建openstack-ocata单节点 | 李家旺</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -322,7 +322,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://www.lijiawang.org/posts/linux-bond.html">
+    <link itemprop="mainEntityOfPage" href="https://www.lijiawang.org/posts/kolla-openstack-ocata.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="李家旺">
@@ -339,7 +339,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">网卡Bond介绍</h1>
+          <h1 class="post-title" itemprop="name headline">利用kolla快速搭建openstack-ocata单节点</h1>
         
 
         <div class="post-meta">
@@ -351,8 +351,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-27T18:33:51+08:00">
-                2017-05-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-25T08:09:37+08:00">
+                2017-06-25
               </time>
             
 
@@ -374,8 +374,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">openstack</span>
                   </a>
                 </span>
 
@@ -392,7 +392,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/posts/linux-bond.html#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/posts/kolla-openstack-ocata.html#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -401,7 +401,7 @@
 
           
           
-             <span id="/posts/linux-bond.html" class="leancloud_visitors" data-flag-title="网卡Bond介绍">
+             <span id="/posts/kolla-openstack-ocata.html" class="leancloud_visitors" data-flag-title="利用kolla快速搭建openstack-ocata单节点">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -429,38 +429,124 @@
       
 
       
-        <h3 id="网卡Bond介绍"><a href="#网卡Bond介绍" class="headerlink" title="网卡Bond介绍"></a>网卡Bond介绍</h3><a id="more"></a>
-<h3 id="总括"><a href="#总括" class="headerlink" title="总括"></a>总括</h3><p>  Bond技术即bonding，它是一个Linux内核的一个模块，能将多块物理网卡绑定到一张虚拟网卡上的技术，并通过修改Linux的网口驱动让多块网卡看起来是一个单独的以太网接口设备并具有相同的 IP 地址。Bond技术一般用于解决网卡的单点故障或用于网卡负载较高的场景。</p>
-<p>  Bond 的网卡运行在混杂模式(Promisc)下。在正常情况下，网卡只接收目的硬件地址(MAC Address)是自身MAC的以太网帧，过滤其他数据帧，以减轻驱动程序的负担。但是网卡也支持另外一种被称为混杂的模式，运行在此模式下的网卡可以接收网络上所有的数据帧。bonding就运行在这种模式下，而且修改了驱动程序中的MAC地址，将两张或多张网卡的MAC地址改成同一MAC地址。</p>
-<p>网卡的bond模式一共有7种，下面详细介绍。</p>
-<h3 id="模式0"><a href="#模式0" class="headerlink" title="模式0"></a>模式0</h3><p>  模式0（mode=0，round-robin）：此模式使用轮询策略，即顺序的在每一个被bond的网卡上发送数据包，这种模式提供负载均衡和容错能力。Bond0可以保证bond虚拟网卡和被bond的两张或多张物理网卡拥有相同的MAC地址，其中bond虚拟网卡的MAC地址是其中一张物理网卡的MAC地址，而bond虚拟网卡的MAC地址是根据bond自己实现的一个算法来选择的。<br>  在bond0模式下，如果一个连接或者会话的数据包从不同的网口发出，途中再经过不同的链路，则在客户端很有可能会出现数据包无序到达的现象，而无序到达的数据包一般需要重新发送，这样网络的吞吐量就会下降。同时，如果做bond0的两张或多张网卡接到了同一交换机上，还需对其配置聚合模式。</p>
-<h3 id="模式1"><a href="#模式1" class="headerlink" title="模式1"></a>模式1</h3><p>  模式1（mode=1，active-backup）：此模式使用主被策略（热备）。在所有做bond1的物理网卡中，同一时刻只有一张网卡被激活，当且仅当活动网卡失效时才会激活其他的网卡。这种模式下做bond的两张或多张网卡的MAC地址和Bond虚拟网卡的MAC地址相同，而Bond的MAC地址是Bond创建启动后活动网卡（Active Slave）的MAC地址。这种模式要求主被网卡能快速的切换，即当主网卡出现故障后能迅速地切换至备用网卡。切换过程中，上层的应用几乎不受影响，因为Bond的驱动程序会临时接管上层应用的数据包，存放至数据缓冲区，等待备用网卡启动后再发送出去。但是如果切换时间过长，则会引起缓冲区的溢出，导致丢包。</p>
-<h3 id="模式2"><a href="#模式2" class="headerlink" title="模式2"></a>模式2</h3><p>  模式2（mode=2，balance-xor）：xor为异或运算(二进制位相异为1，相同为0)。此模式的默认选择策略是：<br>选择网卡的序号=(源MAC地址 XOR 目标MAC地址) % Slave网卡（从网卡）的数量。<br>  其他的传输策略可以通过xmit_hash_policy配置项指定。</p>
-<h3 id="模式3"><a href="#模式3" class="headerlink" title="模式3"></a>模式3</h3><p>  模式3（mode=3，broadcast）：使用广播策略，数据包会被广播至所有Slave网卡进行传送。</p>
-<h3 id="模式4"><a href="#模式4" class="headerlink" title="模式4"></a>模式4</h3><p>  模式4（mode=4，802.3ad）：使用动态链接聚合策略，启动时会创建一个聚合组，所有Slave网卡共享同样的速率和双工设定。<br>必要条件：<br>  1．支持使用ethtool工具获取每个slave网卡的速率和双工设定；<br>  2．需要交换机支持IEEE 802.3ad 动态链路聚合（Dynamic link aggregation）模式</p>
-<h3 id="模式5"><a href="#模式5" class="headerlink" title="模式5"></a>模式5</h3><p>  模式5（mode=5，balance-tlbtransmitload balancing）：基于每个slave网卡的速率选择传输网卡。<br>  必要条件：支持使用ethtool工具获取每个slave网卡的速率。</p>
-<h3 id="模式6"><a href="#模式6" class="headerlink" title="模式6"></a>模式6</h3><p>  模式6（mode=6，balance-alb，Adaptive load balancing）：该模式包含了bond5模式，同时还支持对IPV4流量接收时的负载均衡策略(receive load balance, rlb)，而且不需要任何交换机的支持。<br>必要条件：</p>
-<ol>
-<li>ethtool支持获取每个slave的速率；</li>
-<li>底层驱动支持设置某个网卡设备的硬件地址。</li>
-</ol>
-<h3 id="优劣比较"><a href="#优劣比较" class="headerlink" title="优劣比较"></a>优劣比较</h3><p>7中bond模式对比如下<br><img src="https://ljw.howieli.cn/blog/2017-5-27/bond.png" alt=""><br>  在7种模式中，最为常用的是bond0和bond1。在网络流量较大的场景下推荐使用bond0；在可靠性要求较高的场景下推荐使用bond1。</p>
-<h3 id="实践操作"><a href="#实践操作" class="headerlink" title="实践操作"></a>实践操作</h3><p>下面以bond0为例，介绍一下bond的基本配置。具体步骤如下：</p>
-<ol>
-<li><p>配置前查看是否开启bond模块：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">modinfo bonding</div></pre></td></tr></table></figure>
+        <h3 id="利用kolla快速安装openstack-ocata单节点"><a href="#利用kolla快速安装openstack-ocata单节点" class="headerlink" title="利用kolla快速安装openstack-ocata单节点"></a>利用<code>kolla</code>快速安装<code>openstack-ocata</code>单节点</h3><a id="more"></a>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
+<li><p>我还是使用大家最常用的<code>vmware workstation 12.0</code>, <code>CentOS 7.3</code>虚拟机来完成整个的验证过程<br>在虚拟机安装<code>centos7.3</code>我就不再这里多说了,选择最小化安装即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> cat /etc/redhat-release </div><div class="line">CentOS Linux release 7.3.1611 (Core)</div></pre></td></tr></table></figure>
 </li>
-<li><p>创建bond0网卡配置文件如下：  </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">vim /etc/sysconfig/network-scripts/ifcfg-bond0:</div><div class="line">    DEVICE=bond0</div><div class="line">    ONBOOT=yes #自动启动</div><div class="line">    BOOTPROTO=dhcp #可以选择dhcp，static，none</div><div class="line">    USERCTL=no #该设备只能由root控制</div><div class="line">    NM_CONTROLLED=no #不需要重启网卡，实时生效</div><div class="line">    TYPE=Ethernet    #如选DHCP则需要配置IP地址等信息</div><div class="line">    #IPADDR=10.0.2.10</div><div class="line">    #NETMASK=255.255.255.0</div><div class="line">    #GATEWAY=10.0.2.1</div><div class="line">    #BONDING_OPTS="mode=0 miimon=100fail_over_mac=1"</div><div class="line">    #如果使用了BONDING_OPTS选项，则不需要再使用/etc/modprobe.conf 配置文件对绑定设备进行配置。</div></pre></td></tr></table></figure>
+<li><p>kolla的安装，要求目标机器是两块网卡，所以我虚拟机也是分配两块网卡</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> ip a|grep eno</div><div class="line">2: eno16777736: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000</div><div class="line">    inet 192.168.18.131/24 brd 192.168.18.255 scope global dynamic eno16777736</div><div class="line">3: eno33554960: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast master ovs-system state UP qlen 1000</div><div class="line">    inet 192.168.18.30/24 brd 192.168.18.255 scope global eno33554960</div></pre></td></tr></table></figure>
 </li>
-<li><p>配置被bond的网卡。Bonding接口创建以后，被绑定的网卡必须在他们的设置文件里面添加MASTER和SLAVE两个参数。如eth0的配置如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">vim /etc/sysconfig/network-scripts/ifcfg-eth0:</div><div class="line">    DEVICE=eth0</div><div class="line">    ONBOOT=yes</div><div class="line">    BOOTPROTO=none</div><div class="line">    USERCTL=no</div><div class="line">    NM_CONTROLLED=no</div><div class="line">    MASTER=bond0 #属于哪个bond</div><div class="line">    SLAVE=yes #是否为从网卡，即是否被做bond</div></pre></td></tr></table></figure>
+</ul>
+<p><code>eno16777736</code>:设置的IP是：<code>192.168.18.131</code>，日后<code>Horizon</code>访问就是通过这个<code>IP</code>地址<br><code>eno33554960</code>:设置的IP是：<code>192.168.18.30</code>，这个是让<code>neutron</code>的<code>br-ex</code>绑定使用，虚拟机是通过这块网卡访问外网。</p>
+<ul>
+<li><p>修改主机名</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> hostname</div><div class="line">localhost.localdomain</div><div class="line"><span class="meta">#</span> hostnamectl set-hostname kolla</div></pre></td></tr></table></figure>
 </li>
-<li><p>创建并编辑<code>/etc/modprobe.d/bond.conf</code>文件，使系统在启动时加载bonding模块。添加：<br><code>alias bond0 bonding</code> //使系统在启动时加载bonding模块，对外虚拟网络接口设备为 bond0<br><code>options bond0 miimon=100 mode=0 fail_over_mac=1</code><br>其中miimon是用来进行链路监测的，其原理是检测网上的链路状态，一般将miimon值设为100，表示系统每100ms监测一次链路连接状态，如果有一条线路不通就转入另一条线路。bonding定义了网卡的4个链路状态：正常状态(BOND_LINK_UP)、网卡出现故障(BOND_LINK_FAIL)、失效状态(BOND_LINK_DOWN)和恢复状态(BOND_LINK_BACK)。<br>fail_over_mac默认等于0，当发生错误时只修改slave网卡的MAC地址而不修改bond的MAC地址；fail_over_mac=1时，当发生错误时只修改bond网卡的MAC地址而不修改slave网卡的MAC地址。这个选项只在虚拟机上进行测试时开启，如果使用物理机则不需配置。</p>
+<li><p>关闭<code>firewalld</code>和<code>iptables</code><br><code>centos7</code>以上系统默认防火墙是<code>firewalld</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> systemctl disable firewalld</div><div class="line"><span class="meta">#</span> systemctl stop firewalld</div><div class="line"><span class="meta">#</span> systemctl status firewalld</div></pre></td></tr></table></figure>
 </li>
-<li><p>重启机器，使用<code>cat /proc/net/bonding/bondX</code>命令查看bond配置是否生效。<br> 注：必须关闭NetworkManger服务，否则会和bond冲突</p>
+<li><p>关闭<code>selinux</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> sed -i "s/SELINUX=enforcing/SELINUX=disabled/" /etc/selinux/config</div></pre></td></tr></table></figure>
 </li>
-</ol>
+<li><p>查看虚拟机是开启了虚拟</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> egrep "vmx|svm" /proc/cpuinfo</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果没有开启虚拟化请开启虚拟化说</p>
+<ul>
+<li>重启系统<code>reboot</code>生效<h3 id="安装基础包"><a href="#安装基础包" class="headerlink" title="安装基础包"></a>安装基础包</h3></li>
+<li><p>一定要先启用<code>EPEL</code>的<code>repo</code>源</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> yum install epel-release -y</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装基础软件包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> yum install vim net-tools tmux python-devel libffi-devel gcc openssl-devel git python-pip -y</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装<code>docker</code></h3><ul>
+<li><p>设置<code>repo</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> tee /etc/yum.repos.d/docker.repo &lt;&lt; 'EOF'</div><div class="line">[dockerrepo]</div><div class="line">name=Docker Repository</div><div class="line">baseurl=https://yum.dockerproject.org/repo/main/centos/$releasever/</div><div class="line">enabled=1</div><div class="line">gpgcheck=1</div><div class="line">gpgkey=https://yum.dockerproject.org/gpg</div><div class="line">EOF</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装<code>Docker 1.12.5</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> yum install docker-engine-1.12.5 docker-engine-selinux-1.12.5 -y</div></pre></td></tr></table></figure>
+</li>
+<li><p>设置<code>docker</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> mkdir /etc/systemd/system/docker.service.d</div><div class="line"><span class="meta">#</span> tee /etc/systemd/system/docker.service.d/kolla.conf &lt;&lt; 'EOF'</div><div class="line">[Service]</div><div class="line">MountFlags=shared</div><div class="line">EOF</div></pre></td></tr></table></figure>
+</li>
+<li><p>重启先关服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> systemctl daemon-reload</div><div class="line"><span class="meta">#</span> systemctl enable docker</div><div class="line"><span class="meta">#</span> systemctl restart docker</div><div class="line"><span class="meta">#</span> systemctl status docker</div></pre></td></tr></table></figure>
+</li>
+<li><p>访问私有的<code>Docker</code>仓库<br>查看网卡的<code>ip</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> ip a|grep eno16777736 |grep inet|awk '&#123;print $2&#125;'|cut -d/ -f1</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>编辑<code>/usr/lib/systemd/system/docker.service</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> ExecStart=/usr/bin/dockerd</div><div class="line">ExecStart=/usr/bin/dockerd --insecure-registry 192.168.18.131:4000</div></pre></td></tr></table></figure></p>
+<ul>
+<li>重启服务<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> systemctl daemon-reload</div><div class="line"><span class="meta">#</span> systemctl restart docker</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="安装Ansible"><a href="#安装Ansible" class="headerlink" title="安装Ansible"></a>安装<code>Ansible</code></h3><p><code>Kolla</code>项目的<code>Mitaka</code>版本要求<code>ansible</code>版本低于<code>2.0</code>，<code>Newton</code>版本以后的就只支持<code>2.x</code>以上的版本。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> yum -y install ansible</div></pre></td></tr></table></figure></p>
+<h3 id="搭建Registry服务器"><a href="#搭建Registry服务器" class="headerlink" title="搭建Registry服务器"></a>搭建<code>Registry</code>服务器</h3><p>默认<code>docker</code>的<code>registry</code>是使用<code>5000</code>端口，对于<code>OpenStack</code>来说，有端口冲突，所以我将端口改成了<code>4000</code>。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> docker run -d -v /opt/registry:/var/lib/registry -p 4000:5000 \</div><div class="line">--restart=always --name registry registry:2</div></pre></td></tr></table></figure></p>
+<h3 id="下载kolla官方提供的ocata镜像"><a href="#下载kolla官方提供的ocata镜像" class="headerlink" title="下载kolla官方提供的ocata镜像"></a>下载<code>kolla</code>官方提供的<code>ocata</code>镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> wget http://tarballs.openstack.org/kolla/images/centos-source-registry-ocata.tar.gz</div><div class="line"><span class="meta">#</span> du -sh centos-source-registry-ocata.tar.gz </div><div class="line">3.0G	centos-source-registry-ocata.tar.gz</div><div class="line"><span class="meta">#</span> tar zxf centos-source-registry-ocata.tar.gz -C /opt/registry/</div></pre></td></tr></table></figure>
+<p><code>centos-source-registry-ocata</code>大约有3G。</p>
+<h3 id="kolla-ansible"><a href="#kolla-ansible" class="headerlink" title="kolla-ansible"></a><code>kolla-ansible</code></h3><ul>
+<li><p>下载<code>kolla-ansible</code>的代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> cd</div><div class="line"><span class="meta">#</span> git clone http://git.trystack.cn/openstack/kolla-ansible -b stable/ocata</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装<code>kolla-ansible</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> cd kolla-ansible/</div><div class="line"><span class="meta">#</span> pip install . -i https://pypi.tuna.tsinghua.edu.cn/simple</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果<code>pip</code>速度很慢，后面可以加上参数<code>-i https://pypi.tuna.tsinghua.edu.cn/simple</code>，指定国内的<code>pip</code>源</p>
+<ul>
+<li><p>复制相关文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> cp -r etc/kolla /etc/kolla/</div><div class="line"><span class="meta">#</span> cd</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果是在虚拟机里装<code>kolla</code>，希望可以启动再启动虚拟机，那么你需要把<code>virt_type=qemu</code>，默认是<code>kvm</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">mkdir -p /etc/kolla/config/nova</div><div class="line">cat &lt;&lt; EOF &gt; /etc/kolla/config/nova/nova-compute.conf</div><div class="line">[libvirt]</div><div class="line">virt_type=qemu</div><div class="line">cpu_mode = none</div><div class="line">EOF</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="安装kolla"><a href="#安装kolla" class="headerlink" title="安装kolla"></a>安装<code>kolla</code></h3><ul>
+<li><p>生成密码文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> kolla-genpwd</div></pre></td></tr></table></figure>
+</li>
+<li><p>编辑 <code>/etc/kolla/passwords.yml</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> vim /etc/kolla/passwords.yml</div><div class="line">keystone_admin_password: admin</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这是登录<code>Dashboard</code>，<code>admin</code>使用的密码，你可以根据自己需要进行修改</p>
+<ul>
+<li>编辑<code>/etc/kolla/globals.yml</code>文件<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> vim /etc/kolla/globals.yml</div><div class="line">kolla_base_distro: "centos"</div><div class="line">kolla_install_type: "source"</div><div class="line">openstack_release: "4.0.3"</div><div class="line">kolla_internal_vip_address: "192.168.18.100"</div><div class="line">docker_registry: "192.168.18.131:4000"</div><div class="line">docker_namespace: "lokolla"</div><div class="line">network_interface: "eno16777736"</div><div class="line">neutron_external_interface: "eno33554960"</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果不知道<code>openstack_release</code>和<code>docker_namespace</code>请查看<br><code># cd /opt/registry/docker/registry/v2/repositories/lokolla/centos-source-keepalived/_manifests/tags/4.0.3/</code><br>就可以知道<code>openstack_release</code>为<code>4.0.3</code>和<code>docker_namespace</code>为<code>lokolla</code>了。</p>
+<h3 id="验证部署"><a href="#验证部署" class="headerlink" title="验证部署"></a>验证部署</h3><ul>
+<li><p>验证</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> kolla-ansible prechecks -i kolla-ansible/ansible/inventory/all-in-one</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>pull</code>镜像</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> kolla-ansible pull -i kolla-ansible/ansible/inventory/all-in-one</div></pre></td></tr></table></figure>
+</li>
+<li><p>部署</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> kolla-ansible deploy -i kolla-ansible/ansible/inventory/all-in-one</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>大约半个小时基本上就部署完成了</p>
+<h3 id="验证部署-1"><a href="#验证部署-1" class="headerlink" title="验证部署"></a>验证部署</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> kolla-ansible post-deploy</div></pre></td></tr></table></figure>
+<p>这样就创建 <code>/etc/kolla/admin-openrc.sh</code>文件</p>
+<h3 id="安装安装OpenStack-client端"><a href="#安装安装OpenStack-client端" class="headerlink" title="安装安装OpenStack client端"></a>安装安装<code>OpenStack client</code>端</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> pip install python-openstackclient</div></pre></td></tr></table></figure>
+<h3 id="安装成功"><a href="#安装成功" class="headerlink" title="安装成功"></a>安装成功</h3><p><img src="https://ljw.howieli.cn/blog/2017-6-23/dashboard.jpg" alt=""><br>账号：<code>admin</code><br>密码：<code>admin</code></p>
+<h3 id="创建网络"><a href="#创建网络" class="headerlink" title="创建网络"></a>创建网络</h3><ul>
+<li><p>编辑 <code>/usr/share/kolla-ansible/init-runonce</code><br>网络需要根据实际情况修改,我都是用的<code>nat</code>模式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">EXT_NET_CIDR='192.168.18.0/24'</div><div class="line">EXT_NET_RANGE='start=192.168.18.10,end=192.168.18.20'</div><div class="line">EXT_NET_GATEWAY='192.168.18.2'</div></pre></td></tr></table></figure>
+</li>
+<li><p>运行脚本创建</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">source /etc/kolla/admin-openrc.sh</div><div class="line">bash /usr/share/kolla-ansible/init-runonce</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="最后进入dashboard创建虚拟机，绑定浮动ip"><a href="#最后进入dashboard创建虚拟机，绑定浮动ip" class="headerlink" title="最后进入dashboard创建虚拟机，绑定浮动ip"></a>最后进入<code>dashboard</code>创建虚拟机，绑定浮动<code>ip</code></h3><p>这里我就不多说了，进入<code>dashboard</code>创建与主机即可，网络选择<code>demo-net</code>网络，创建完成后标定浮动<code>ip</code>即可。</p>
+<h3 id="检查虚拟网络"><a href="#检查虚拟网络" class="headerlink" title="检查虚拟网络"></a>检查虚拟网络</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> openstack server list</div><div class="line">+--------------------------------------+------+--------+----------------------------------+------------+</div><div class="line">| ID                                   | Name | Status | Networks                         | Image Name |</div><div class="line">+--------------------------------------+------+--------+----------------------------------+------------+</div><div class="line">| 0267025b-8193-42ee-8551-67b7625482ab | tets | ACTIVE | demo-net=10.0.0.6, 192.168.18.12 | cirros     |</div><div class="line">+--------------------------------------+------+--------+----------------------------------+------------+</div><div class="line"><span class="meta">#</span> ping 192.168.18.12 -c 3</div><div class="line">PING 192.168.18.12 (192.168.18.12) 56(84) bytes of data.</div><div class="line">64 bytes from 192.168.18.12: icmp_seq=1 ttl=63 time=1.85 ms</div><div class="line">64 bytes from 192.168.18.12: icmp_seq=2 ttl=63 time=1.46 ms</div><div class="line">64 bytes from 192.168.18.12: icmp_seq=3 ttl=63 time=5.94 ms</div><div class="line">--- 192.168.18.12 ping statistics ---</div><div class="line">3 packets transmitted, 3 received, 0% packet loss, time 2005ms</div><div class="line">rtt min/avg/max/mdev = 1.466/3.087/5.942/2.025 ms</div></pre></td></tr></table></figure>
+<h3 id="检查虚拟机是能能通外网"><a href="#检查虚拟机是能能通外网" class="headerlink" title="检查虚拟机是能能通外网"></a>检查虚拟机是能能通外网</h3><p><code>cirros</code>用户密码默认为<code>cubswin:)</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> ssh cirros@192.168.18.12</div><div class="line">cirros@192.168.18.12's password: </div><div class="line"><span class="meta">$</span> ip a</div><div class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue </div><div class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</div><div class="line">    inet 127.0.0.1/8 scope host lo</div><div class="line">    inet6 ::1/128 scope host </div><div class="line">       valid_lft forever preferred_lft forever</div><div class="line">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc pfifo_fast qlen 1000</div><div class="line">    link/ether fa:16:3e:82:4e:f8 brd ff:ff:ff:ff:ff:ff</div><div class="line">    inet 10.0.0.6/24 brd 10.0.0.255 scope global eth0</div><div class="line">    inet6 fe80::f816:3eff:fe82:4ef8/64 scope link </div><div class="line">       valid_lft forever preferred_lft forever</div><div class="line"><span class="meta">$</span> ping 8.8.8.8 -c 2</div><div class="line">PING 8.8.8.8 (8.8.8.8): 56 data bytes</div><div class="line">64 bytes from 8.8.8.8: seq=0 ttl=127 time=171.481 ms</div><div class="line">64 bytes from 8.8.8.8: seq=1 ttl=127 time=171.464 ms</div><div class="line">--- 8.8.8.8 ping statistics ---</div><div class="line">2 packets transmitted, 2 packets received, 0% packet loss</div><div class="line">round-trip min/avg/max = 171.464/171.472/171.481 ms</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -490,7 +576,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/linux-bond/" rel="tag"># linux bond</a>
+            <a href="/tags/openstack/" rel="tag"># openstack</a>
           
         </div>
       
@@ -503,8 +589,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/linux-tmux.html" rel="next" title="Tmux Linux 分屏工具">
-                <i class="fa fa-chevron-left"></i> Tmux Linux 分屏工具
+              <a href="/posts/Openstack-DevStack-ocata.html" rel="next" title="DevStack">
+                <i class="fa fa-chevron-left"></i> DevStack
               </a>
             
           </div>
@@ -512,10 +598,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/posts/Linux-awk.html" rel="prev" title="在linux系统下使用awk工具详解">
-                在linux系统下使用awk工具详解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -702,7 +784,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#网卡Bond介绍"><span class="nav-number">1.</span> <span class="nav-text">网卡Bond介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总括"><span class="nav-number">2.</span> <span class="nav-text">总括</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模式0"><span class="nav-number">3.</span> <span class="nav-text">模式0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模式1"><span class="nav-number">4.</span> <span class="nav-text">模式1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模式2"><span class="nav-number">5.</span> <span class="nav-text">模式2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模式3"><span class="nav-number">6.</span> <span class="nav-text">模式3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模式4"><span class="nav-number">7.</span> <span class="nav-text">模式4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模式5"><span class="nav-number">8.</span> <span class="nav-text">模式5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模式6"><span class="nav-number">9.</span> <span class="nav-text">模式6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优劣比较"><span class="nav-number">10.</span> <span class="nav-text">优劣比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实践操作"><span class="nav-number">11.</span> <span class="nav-text">实践操作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#利用kolla快速安装openstack-ocata单节点"><span class="nav-number">1.</span> <span class="nav-text">利用kolla快速安装openstack-ocata单节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装基础包"><span class="nav-number">3.</span> <span class="nav-text">安装基础包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装docker"><span class="nav-number">4.</span> <span class="nav-text">安装docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Ansible"><span class="nav-number">5.</span> <span class="nav-text">安装Ansible</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建Registry服务器"><span class="nav-number">6.</span> <span class="nav-text">搭建Registry服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载kolla官方提供的ocata镜像"><span class="nav-number">7.</span> <span class="nav-text">下载kolla官方提供的ocata镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kolla-ansible"><span class="nav-number">8.</span> <span class="nav-text">kolla-ansible</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装kolla"><span class="nav-number">9.</span> <span class="nav-text">安装kolla</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证部署"><span class="nav-number">10.</span> <span class="nav-text">验证部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证部署-1"><span class="nav-number">11.</span> <span class="nav-text">验证部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装安装OpenStack-client端"><span class="nav-number">12.</span> <span class="nav-text">安装安装OpenStack client端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装成功"><span class="nav-number">13.</span> <span class="nav-text">安装成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建网络"><span class="nav-number">14.</span> <span class="nav-text">创建网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后进入dashboard创建虚拟机，绑定浮动ip"><span class="nav-number">15.</span> <span class="nav-text">最后进入dashboard创建虚拟机，绑定浮动ip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查虚拟网络"><span class="nav-number">16.</span> <span class="nav-text">检查虚拟网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查虚拟机是能能通外网"><span class="nav-number">17.</span> <span class="nav-text">检查虚拟机是能能通外网</span></a></li></ol></div>
             
 
           </div>
