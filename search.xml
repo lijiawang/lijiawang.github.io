@@ -3,6 +3,52 @@
   
     
     <entry>
+      <title><![CDATA[openstack镜像格式转换与上传]]></title>
+      <url>/posts/openstack-image.html</url>
+      <content type="html"><![CDATA[<h3 id="openstack镜像格式转换与上传"><a href="#openstack镜像格式转换与上传" class="headerlink" title="openstack镜像格式转换与上传"></a><code>openstack</code>镜像格式转换与上传</h3><a id="more"></a>
+<h3 id="openstack常用镜像格式"><a href="#openstack常用镜像格式" class="headerlink" title="openstack常用镜像格式"></a><code>openstack</code>常用镜像格式</h3><p>今天我给大家介绍一下<code>openstack</code>常用的三种镜像格式，三种镜像格式分别是<code>qcow2</code>、<code>raw</code>、<code>vmdk</code>(所谓的<code>vmdk</code>就是<code>vmware</code>虚拟化的镜像格式，只有<code>openstack</code>纳管<code>vmware</code>才能用的到)。</p>
+<h3 id="惊险格式的转换"><a href="#惊险格式的转换" class="headerlink" title="惊险格式的转换"></a>惊险格式的转换</h3><ul>
+<li><p>将<code>raw</code>格式的镜像转化成<code>qcow2</code>格式（<code>image</code>代表镜像）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> qemu-img convert <span class="_">-f</span> raw -O qcow2 image.img image.qcow2</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>将<code>vmdk</code>格式的镜像转化成<code>raw</code>格式（<code>image</code>代表镜像）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> qemu-img convert <span class="_">-f</span> vmdk -O raw image.vmdk image.img</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>将<code>vmdk</code>格式的镜像转化成<code>qcow2</code>格式（<code>image</code>代表镜像）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> qemu-img convert <span class="_">-f</span> vmdk -O qcow2 image.vmdk image.qcow2</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="获取镜像查看镜像信息"><a href="#获取镜像查看镜像信息" class="headerlink" title="获取镜像查看镜像信息"></a>获取镜像查看镜像信息</h3><p>查看镜像的详细信息<code>qemu-img info image.qcow2</code><br>例如<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> qemu-img info CentOS-7-x86_64-GenericCloud.qcow2c </span></div><div class="line">image: CentOS-7-x86_64-GenericCloud.qcow2c</div><div class="line">file format: qcow2                                #格式为qcow2</div><div class="line">virtual size: 8.0G (8589934592 bytes)             #空间大小</div><div class="line">disk size: 410M</div><div class="line">cluster_size: 65536</div></pre></td></tr></table></figure></p>
+<h3 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h3><p>这里我只介绍在<code>linux</code>命令行上传三种格式的镜像</p>
+<ul>
+<li><p>上传<code>raw</code>格式的镜像</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">openstack image create --disk-format raw --container-format bare \</div><div class="line">--public image_raw --file ./image.raw</div></pre></td></tr></table></figure>
+</li>
+<li><p>上传<code>qcow2</code>格式的镜像</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glance image-create --name image_qcow2  --disk-format qcow2 --container-format bare &lt; image.qcow2</div></pre></td></tr></table></figure>
+</li>
+<li><p>上传<code>vmdk</code>格式的镜像</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glance image-create --name image_vmdk --disk-format vmdk --container-format bare --property vmware_adaptertype=ide --property hw_disk_bus=ide --property hypervisor_type=vmware &lt; image.vmdk</div></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> openstack </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> openstack </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[利用kolla快速搭建openstack-ocata单节点]]></title>
       <url>/posts/kolla-openstack-ocata.html</url>
       <content type="html"><![CDATA[<h3 id="利用kolla快速安装openstack-ocata单节点"><a href="#利用kolla快速安装openstack-ocata单节点" class="headerlink" title="利用kolla快速安装openstack-ocata单节点"></a>利用<code>kolla</code>快速安装<code>openstack-ocata</code>单节点</h3><a id="more"></a>
