@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linux, python, shell, openstack" />
+  <meta name="keywords" content="openstack" />
 
 
 
@@ -92,16 +92,20 @@
 
 
 
-<meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李家旺">
-<meta property="og:url" content="https://www.lijiawang.org/categories/index.html">
+<meta name="description" content="openstack新建云主机流程介绍">
+<meta name="keywords" content="openstack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="openstack新建云主机流程介绍">
+<meta property="og:url" content="https://www.lijiawang.org/posts/openstack-nova.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="不看官网不足以熟练，不懂源码不足以精通">
-<meta property="og:updated_time" content="2017-05-17T03:19:30.218Z">
+<meta property="og:description" content="openstack新建云主机流程介绍">
+<meta property="og:image" content="https://ljw.howieli.cn/blog/2017-7-3/%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta property="og:image" content="https://ljw.howieli.cn/blog/2017-7-3/%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2.png">
+<meta property="og:updated_time" content="2017-07-03T12:33:28.959Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李家旺">
-<meta name="twitter:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta name="twitter:title" content="openstack新建云主机流程介绍">
+<meta name="twitter:description" content="openstack新建云主机流程介绍">
+<meta name="twitter:image" content="https://ljw.howieli.cn/blog/2017-7-3/%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
 
 
 
@@ -129,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="https://www.lijiawang.org/categories/"/>
+  <link rel="canonical" href="https://www.lijiawang.org/posts/openstack-nova.html"/>
 
 
 
 
 
-  <title>分类 | 李家旺</title>
+  <title>openstack新建云主机流程介绍 | 李家旺</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -171,7 +175,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -320,25 +324,232 @@
             
 
   <div id="posts" class="posts-expand">
-  <header class="post-header">
+    
 
-	<h1 class="post-title" itemprop="name headline"></h1>
+  
 
+  
+  
+  
 
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://www.lijiawang.org/posts/openstack-nova.html">
 
-</header>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李家旺">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李家旺">
+    </span>
 
     
-    
-      <div class="category-all-page">
-        <div class="category-all-title">
-            目前共计 3 个分类
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">openstack新建云主机流程介绍</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T20:28:16+08:00">
+                2017-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">openstack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/posts/openstack-nova.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/posts/openstack-nova.html" class="leancloud_visitors" data-flag-title="openstack新建云主机流程介绍">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
         </div>
-        <div class="category-all">
-          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/openstack/">openstack</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li></ul>
-        </div>
-      </div>
+      </header>
     
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="openstack新建云主机流程介绍"><a href="#openstack新建云主机流程介绍" class="headerlink" title="openstack新建云主机流程介绍"></a><code>openstack</code>新建云主机流程介绍</h3><a id="more"></a>
+<p><code>openstack</code> 可以登录到你的<code>dashboard</code>上之后点击“项目-计算-实例-创建实例”按钮，然后选择一下相应的配置，只短短十几秒内就可以创建好一台云主机供我们使用了，然而这么牛逼的事情是怎么做到的呢？<br>新建一个云主机流程图<br><img src="https://ljw.howieli.cn/blog/2017-7-3/%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></p>
+<p>上图我们可以看出要想新建一台完整的云主机至少需要29步。</p>
+<h3 id="流程图分析"><a href="#流程图分析" class="headerlink" title="流程图分析"></a>流程图分析</h3><h4 id="流程-1"><a href="#流程-1" class="headerlink" title="流程-1"></a>流程-1</h4><p>首先我们访问<code>dashboard</code>之后，浏览器会显示一个登陆界面（如下图所示），<code>horizon</code>会让我们登陆用户名和密码，然后<code>horizon</code>会把用户名和密码交给<code>keystone</code>来确认我们的身份，<code>keystone</code>确认成功后，才会允许我们登陆进去。（在<code>openstack</code>里<code>keystone</code>就相当于<code>openstack</code>这些组件共同的老大哥）<br><img src="https://ljw.howieli.cn/blog/2017-7-3/%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2.png" alt=""><br>在原来我一直以为这里登陆的时候只不过是一个简单的<code>django</code>框架使用<code>pymysql</code>直接查询数据库，而实际上这里的表单信息是提交到了<code>keystone</code>，然后通过<code>keystone</code>查询数据库进行验证的</p>
+<h4 id="流程-2"><a href="#流程-2" class="headerlink" title="流程-2"></a>流程-2</h4><p><code>keystone</code>接受到<code>horizon</code>前端表单传过来的用户、密码信息以后，会去查询数据库来确认身份，确认了身份后会将一个<code>token</code>（就相当于办理了一个身份证~~~~）返回到该用户，让这个用户在进行操作的时候不在需要提供用户名和密码了，而是直接拿出<code>token</code>来。</p>
+<h4 id="流程-3"><a href="#流程-3" class="headerlink" title="流程-3"></a>流程-3</h4><p><code>horizon</code>拿到<code>token</code>之后，实际上这里在<code>web</code>页面上的显示就是登陆成功了，接下来就是找到“项目-计算-实例-创建实例”按钮，点击创建实例，然后根据我们的需求填写云主机相关的配置信息。<br>填写完配置信息后，点击启动实例之后，<code>horizon</code>就会带着三个东西去找<code>nova-api</code>了。</p>
+<ul>
+<li>创建云主机的请求</li>
+<li>云主机相关配置信息</li>
+<li>刚刚<code>keystone</code>返回给的<code>token</code></li>
+</ul>
+<h4 id="流程-4"><a href="#流程-4" class="headerlink" title="流程-4"></a>流程-4</h4><p><code>nova-api</code>会拿着<code>horizon</code>给的<code>token</code>去找老大哥<code>keystone</code>验证去。</p>
+<h4 id="流程-5"><a href="#流程-5" class="headerlink" title="流程-5"></a>流程-5</h4><p><code>keystone</code>看到<code>nova-api</code>拿来的<code>token</code>，查询一下数据库确认，然后告诉给<code>nova-api</code>，这兄弟信得过，可以照他的安排去做。</p>
+<h4 id="流程-6"><a href="#流程-6" class="headerlink" title="流程-6"></a>流程-6</h4><p><code>nova-api</code>从大哥那回来，接收了<code>horizon</code>提供的两样东西，一是云主机配置信息，二是创建请求，这<code>nova-api</code>手底下也有一帮小兄弟，这帮人之间沟通可不太方便都得通过一块小黑板（<code>mq</code>消息队列），把自己的需求写在小黑板上，能做的了这事的人自然就去做了。但配置信息现在还不能写在小黑板上，得找到确定去干活的人之后才行啊，所以<code>nova-api</code>就把配置信息放到数据库里。</p>
+<h4 id="流程-7"><a href="#流程-7" class="headerlink" title="流程-7"></a>流程-7</h4><p>数据库把配置信息收好之后，对<code>nova-api</code>说了声，我放好了。</p>
+<h4 id="流程-8"><a href="#流程-8" class="headerlink" title="流程-8"></a>流程-8</h4><p>放好配置信息后<code>nova-api</code>就在小黑板上写“现在要创建一台云主机，配置信息我已经放到数据库了，然后让<code>nova-schedular</code>给安排。</p>
+<h4 id="流程-9"><a href="#流程-9" class="headerlink" title="流程-9"></a>流程-9</h4><p><code>nova-schedular</code>他就像是<code>nova-api</code>的秘书，<code>nova-api</code>的有事都是通过它交代给其他人的，这一步就是他从小黑板上看到了<code>nova-api</code>的信息。</p>
+<h4 id="流程-10"><a href="#流程-10" class="headerlink" title="流程-10"></a>流程-10</h4><p><code>nova-schedular</code>现在知道了要创建云主机，但它要看一看云主机都要什么配置，才好决定该把这事交给谁去做（这里是指多个<code>nova-compute</code>的情况，各个计算节点的资源使用情况都在<code>nova-schedular</code>这里），所以他让数据库把云主机配置信息发给他看看。</p>
+<h4 id="流程-11"><a href="#流程-11" class="headerlink" title="流程-11"></a>流程-11</h4><p>数据库收到请求之后，把云主机配置信息发给<code>nova-schedular</code>。</p>
+<h4 id="流程-12"><a href="#流程-12" class="headerlink" title="流程-12"></a>流程-12</h4><p><code>nova-schedular</code>拿到配置信息后，使用调度算法决定了要让<code>nova-compute</code>去干这个事，就在小黑板上写“<code>nova-compute</code>你给创建个云主机，配置都在数据库里了”。</p>
+<h4 id="流程-13"><a href="#流程-13" class="headerlink" title="流程-13"></a>流程-13</h4><p><code>nova-compute</code>看到小黑板上的东西之后，本应该直接去数据库拿取配置信息，但因为<code>nova-compute</code>的特殊身份，<code>nova-compute</code>所在计算节点上全是云主机，万一有一台云主机被黑客入侵从而控制计算节点，直接拖库是很危险的。所以不能让<code>nova-compute</code>知道数据库在什么地方。</p>
+<h4 id="流程-14"><a href="#流程-14" class="headerlink" title="流程-14"></a>流程-14</h4><p><code>nova-compute</code>没办法去数据库取东西难道就不工作了吗？那可不行啊，他不知道去哪取，但他哥们知道啊，于是他在小黑板上写“<code>nova-conductor</code>，你帮我去数据库取一下配置信息”。</p>
+<h4 id="流程-15"><a href="#流程-15" class="headerlink" title="流程-15"></a>流程-15</h4><p><code>nova-conductor</code>从小黑板上看到了<code>nova-compute</code>的请求。</p>
+<h4 id="流程-16"><a href="#流程-16" class="headerlink" title="流程-16"></a>流程-16</h4><p><code>nova-conductor</code>告诉数据库我要查看某某云主机的配置信息。</p>
+<h4 id="流程-17"><a href="#流程-17" class="headerlink" title="流程-17"></a>流程-17</h4><p>数据库把云主机配置信息发送给<code>nova-conductor</code>。</p>
+<h4 id="流程-18"><a href="#流程-18" class="headerlink" title="流程-18"></a>流程-18</h4><p><code>nova-conductor</code>把配置信息写在小黑板上。</p>
+<h4 id="流程-19"><a href="#流程-19" class="headerlink" title="流程-19"></a>流程-19</h4><p><code>nova-compute</code>从小黑板上读取云主机的配置信息。</p>
+<h4 id="流程-20"><a href="#流程-20" class="headerlink" title="流程-20"></a>流程-20</h4><p><code>nova-compute</code>拿到了云主机配置信息一看，人家可是专业的，立马就知道该怎么做了，先去找<code>glance-api</code>拿镜像吧，刚才讲了那么多，可都是在<code>nova</code>组件内部的，这次去找别的组件可不是写在小黑板上了，它得带着自己的身份证去，告诉<code>glance-api</code>，我要<code>xxx</code>镜像。</p>
+<h4 id="流程-21"><a href="#流程-21" class="headerlink" title="流程-21"></a>流程-21</h4><p><code>glance-api</code>看<code>nova-compute</code>过来，他可不认识<code>nova-compute</code>，让<code>nova-compute</code>拿出身份证，拿着人家身份证找到自己的老大哥<code>keystone</code>看看这人靠不靠谱，<code>keystone</code>一看，没问题，按他说的做吧（在<code>nova</code>验证<code>horizon</code>被当做两步，这里化做一步，是为了简化重复的流程）。</p>
+<h4 id="流程-22"><a href="#流程-22" class="headerlink" title="流程-22"></a>流程-22</h4><p><code>glance-api</code>把镜像资源信息返回给<code>nova-compute</code>（这里主要说创建云主机的过程，除<code>nova</code>外其他组件内部先不提）。</p>
+<h4 id="流程-23"><a href="#流程-23" class="headerlink" title="流程-23"></a>流程-23</h4><p>接着<code>nova-compute</code>找到<code>neutron-server</code>（图里画错了，因为是偷别人的图，自己的图画了半天画不好。。。），告诉他我要<code>xxx</code>网络资源。</p>
+<h4 id="流程-24"><a href="#流程-24" class="headerlink" title="流程-24"></a>流程-24</h4><p><code>neutron-server</code>也不认识他，拿着他的身份证找<code>keystone</code>确认了一下身份。</p>
+<h4 id="流程-25"><a href="#流程-25" class="headerlink" title="流程-25"></a>流程-25</h4><p><code>nuetron-server</code>把网络资源信息返回给<code>nova-compute</code>。</p>
+<h4 id="流程-26"><a href="#流程-26" class="headerlink" title="流程-26"></a>流程-26</h4><p><code>nova-compute</code>找到<code>cinder-api</code>要存储资源，云主机得有硬盘啊，得存东西啊（同样，这里图中也有错误）。</p>
+<h4 id="流程-27"><a href="#流程-27" class="headerlink" title="流程-27"></a>流程-27</h4><p><code>cinder-api</code>也不认识他，拿着他的身份证找<code>keystone</code>确认了一下身份。</p>
+<h4 id="流程-28"><a href="#流程-28" class="headerlink" title="流程-28"></a>流程-28</h4><p><code>cinder-api</code>把存储资源信息返回给<code>nova-compute</code>。</p>
+<h4 id="流程-29"><a href="#流程-29" class="headerlink" title="流程-29"></a>流程-29</h4><p><code>nova-compute</code>拿到了所有资源之后，他其实也只是个收集信息的，他把工作全都交给了真正创建虚拟机的<code>Hypervisor</code>（<code>kvm</code>，<code>xen</code>等虚拟化技术）。</p>
+<p>到此为止，你已经拥有了一台云主机了，流程看似复杂实际上在几十秒就完成了。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openstack/" rel="tag"># openstack</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/openstack-image.html" rel="next" title="openstack镜像格式转换与上传">
+                <i class="fa fa-chevron-left"></i> openstack镜像格式转换与上传
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-591bd5ac9354483f" async = "async" ></script>
+</div>
+
+      
+    </div>
   </div>
 
 
@@ -347,6 +558,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
 
         </div>
         
@@ -366,8 +583,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/touxiang.jpg"
@@ -483,6 +709,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#openstack新建云主机流程介绍"><span class="nav-number">1.</span> <span class="nav-text">openstack新建云主机流程介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流程图分析"><span class="nav-number">2.</span> <span class="nav-text">流程图分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-1"><span class="nav-number">2.1.</span> <span class="nav-text">流程-1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-2"><span class="nav-number">2.2.</span> <span class="nav-text">流程-2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-3"><span class="nav-number">2.3.</span> <span class="nav-text">流程-3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-4"><span class="nav-number">2.4.</span> <span class="nav-text">流程-4</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-5"><span class="nav-number">2.5.</span> <span class="nav-text">流程-5</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-6"><span class="nav-number">2.6.</span> <span class="nav-text">流程-6</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-7"><span class="nav-number">2.7.</span> <span class="nav-text">流程-7</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-8"><span class="nav-number">2.8.</span> <span class="nav-text">流程-8</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-9"><span class="nav-number">2.9.</span> <span class="nav-text">流程-9</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-10"><span class="nav-number">2.10.</span> <span class="nav-text">流程-10</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-11"><span class="nav-number">2.11.</span> <span class="nav-text">流程-11</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-12"><span class="nav-number">2.12.</span> <span class="nav-text">流程-12</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-13"><span class="nav-number">2.13.</span> <span class="nav-text">流程-13</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-14"><span class="nav-number">2.14.</span> <span class="nav-text">流程-14</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-15"><span class="nav-number">2.15.</span> <span class="nav-text">流程-15</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-16"><span class="nav-number">2.16.</span> <span class="nav-text">流程-16</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-17"><span class="nav-number">2.17.</span> <span class="nav-text">流程-17</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-18"><span class="nav-number">2.18.</span> <span class="nav-text">流程-18</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-19"><span class="nav-number">2.19.</span> <span class="nav-text">流程-19</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-20"><span class="nav-number">2.20.</span> <span class="nav-text">流程-20</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-21"><span class="nav-number">2.21.</span> <span class="nav-text">流程-21</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-22"><span class="nav-number">2.22.</span> <span class="nav-text">流程-22</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-23"><span class="nav-number">2.23.</span> <span class="nav-text">流程-23</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-24"><span class="nav-number">2.24.</span> <span class="nav-text">流程-24</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-25"><span class="nav-number">2.25.</span> <span class="nav-text">流程-25</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-26"><span class="nav-number">2.26.</span> <span class="nav-text">流程-26</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-27"><span class="nav-number">2.27.</span> <span class="nav-text">流程-27</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-28"><span class="nav-number">2.28.</span> <span class="nav-text">流程-28</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-29"><span class="nav-number">2.29.</span> <span class="nav-text">流程-29</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -601,6 +843,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 
