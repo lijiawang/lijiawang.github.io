@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linux, python, shell, openstack" />
+  <meta name="keywords" content="python,类" />
 
 
 
@@ -92,15 +92,17 @@
 
 
 
-<meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李家旺">
-<meta property="og:url" content="https://www.lijiawang.org/page/2/index.html">
+<meta name="description" content="目标　　1.类的定义 　　2.父类，子类定义，以及子类调用父类 　　3.类的组合使用 　　4.内置功能">
+<meta name="keywords" content="python,类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python中类的定义与使用">
+<meta property="og:url" content="https://www.lijiawang.org/posts/python-class.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta property="og:description" content="目标　　1.类的定义 　　2.父类，子类定义，以及子类调用父类 　　3.类的组合使用 　　4.内置功能">
+<meta property="og:updated_time" content="2017-08-18T05:49:59.295Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李家旺">
-<meta name="twitter:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta name="twitter:title" content="Python中类的定义与使用">
+<meta name="twitter:description" content="目标　　1.类的定义 　　2.父类，子类定义，以及子类调用父类 　　3.类的组合使用 　　4.内置功能">
 
 
 
@@ -128,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="https://www.lijiawang.org/page/2/"/>
+  <link rel="canonical" href="https://www.lijiawang.org/posts/python-class.html"/>
 
 
 
 
 
-  <title> 李家旺 - 学习日记 </title>
+  <title>Python中类的定义与使用 | 李家旺</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -170,9 +172,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -319,9 +319,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -330,7 +330,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://www.lijiawang.org/posts/openstack-ocata.html">
+    <link itemprop="mainEntityOfPage" href="https://www.lijiawang.org/posts/python-class.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="李家旺">
@@ -347,9 +347,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/openstack-ocata.html" itemprop="url">Openstack Ocata vxlan模式搭建</a></h1>
+          <h1 class="post-title" itemprop="name headline">Python中类的定义与使用</h1>
         
 
         <div class="post-meta">
@@ -361,306 +359,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-27T11:17:20+08:00">
-                2017-05-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/openstack/" itemprop="url" rel="index">
-                    <span itemprop="name">openstack</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/posts/openstack-ocata.html" class="leancloud_visitors" data-flag-title="Openstack Ocata vxlan模式搭建">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="手动搭建分布式Openstack-Ocata-vxlan模式"><a href="#手动搭建分布式Openstack-Ocata-vxlan模式" class="headerlink" title="手动搭建分布式Openstack Ocata vxlan模式 "></a>手动搭建分布式Openstack Ocata vxlan模式
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/posts/openstack-ocata.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://www.lijiawang.org/posts/openstack-blog.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="李家旺">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/touxiang.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李家旺">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/openstack-blog.html" itemprop="url">openstack实例启动流程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-26T08:23:34+08:00">
-                2017-05-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/openstack/" itemprop="url" rel="index">
-                    <span itemprop="name">openstack</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/posts/openstack-blog.html" class="leancloud_visitors" data-flag-title="openstack实例启动流程">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="openstack实例启动流程"><a href="#openstack实例启动流程" class="headerlink" title="openstack实例启动流程"></a>openstack实例启动流程</h3>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/posts/openstack-blog.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://www.lijiawang.org/posts/python-blog.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="李家旺">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/touxiang.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李家旺">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/python-blog.html" itemprop="url">python环境准备</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-23T17:16:22+08:00">
-                2017-05-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-18T13:34:41+08:00">
+                2017-08-18
               </time>
             
 
@@ -695,11 +395,21 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/posts/python-class.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
           
-             <span id="/posts/python-blog.html" class="leancloud_visitors" data-flag-title="python环境准备">
+             <span id="/posts/python-class.html" class="leancloud_visitors" data-flag-title="Python中类的定义与使用">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -727,54 +437,93 @@
       
 
       
+        <h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>　　1.类的定义</p>
+<p>　　2.父类，子类定义，以及子类调用父类</p>
+<p>　　3.类的组合使用</p>
+<p>　　4.内置功能<br><a id="more"></a></p>
+<hr>
+<h3 id="1-类的定义"><a href="#1-类的定义" class="headerlink" title="1.类的定义"></a>1.类的定义</h3><p>代码如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment">#coding:utf8</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hotel</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""docstring for Hotel"""</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, room, cf=<span class="number">1.0</span>, br=<span class="number">15</span>)</span>:</span></div><div class="line">        self.room = room</div><div class="line">        self.cf = cf</div><div class="line">        self.br = br</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">cacl_all</span><span class="params">(self, days=<span class="number">1</span>)</span>:</span></div><div class="line">        <span class="keyword">return</span> (self.room * self.cf + self.br) * days</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    stdroom = Hotel(<span class="number">200</span>)</div><div class="line">    big_room = Hotel(<span class="number">230</span>, <span class="number">0.9</span>)</div><div class="line">    <span class="keyword">print</span> stdroom.cacl_all()</div><div class="line">    <span class="keyword">print</span> stdroom.cacl_all(<span class="number">2</span>)</div><div class="line">    <span class="keyword">print</span> big_room.cacl_all()</div><div class="line">    <span class="keyword">print</span> big_room.cacl_all(<span class="number">3</span>)</div></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="2-父类、子类以及调用父类"><a href="#2-父类、子类以及调用父类" class="headerlink" title="2.父类、子类以及调用父类"></a>2.父类、子类以及调用父类</h3><p>代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="comment"># 父类</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AddBook</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, phone)</span>:</span></div><div class="line">        self.name = name</div><div class="line">        self.phone = phone</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_phone</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.phone</div><div class="line"></div><div class="line"><span class="comment"># 子类，继承</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">EmplEmail</span><span class="params">(AddBook)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, nm, ph, email)</span>:</span></div><div class="line">        <span class="comment"># AddBook.__init__(self, nm, ph) # 调用父类方法一</span></div><div class="line">        super(EmplEmail, self).__init__(nm, ph) <span class="comment"># 调用父类方法二</span></div><div class="line">        self.email = email</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_email</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.email</div><div class="line"></div><div class="line"><span class="comment"># 调用</span></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    Detian = AddBook(<span class="string">'handetian'</span>, <span class="string">'18210413001'</span>)</div><div class="line">    Meng = AddBook(<span class="string">'shaomeng'</span>, <span class="string">'18210413002'</span>)</div><div class="line"></div><div class="line">    <span class="keyword">print</span> Detian.get_phone()</div><div class="line">    <span class="keyword">print</span> AddBook.get_phone(Meng)</div><div class="line"></div><div class="line">    alice = EmplEmail(<span class="string">'alice'</span>, <span class="string">'18210418888'</span>, <span class="string">'alice@xkops.com'</span>)</div><div class="line">    <span class="keyword">print</span> alice.get_email(), alice.get_phone()</div></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="3-类的组合使用"><a href="#3-类的组合使用" class="headerlink" title="3.类的组合使用"></a>3.类的组合使用</h3><p>代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line">1.class类的组合使用</div><div class="line">2.手机、邮箱、QQ等是可以变化的（定义在一起），姓名不可变（单独定义）。</div><div class="line">3.在另一个类中引用</div><div class="line">'''</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Info</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, phone, email, qq)</span>:</span></div><div class="line">        self.phone = phone</div><div class="line">        self.email = email</div><div class="line">        self.qq = qq</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_phone</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.phone</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update_phone</span><span class="params">(self, newphone)</span>:</span></div><div class="line">        self.phone = newphone</div><div class="line">        <span class="keyword">print</span> <span class="string">"手机号更改已更改"</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_email</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.email</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AddrBook</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">'''docstring for AddBook'''</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, phone, email, qq)</span>:</span></div><div class="line">        self.name = name</div><div class="line">        self.info = Info(phone, email, qq)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    Detian = AddrBook(<span class="string">'handetian'</span>, <span class="string">'18210413001'</span>, <span class="string">'detian@xkops.com'</span>, <span class="string">'123456'</span>)</div><div class="line">    <span class="keyword">print</span> Detian.info.get_phone()</div><div class="line">    Detian.info.update_phone(<span class="number">18210413002</span>)</div><div class="line">    <span class="keyword">print</span> Detian.info.get_phone()</div><div class="line">    <span class="keyword">print</span> Detian.info.get_email()</div></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="4-内置功能-函数（）加与不加的区别）"><a href="#4-内置功能-函数（）加与不加的区别）" class="headerlink" title="4.内置功能(函数（）加与不加的区别）"></a>4.内置功能(函数（）加与不加的区别）</h3><p>代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment">#coding:utf8</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Books</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, title, author)</span>:</span></div><div class="line">        self.title = title</div><div class="line">        self.author = author</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.title</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.title</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"%s is written by %s"</span> %(self.title, self.author)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    pybook = Books(<span class="string">'Core Python'</span>, <span class="string">'Wesley'</span>)</div><div class="line">    <span class="keyword">print</span> pybook</div><div class="line">    pybook()</div></pre></td></tr></table></figure></p>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment">#coding:utf8</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Books</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, title, author)</span>:</span></div><div class="line">        self.title = title</div><div class="line">        self.author = author</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.title</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.title</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"%s is written by %s"</span> %(self.title, self.author)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    pybook = Books(<span class="string">'Core Python'</span>, <span class="string">'Wesley'</span>)</div><div class="line">    <span class="keyword">print</span> pybook</div><div class="line">    pybook()</div><div class="line">复制代码</div><div class="line">复制代码</div><div class="line">----------------------------------------------------------------------------------------------------------------------------------------------------------------</div><div class="line"></div><div class="line">复制代码</div><div class="line">复制代码</div><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment">#coding:utf8</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span>  <span class="title">Number</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""Custum object</span></div><div class="line">    add/radd -&gt; +; </div><div class="line">    sub/rsub -&gt; -;</div><div class="line">    mul/rmul -&gt; *;</div><div class="line">    div/rdiv -&gt; /;</div><div class="line">    """</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, number)</span>:</span></div><div class="line">        self.number = number</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__add__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.number + other        </div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__radd__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.number  + other</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__sub__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.number - other</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__rsub__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">return</span> other - self.number</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__gt__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">if</span> self.number &gt; other:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    num = Number(<span class="number">10</span>)</div><div class="line">    <span class="keyword">print</span> num + <span class="number">20</span></div><div class="line">    <span class="keyword">print</span> <span class="number">30</span> + num</div><div class="line">    <span class="keyword">print</span> num - <span class="number">5</span></div><div class="line">    <span class="keyword">print</span> <span class="number">11</span> - num</div><div class="line">    <span class="keyword">print</span> num &gt; <span class="number">20</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
         
-          <h3 id="pyenv配置"><a href="#pyenv配置" class="headerlink" title="pyenv配置"></a>pyenv配置</h3>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/posts/python-blog.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
-      
-    </div>
-
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/类/" rel="tag"># 类</a>
+          
+        </div>
       
 
       
+        
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/intsall-ceph.html" rel="next" title="基于CentOS 7.3 安装Ceph Jewel 10.2.9">
+                <i class="fa fa-chevron-left"></i> 基于CentOS 7.3 安装Ceph Jewel 10.2.9
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-  </nav>
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-591bd5ac9354483f" async = "async" ></script>
+</div>
 
+      
+    </div>
+  </div>
 
 
           </div>
@@ -782,6 +531,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
 
         </div>
         
@@ -801,8 +556,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/touxiang.jpg"
@@ -918,6 +682,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#目标"><span class="nav-number">1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-类的定义"><span class="nav-number">2.</span> <span class="nav-text">1.类的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-父类、子类以及调用父类"><span class="nav-number">3.</span> <span class="nav-text">2.父类、子类以及调用父类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-类的组合使用"><span class="nav-number">4.</span> <span class="nav-text">3.类的组合使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-内置功能-函数（）加与不加的区别）"><span class="nav-number">5.</span> <span class="nav-text">4.内置功能(函数（）加与不加的区别）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1036,6 +816,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 
