@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="python,博客" />
+  <meta name="keywords" content="socket" />
 
 
 
@@ -92,17 +92,17 @@
 
 
 
-<meta name="description" content="pyenv配置">
-<meta name="keywords" content="python,博客">
+<meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta name="keywords" content="socket">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python环境准备">
-<meta property="og:url" content="https://www.lijiawang.org/posts/python-blog.html">
+<meta property="og:title" content="python socket网路编程">
+<meta property="og:url" content="https://www.lijiawang.org/posts/python-socket.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="pyenv配置">
-<meta property="og:updated_time" content="2017-05-23T09:35:17.778Z">
+<meta property="og:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta property="og:updated_time" content="2017-08-25T01:46:08.396Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python环境准备">
-<meta name="twitter:description" content="pyenv配置">
+<meta name="twitter:title" content="python socket网路编程">
+<meta name="twitter:description" content="不看官网不足以熟练，不懂源码不足以精通">
 
 
 
@@ -130,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="https://www.lijiawang.org/posts/python-blog.html"/>
+  <link rel="canonical" href="https://www.lijiawang.org/posts/python-socket.html"/>
 
 
 
 
 
-  <title>python环境准备 | 李家旺</title>
+  <title>python socket网路编程 | 李家旺</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -330,7 +330,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://www.lijiawang.org/posts/python-blog.html">
+    <link itemprop="mainEntityOfPage" href="https://www.lijiawang.org/posts/python-socket.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="李家旺">
@@ -347,7 +347,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">python环境准备</h1>
+          <h1 class="post-title" itemprop="name headline">python socket网路编程</h1>
         
 
         <div class="post-meta">
@@ -359,8 +359,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-23T17:16:22+08:00">
-                2017-05-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-25T09:43:59+08:00">
+                2017-08-25
               </time>
             
 
@@ -400,7 +400,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/posts/python-blog.html#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/posts/python-socket.html#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -409,7 +409,7 @@
 
           
           
-             <span id="/posts/python-blog.html" class="leancloud_visitors" data-flag-title="python环境准备">
+             <span id="/posts/python-socket.html" class="leancloud_visitors" data-flag-title="python socket网路编程">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -437,17 +437,7 @@
       
 
       
-        <h3 id="pyenv配置"><a href="#pyenv配置" class="headerlink" title="pyenv配置"></a>pyenv配置</h3><a id="more"></a>
-<ol>
-<li>安装git <code>yum -y install git</code></li>
-<li>安装pyenv <code>curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash</code></li>
-<li><p>配置环境变量，在<code>~/.bash_profile</code>里增加。</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> PATH=<span class="string">"~/.pyenv/bin:<span class="variable">$PATH</span>"</span></div><div class="line"><span class="built_in">eval</span> <span class="string">"<span class="variable">$(pyenv init -)</span>"</span></div><div class="line"><span class="built_in">eval</span> <span class="string">"<span class="variable">$(pyenv virtualenv-init -)</span>"</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>安装编译工具<code>yum -y install gcc make patch</code></p>
-</li>
-</ol>
-
+        
       
     </div>
 
@@ -489,14 +479,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/posts/python-class.html" rel="next" title="Python中类的定义与使用">
+                <i class="fa fa-chevron-left"></i> Python中类的定义与使用
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/openstack-blog.html" rel="prev" title="openstack实例启动流程">
-                openstack实例启动流程 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/kolla-ironic.html" rel="prev" title="kolla搭建ironic裸机服务">
+                kolla搭建ironic裸机服务 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -552,17 +546,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/touxiang.jpg"
@@ -678,22 +663,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#pyenv配置"><span class="nav-number">1.</span> <span class="nav-text">pyenv配置</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

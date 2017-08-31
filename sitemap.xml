@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/kolla-ironic.html</loc>
+    
+    <lastmod>2017-08-31T06:16:59.005Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/python-socket.html</loc>
+    
+    <lastmod>2017-08-25T01:46:08.396Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/python-class.html</loc>
     
     <lastmod>2017-08-18T05:49:59.295Z</lastmod>
