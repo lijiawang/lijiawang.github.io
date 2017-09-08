@@ -99,12 +99,12 @@
 <meta property="og:url" content="https://www.lijiawang.org/posts/ironic-instruction.html">
 <meta property="og:site_name" content="李家旺">
 <meta property="og:description" content="简介 “裸机功能使用说明”介绍了裸机配置中的一些技术细节，旨在帮助用户更好地了解和使用 ironic。">
-<meta property="og:image" content="https://ljw.howieli.cn//blog/2017-9-8/ironic.png">
-<meta property="og:updated_time" content="2017-09-08T02:31:38.722Z">
+<meta property="og:image" content="https://ljw.howieli.cn/blog/2017-9-8/ironic.png">
+<meta property="og:updated_time" content="2017-09-08T04:11:33.219Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ironic裸机服务使用说明">
 <meta name="twitter:description" content="简介 “裸机功能使用说明”介绍了裸机配置中的一些技术细节，旨在帮助用户更好地了解和使用 ironic。">
-<meta name="twitter:image" content="https://ljw.howieli.cn//blog/2017-9-8/ironic.png">
+<meta name="twitter:image" content="https://ljw.howieli.cn/blog/2017-9-8/ironic.png">
 
 
 
@@ -456,7 +456,7 @@
 <p>带内和带外的区别主要体现在不同行为的的管理方式上,例如检查时，通过agent发现硬件属性就是带内的管理方式，通过ilo rest接口查询就是带外的方式；部署时，通过iscsi部署是带外的部署方式，通过agent部署是带内的部署方式。</p>
 <hr>
 <h3 id="裸机配置状态介绍"><a href="#裸机配置状态介绍" class="headerlink" title="裸机配置状态介绍"></a>裸机配置状态介绍</h3><hr>
-<p><img src="https://ljw.howieli.cn//blog/2017-9-8/ironic.png" alt=""><br>注册（Enroll)：所有节点的初始状态，代表节点已经存在，但在这种状态下无法对节点进行下一步操作。</p>
+<p><img src="https://ljw.howieli.cn/blog/2017-9-8/ironic.png" alt=""><br>注册（Enroll)：所有节点的初始状态，代表节点已经存在，但在这种状态下无法对节点进行下一步操作。</p>
 <p>当获取到节点信息以及驱动详情后，可通过调用manage API，使节点过渡到验证状态。</p>
 <p>验证（Verifying)：ironic会对节点的驱动和证书进行验证，验证成功后节点的配置状态将过渡到可管理状态。</p>
 <p>可管理（Manageable)：此时，可对节点进行管理（包括电源状态等）。此时节点可以：</p>
