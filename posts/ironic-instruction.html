@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linux, python, shell, openstack" />
+  <meta name="keywords" content="ironic" />
 
 
 
@@ -92,15 +92,19 @@
 
 
 
-<meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李家旺">
-<meta property="og:url" content="https://www.lijiawang.org/tags/ceph/index.html">
+<meta name="description" content="简介 “裸机功能使用说明”介绍了裸机配置中的一些技术细节，旨在帮助用户更好地了解和使用 ironic。">
+<meta name="keywords" content="ironic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ironic裸机服务使用说明">
+<meta property="og:url" content="https://www.lijiawang.org/posts/ironic-instruction.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta property="og:description" content="简介 “裸机功能使用说明”介绍了裸机配置中的一些技术细节，旨在帮助用户更好地了解和使用 ironic。">
+<meta property="og:image" content="https://ljw.howieli.cn//blog/2017-9-8/ironic.png">
+<meta property="og:updated_time" content="2017-09-08T02:31:38.722Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李家旺">
-<meta name="twitter:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta name="twitter:title" content="ironic裸机服务使用说明">
+<meta name="twitter:description" content="简介 “裸机功能使用说明”介绍了裸机配置中的一些技术细节，旨在帮助用户更好地了解和使用 ironic。">
+<meta name="twitter:image" content="https://ljw.howieli.cn//blog/2017-9-8/ironic.png">
 
 
 
@@ -128,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="https://www.lijiawang.org/tags/ceph/"/>
+  <link rel="canonical" href="https://www.lijiawang.org/posts/ironic-instruction.html"/>
 
 
 
 
 
-  <title>标签: ceph | 李家旺</title>
+  <title>ironic裸机服务使用说明 | 李家旺</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -170,7 +174,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -318,44 +322,241 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h1>ceph<small>标签</small>
-      </h1>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://www.lijiawang.org/posts/ironic-instruction.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李家旺">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李家旺">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ironic裸机服务使用说明</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-08T10:18:00+08:00">
+                2017-09-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">openstack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/posts/ironic-instruction.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/posts/ironic-instruction.html" class="leancloud_visitors" data-flag-title="ironic裸机服务使用说明">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><hr>
+<p>“裸机功能使用说明”介绍了裸机配置中的一些技术细节，旨在帮助用户更好地了解和使用 ironic。</p>
+<a id="more"></a>
+<hr>
+<h3 id="whole-disk镜像和partition镜像区别"><a href="#whole-disk镜像和partition镜像区别" class="headerlink" title="whole disk镜像和partition镜像区别"></a>whole disk镜像和partition镜像区别</h3><hr>
+<p>partition image部署可以支持windows系统，但是不支持自定义分区，因为分区表在制作镜像时已经被确定下来。但partition image支持按照配置中规定的root,swap分区来自动进行磁盘分区。</p>
+<p>partition image方式部署的机器将kernel和ramdisk都存放在tftp server上，每次启动都需要访问tftp,whole disk部署的服务器启动时不需要访问tftp server。</p>
+<hr>
+<h3 id="noop，neutron和flat简介"><a href="#noop，neutron和flat简介" class="headerlink" title="noop，neutron和flat简介"></a>noop，neutron和flat简介</h3><hr>
+<p>noop ：用于stand alone(不和OpenStack集成的模式)部署用的网络模式，在部署过程不进行任何的网络切换。</p>
+<p>neutron ：通过与provide的网络集成来提供租户定义的网络，同时还将租户网络与provision network和cleaning network网络分开。</p>
+<p>flat ：用于提供外网访问和部署的二层网络,provision network和cleaning network网络可以放在一起，也可以分开。</p>
+<h3 id="IPMI带内（in-band）信道和带外（out-of-band）信道"><a href="#IPMI带内（in-band）信道和带外（out-of-band）信道" class="headerlink" title="IPMI带内（in band）信道和带外（out of band）信道"></a>IPMI带内（in band）信道和带外（out of band）信道</h3><hr>
+<p>IPMI 信道分为带内信道和带外信道两种类型，但配置裸机并不是按照带内和带外信道的方式来划分驱动。</p>
+<p>带内和带外的区别主要体现在不同行为的的管理方式上,例如检查时，通过agent发现硬件属性就是带内的管理方式，通过ilo rest接口查询就是带外的方式；部署时，通过iscsi部署是带外的部署方式，通过agent部署是带内的部署方式。</p>
+<hr>
+<h3 id="裸机配置状态介绍"><a href="#裸机配置状态介绍" class="headerlink" title="裸机配置状态介绍"></a>裸机配置状态介绍</h3><hr>
+<p><img src="https://ljw.howieli.cn//blog/2017-9-8/ironic.png" alt=""><br>注册（Enroll)：所有节点的初始状态，代表节点已经存在，但在这种状态下无法对节点进行下一步操作。</p>
+<p>当获取到节点信息以及驱动详情后，可通过调用manage API，使节点过渡到验证状态。</p>
+<p>验证（Verifying)：ironic会对节点的驱动和证书进行验证，验证成功后节点的配置状态将过渡到可管理状态。</p>
+<p>可管理（Manageable)：此时，可对节点进行管理（包括电源状态等）。此时节点可以：</p>
+<pre><code>从清理中（Cleaning）到可管理，通过调用clean API；
+从检查中（Inspecting）到可管理，通过调用inspect API；
+通过清理中（Cleaning）到Available，通过调用provide API。
+</code></pre><p>检查（Inspecting)：检查过程将调用节点的自我检查功能来更新节点的硬件属性。如果检查失败配置状态将过渡到检查失败（inspectfail）。</p>
+<p>清理中（Cleaning):节点通过清理确保自身能够成功过渡到可用状态（Available）。清理过程中的任务包括：</p>
+<pre><code>清除驱动器
+验证硬件完整性
+验证节点中的配置信息和物理硬件的配置是否一致。
+启动Ramdisk内核
+</code></pre><p>当节点处于清理状态，如果使用带外信道（out of band)则控制器会进入清理步骤，如果是带内信道（in band)方式，控制器会开始为安装磁盘做环境准备。</p>
+<p>可用（Available):处于可用状态下的节点已经进行过清理和预配置过程，在可用状态下：</p>
+<pre><code>通过调用active API过渡到活跃状态（Active)；
+通过调用manage API过渡到可管理状态(Manageable)
+</code></pre><p>配置中（Deploying):处于配置中的节点，正在为裸机的创建作积极准备。这一过程中会运行一系列短暂任务，如：</p>
+<pre><code>配置BIOS；
+部署分区、安装文件系统驱动；
+创建额外的资源（如：网络配置）以及其他附加
+</code></pre><p>的子系统要求；</p>
+<p>活跃（Active):节点上有裸机在运行，此时节点可：</p>
+<pre><code>通过调用rescue API过渡到维护（Rescue）状态；
+通过调用delete API过渡到可用状态（Available)；
+通过调用rebuild API过渡到活跃状态（Active).
+</code></pre><p>删除中（Deleting)：在删除状态下，部署在节点上的裸机会删除。</p>
+<hr>
 
-      <h2 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/posts/intsall-ceph.html" itemprop="url">
-              
-                <span itemprop="name">基于CentOS 7.3 安装Ceph Jewel 10.2.9</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-18T16:45:27+08:00"
-              content="2017-07-18" >
-          07-18
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/kolla/" rel="tag"># kolla</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/kolla-ironic.html" rel="next" title="kolla搭建ironic裸机服务">
+                <i class="fa fa-chevron-left"></i> kolla搭建ironic裸机服务
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-591bd5ac9354483f" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -363,6 +564,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
 
         </div>
         
@@ -382,8 +589,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/touxiang.jpg"
@@ -499,6 +715,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#whole-disk镜像和partition镜像区别"><span class="nav-number">2.</span> <span class="nav-text">whole disk镜像和partition镜像区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#noop，neutron和flat简介"><span class="nav-number">3.</span> <span class="nav-text">noop，neutron和flat简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPMI带内（in-band）信道和带外（out-of-band）信道"><span class="nav-number">4.</span> <span class="nav-text">IPMI带内（in band）信道和带外（out of band）信道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#裸机配置状态介绍"><span class="nav-number">5.</span> <span class="nav-text">裸机配置状态介绍</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -617,6 +849,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 
