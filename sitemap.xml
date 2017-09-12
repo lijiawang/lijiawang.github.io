@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/Openstack%20performance%20testing.html</loc>
+    
+    <lastmod>2017-09-12T07:48:21.019Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/kolla-octavia.html</loc>
     
     <lastmod>2017-09-11T02:22:37.505Z</lastmod>
