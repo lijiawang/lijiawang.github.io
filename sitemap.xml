@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/kolla-ironic.html</loc>
+    
+    <lastmod>2017-10-23T01:23:56.482Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/kolla-octavia.html</loc>
     
     <lastmod>2017-09-19T12:03:53.780Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>https://www.lijiawang.org/posts/ironic-instruction.html</loc>
     
     <lastmod>2017-09-08T04:11:33.219Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/kolla-ironic.html</loc>
-    
-    <lastmod>2017-08-31T06:45:31.844Z</lastmod>
     
   </url>
   
