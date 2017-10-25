@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linux, python, shell, openstack" />
+  <meta name="keywords" content="openstack" />
 
 
 
@@ -92,15 +92,19 @@
 
 
 
-<meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李家旺">
-<meta property="og:url" content="https://www.lijiawang.org/archives/page/2/index.html">
+<meta name="description" content="openstack Glance介绍Glance项目提供虚拟机镜像的发现，注册，取得服务。Glance提供restful API可以查询虚拟机镜像的metadata，并且可以获得镜像。通过Glance，虚拟机镜像可以被存储到多种存储上，比如简单的文件存储或者对象存储（比如OpenStack中swiftx项目）。Glance，像所有的OpenStack项目一样，遵循以下思想：1.基于组件的架构">
+<meta name="keywords" content="openstack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="opensyack glance学习">
+<meta property="og:url" content="https://www.lijiawang.org/posts/openstack-glance.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta property="og:description" content="openstack Glance介绍Glance项目提供虚拟机镜像的发现，注册，取得服务。Glance提供restful API可以查询虚拟机镜像的metadata，并且可以获得镜像。通过Glance，虚拟机镜像可以被存储到多种存储上，比如简单的文件存储或者对象存储（比如OpenStack中swiftx项目）。Glance，像所有的OpenStack项目一样，遵循以下思想：1.基于组件的架构">
+<meta property="og:image" content="https://ljw.howieli.cn/blog/2017-10-26/glance架构图.png">
+<meta property="og:updated_time" content="2017-10-25T04:06:16.136Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李家旺">
-<meta name="twitter:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta name="twitter:title" content="opensyack glance学习">
+<meta name="twitter:description" content="openstack Glance介绍Glance项目提供虚拟机镜像的发现，注册，取得服务。Glance提供restful API可以查询虚拟机镜像的metadata，并且可以获得镜像。通过Glance，虚拟机镜像可以被存储到多种存储上，比如简单的文件存储或者对象存储（比如OpenStack中swiftx项目）。Glance，像所有的OpenStack项目一样，遵循以下思想：1.基于组件的架构">
+<meta name="twitter:image" content="https://ljw.howieli.cn/blog/2017-10-26/glance架构图.png">
 
 
 
@@ -128,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="https://www.lijiawang.org/archives/page/2/"/>
+  <link rel="canonical" href="https://www.lijiawang.org/posts/openstack-glance.html"/>
 
 
 
 
 
-  <title>归档 | 李家旺</title>
+  <title>opensyack glance学习 | 李家旺</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -170,7 +174,7 @@
     
   
 
-  <div class="container sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -318,292 +322,229 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-    <span class="archive-page-counter">
-      
-      
-      
-        
-      
-      嗯..! 目前共计 17 篇日志。 继续努力。
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://www.lijiawang.org/posts/openstack-glance.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李家旺">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李家旺">
     </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">opensyack glance学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-25T12:03:47+08:00">
+                2017-10-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">openstack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/posts/openstack-glance.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/posts/openstack-glance.html" class="leancloud_visitors" data-flag-title="opensyack glance学习">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
 
       
       
-      
 
+      
+        <h3 id="openstack-Glance介绍"><a href="#openstack-Glance介绍" class="headerlink" title="openstack Glance介绍"></a>openstack Glance介绍</h3><p>Glance项目提供虚拟机镜像的发现，注册，取得服务。<br>Glance提供restful API可以查询虚拟机镜像的metadata，并且可以获得镜像。<br>通过Glance，虚拟机镜像可以被存储到多种存储上，比如简单的文件存储或者对象存储（比如OpenStack中swiftx项目）。<br>Glance，像所有的OpenStack项目一样，遵循以下思想：<br>1.基于组件的架构      便于快速增加新特性<br>2.高可用性                  支持大负荷<br>3.容错性                      独立的进程避免串行错误<br>4.开放标准                  对社区驱动的API提供参考实现</p>
+<a id="more"></a>
+<h3 id="Glance架构"><a href="#Glance架构" class="headerlink" title="Glance架构"></a>Glance架构</h3><p><img src="https://ljw.howieli.cn/blog/2017-10-26/glance架构图.png" alt=""><br>以上是glance架构图<br><a href="https://docs.openstack.org/glance/latest/" target="_blank" rel="external">glance官网</a></p>
+<h3 id="glance服务"><a href="#glance服务" class="headerlink" title="glance服务"></a>glance服务</h3><p>我这是一个kolla环境<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@control01 ~]# docker ps |grep glance</div><div class="line">1b240466af76        172.18.22.161:4000/99cloud/centos-source-glance-registry:animbus-5.3.0             "kolla_start"            2 weeks ago         Up 17 hours                                  glance_registry</div><div class="line">3f25b6ace631        172.18.22.161:4000/99cloud/centos-source-glance-api:animbus-5.3.0                  "kolla_start"            2 weeks ago         Up 17 hours                                  glance_api</div></pre></td></tr></table></figure></p>
+<h3 id="glancce-api"><a href="#glancce-api" class="headerlink" title="glancce-api"></a>glancce-api</h3><p>glance-api 是系统后台运行的服务进程。 对外提供 REST API，响应 image 查询、获取和存储的调用。</p>
+<p>glance-api 不会真正处理请求。 如果操作是与 image metadata（元数据）相关，glance-api 会把请求转发给 glance-registry； 如果操作是与 image 自身存取相关，glance-api 会把请求转发给该 image 的 store backend。<br>在控制节点可以查看glance-api的进程<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@control01 ~]# ps -e |grep glance-api</div><div class="line"> 4381 ?        00:09:56 glance-api</div><div class="line"> 9026 ?        00:00:14 glance-api</div><div class="line"> 9035 ?        00:00:11 glance-api</div><div class="line"> 9046 ?        00:00:14 glance-api</div><div class="line"> 9059 ?        00:00:16 glance-api</div><div class="line"> 9067 ?        00:00:13 glance-api</div></pre></td></tr></table></figure></p>
+<h3 id="glance-registry"><a href="#glance-registry" class="headerlink" title="glance-registry"></a>glance-registry</h3><p>glance-registry 是系统后台运行的服务进程。 负责处理和存取 image 的 metadata，例如 image 的大小和类型。在控制节点上可以查看 glance-registry 进程.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@control01 ~]# ps -e |grep glance-registry</div><div class="line"> 2645 ?        00:00:03 glance-registry</div><div class="line"> 5351 ?        00:00:00 glance-registry</div><div class="line"> 5352 ?        00:00:00 glance-registry</div><div class="line"> 5353 ?        00:00:00 glance-registry</div><div class="line"> 5354 ?        00:00:00 glance-registry</div><div class="line"> 5355 ?        00:00:00 glance-registry</div></pre></td></tr></table></figure></p>
+<h3 id="Store-backend"><a href="#Store-backend" class="headerlink" title="Store backend"></a>Store backend</h3><p>Glance 自己并不存储 image。 真正的 image 是存放在 backend 中的。 Glance 支持多种 backend，包括：</p>
+<ul>
+<li>A directory on a local file system（这是默认配置）</li>
+<li>GridFS</li>
+<li>Ceph RBD</li>
+<li>Amazon S3</li>
+<li>Sheepdog</li>
+<li>OpenStack Block Storage (Cinder)</li>
+<li>OpenStack Object Storage (Swift)</li>
+<li>VMware ESX</li>
+</ul>
+<h3 id="image数据存放"><a href="#image数据存放" class="headerlink" title="image数据存放"></a>image数据存放</h3><p>image的元数据通过glance-registry存放到db中；image的chunk数据通过glance-store存放在各种 backend store 中，并从中获取。</p>
+<h3 id="image的访问权限"><a href="#image的访问权限" class="headerlink" title="image的访问权限"></a>image的访问权限</h3><p>image 的 访问权限分为：</p>
+<ul>
+<li>public 公共的：可以被所有的 tenant 使用。</li>
+<li>private 私有的/项目的：只能被 image owner 所在的 tenant 使用。</li>
+<li>shared 共享的：一个非共有的image 可以 共享给另外的 tenant，可通过member-* 操作来实现。</li>
+<li>protected 受保护的：protected 的 image 不能被删除。</li>
+</ul>
+<h3 id="image各种状态"><a href="#image各种状态" class="headerlink" title="image各种状态"></a>image各种状态</h3><ul>
+<li>queued：没有上传 image 数据，只有db 中的元数据。</li>
+<li>saving：正在上传 image data</li>
+<li>active：正常状态</li>
+<li>deleted/pending_delete： 已删除/等待删除</li>
+<li>killed：image 元数据不正确，等待被删除。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
       
         
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/glance/" rel="tag"># glance</a>
+          
         </div>
       
+
+      
+        
       
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/Openstack performance testing.html" rel="next" title="openstack性能测试">
+                <i class="fa fa-chevron-left"></i> openstack性能测试
+              </a>
+            
+          </div>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          <span class="post-nav-divider"></span>
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/Openstack-DevStack-ocata.html" itemprop="url">
-              
-                <span itemprop="name">DevStack</span>
-              
-            </a>
-        
-      </h2>
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-20T20:37:28+08:00"
-              content="2017-06-20" >
-          06-20
-        </time>
-      </div>
-
-    </header>
+      
+      
+    </footer>
   </article>
 
 
 
-    
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-591bd5ac9354483f" async = "async" ></script>
+</div>
 
       
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/openstack.html" itemprop="url">
-              
-                <span itemprop="name">虚拟机手动迁移</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-19T21:04:48+08:00"
-              content="2017-06-19" >
-          06-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/Linux-awk.html" itemprop="url">
-              
-                <span itemprop="name">在linux系统下使用awk工具详解</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-05-28T11:52:20+08:00"
-              content="2017-05-28" >
-          05-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/linux-bond.html" itemprop="url">
-              
-                <span itemprop="name">网卡Bond介绍</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-05-27T18:33:51+08:00"
-              content="2017-05-27" >
-          05-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/linux-tmux.html" itemprop="url">
-              
-                <span itemprop="name">Tmux Linux 分屏工具</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-05-27T18:13:32+08:00"
-              content="2017-05-27" >
-          05-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/openstack-blog.html" itemprop="url">
-              
-                <span itemprop="name">openstack实例启动流程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-05-26T08:23:34+08:00"
-              content="2017-05-26" >
-          05-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/python-blog.html" itemprop="url">
-              
-                <span itemprop="name">python环境准备</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-05-23T17:16:22+08:00"
-              content="2017-05-23" >
-          05-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-  </section>
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
-  </nav>
-
-
+    </div>
+  </div>
 
 
           </div>
@@ -611,6 +552,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
 
         </div>
         
@@ -630,8 +577,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/touxiang.jpg"
@@ -768,6 +724,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#openstack-Glance介绍"><span class="nav-number">1.</span> <span class="nav-text">openstack Glance介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Glance架构"><span class="nav-number">2.</span> <span class="nav-text">Glance架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#glance服务"><span class="nav-number">3.</span> <span class="nav-text">glance服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#glancce-api"><span class="nav-number">4.</span> <span class="nav-text">glancce-api</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#glance-registry"><span class="nav-number">5.</span> <span class="nav-text">glance-registry</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Store-backend"><span class="nav-number">6.</span> <span class="nav-text">Store backend</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#image数据存放"><span class="nav-number">7.</span> <span class="nav-text">image数据存放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#image的访问权限"><span class="nav-number">8.</span> <span class="nav-text">image的访问权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#image各种状态"><span class="nav-number">9.</span> <span class="nav-text">image各种状态</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -885,11 +857,9 @@
   
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
 
 
   
