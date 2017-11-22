@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="awk" />
+  <meta name="keywords" content="openstack Pile kolla" />
 
 
 
@@ -92,17 +92,17 @@
 
 
 
-<meta name="description" content="在linux系统下使用awk工具详解">
-<meta name="keywords" content="awk">
+<meta name="description" content="环境准备我这里用vorkstation 创建了一个虚拟机，安装centos7.4系统，这台虚拟机上有两张网卡，一张做openstack管理网，一张做为虚拟机的业务网卡。">
+<meta name="keywords" content="openstack Pile kolla">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在linux系统下使用awk工具详解">
-<meta property="og:url" content="https://www.lijiawang.org/posts/Linux-awk.html">
+<meta property="og:title" content="kolla Pike on CentOS 7.4">
+<meta property="og:url" content="https://www.lijiawang.org/posts/kolla-pike-on-centos.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="在linux系统下使用awk工具详解">
-<meta property="og:updated_time" content="2017-05-28T07:49:27.100Z">
+<meta property="og:description" content="环境准备我这里用vorkstation 创建了一个虚拟机，安装centos7.4系统，这台虚拟机上有两张网卡，一张做openstack管理网，一张做为虚拟机的业务网卡。">
+<meta property="og:updated_time" content="2017-11-22T07:06:11.388Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在linux系统下使用awk工具详解">
-<meta name="twitter:description" content="在linux系统下使用awk工具详解">
+<meta name="twitter:title" content="kolla Pike on CentOS 7.4">
+<meta name="twitter:description" content="环境准备我这里用vorkstation 创建了一个虚拟机，安装centos7.4系统，这台虚拟机上有两张网卡，一张做openstack管理网，一张做为虚拟机的业务网卡。">
 
 
 
@@ -130,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="https://www.lijiawang.org/posts/Linux-awk.html"/>
+  <link rel="canonical" href="https://www.lijiawang.org/posts/kolla-pike-on-centos.html"/>
 
 
 
 
 
-  <title>在linux系统下使用awk工具详解 | 李家旺</title>
+  <title>kolla Pike on CentOS 7.4 | 李家旺</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -330,7 +330,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://www.lijiawang.org/posts/Linux-awk.html">
+    <link itemprop="mainEntityOfPage" href="https://www.lijiawang.org/posts/kolla-pike-on-centos.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="李家旺">
@@ -347,7 +347,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">在linux系统下使用awk工具详解</h1>
+          <h1 class="post-title" itemprop="name headline">kolla Pike on CentOS 7.4</h1>
         
 
         <div class="post-meta">
@@ -359,8 +359,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-28T11:52:20+08:00">
-                2017-05-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-22T11:42:06+08:00">
+                2017-11-22
               </time>
             
 
@@ -382,8 +382,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">openstack</span>
                   </a>
                 </span>
 
@@ -400,7 +400,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/posts/Linux-awk.html#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/posts/kolla-pike-on-centos.html#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -409,7 +409,7 @@
 
           
           
-             <span id="/posts/Linux-awk.html" class="leancloud_visitors" data-flag-title="在linux系统下使用awk工具详解">
+             <span id="/posts/kolla-pike-on-centos.html" class="leancloud_visitors" data-flag-title="kolla Pike on CentOS 7.4">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -437,9 +437,32 @@
       
 
       
-        <h3 id="在linux系统下使用awk工具详解"><a href="#在linux系统下使用awk工具详解" class="headerlink" title="在linux系统下使用awk工具详解"></a>在linux系统下使用awk工具详解</h3><a id="more"></a>
-<h3 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h3><p>awk 是一个强大的文本分析工具。它不仅是 Linux 中，也是任何环境中现有的功能最强大的数据处理引擎之一。相对于 grep 的查找，sed的编辑，awk在其对数据分析并生成报告时，显得尤为强大。<br>当你第一次拿起双手在电脑上使用 awk 命令处理一个或者多个文件的时候，它会依次读取文件的每一行内容, 然后对其进行处理，awk 命令默认从 stdio 标准输入获取文件内容, awk 使用一对单引号来表示 一些可执行的脚本代码，在可执行脚本代码里面，使用一对花括号来表示一段可执行代码块，可以同时存在多个代码块。 awk 的每个花括号内同时又可以有多个指令，每一个指令用分号分隔，awk 其实就是一个脚本编程语言。说了这么多，你肯定还是一脸的懵逼。</p>
-<h3 id="awk-命令的基本格式"><a href="#awk-命令的基本格式" class="headerlink" title="awk 命令的基本格式"></a>awk 命令的基本格式</h3><p><code>awk [options] &#39;program&#39; file</code><br>options 这个表示一些可选的参数选项，反正就是你爱用不用，不用可以拉到。。。<br>program 这个表示 awk 的可执行脚本代码，这个是必须要有的。 file 这个表示 awk 需要处理的文件，注意是纯文本文件，不是你的 mp3，也不是 mp4 啥的。。</p>
+        <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>我这里用vorkstation 创建了一个虚拟机，安装centos7.4系统，这台虚拟机上有两张网卡，一张做openstack管理网，一张做为虚拟机的业务网卡。<br><a id="more"></a></p>
+<h3 id="确认环境信息"><a href="#确认环境信息" class="headerlink" title="确认环境信息"></a>确认环境信息</h3><p>1.确认系统版本<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> cat /etc/redhat-release</span></div><div class="line">CentOS Linux release 7.4.1708 (Core)</div></pre></td></tr></table></figure></p>
+<p>2.确认网卡个数和状态<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ip a</span></div><div class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN qlen 1</div><div class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</div><div class="line">    inet 127.0.0.1/8 scope host lo</div><div class="line">       valid_lft forever preferred_lft forever</div><div class="line">    inet6 ::1/128 scope host</div><div class="line">       valid_lft forever preferred_lft forever</div><div class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000</div><div class="line">    link/ether 00:0c:29:a7:8c:91 brd ff:ff:ff:ff:ff:ff</div><div class="line">    inet 192.168.10.139/24 brd 192.168.10.255 scope global dynamic ens33</div><div class="line">       valid_lft 1555sec preferred_lft 1555sec</div><div class="line">    inet6 fe80::5057:38c5:6b65:b5/64 scope link</div><div class="line">       valid_lft forever preferred_lft forever</div><div class="line">3: ens34: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000</div><div class="line">    link/ether 00:0c:29:a7:8c:9b brd ff:ff:ff:ff:ff:ff</div><div class="line">    inet6 fe80::20c:29ff:fea7:8c9b/64 scope link</div><div class="line">       valid_lft forever preferred_lft forever</div></pre></td></tr></table></figure></p>
+<p>上面可以看出有两张网卡<code>ens33</code>和<code>ens34</code>，这里我用<code>ens33</code>做管理网，<code>ens34</code>做业务网，这里不需要配置ip，把<code>ens34</code>网卡up起来就好。</p>
+<h3 id="环境初始化"><a href="#环境初始化" class="headerlink" title="环境初始化"></a>环境初始化</h3><p>1.更改主机名<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> hostnamectl <span class="built_in">set</span>-hostname pike</span></div><div class="line"><span class="meta">#</span><span class="bash"> hostname pike</span></div><div class="line"><span class="meta">#</span><span class="bash"> hostname</span></div><div class="line">pike</div></pre></td></tr></table></figure></p>
+<p>2.关闭NetworkManager,firewalld,selinux<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> systemctl stop NetworkManager</span></div><div class="line"><span class="meta">#</span><span class="bash"> systemctl <span class="built_in">disable</span> NetworkManager</span></div><div class="line">Removed symlink /etc/systemd/system/multi-user.target.wants/NetworkManager.service.</div><div class="line">Removed symlink /etc/systemd/system/dbus-org.freedesktop.NetworkManager.service.</div><div class="line">Removed symlink /etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service.</div><div class="line"><span class="meta">#</span><span class="bash"> systemctl stop firewalld</span></div><div class="line"><span class="meta">#</span><span class="bash"> systemctl <span class="built_in">disable</span> firewalld</span></div><div class="line">Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.</div><div class="line">Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.</div><div class="line"><span class="meta">#</span><span class="bash"> sed -i <span class="string">"s/SELINUX=enforcing/SELINUX=disabled/"</span> /etc/selinux/config</span></div><div class="line"><span class="meta">#</span><span class="bash"> setenforce 0</span></div><div class="line"><span class="meta">#</span><span class="bash"> getenforce</span></div><div class="line">Permissive</div></pre></td></tr></table></figure></p>
+<p>3.查看是否开启了虚拟化<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> egrep <span class="string">"vmx|svm"</span> /proc/cpuinfo</span></div></pre></td></tr></table></figure></p>
+<h3 id="安装基础包"><a href="#安装基础包" class="headerlink" title="安装基础包"></a>安装基础包</h3><p>1.配置epel源安装基础包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># yum install epel-release</div><div class="line"># yum install axel vim git curl wget lrzsz gcc  python-devel yum* python-pip</div></pre></td></tr></table></figure></p>
+<p>2.配置docker-ce的yum源安装docker-ce,这里我用的docker版本为docker-ce17.09<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span></div><div class="line"><span class="meta">#</span><span class="bash"> yum install -y docker-ce</span></div><div class="line"><span class="meta">#</span><span class="bash"> docker -v</span></div><div class="line">Docker version 17.09.0-ce, build afdb6d4</div></pre></td></tr></table></figure></p>
+<p>3.配置docker<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> mkdir /etc/systemd/system/docker.service.d</span></div><div class="line"><span class="meta">#</span><span class="bash"> tee /etc/systemd/system/docker.service.d/kolla.conf &lt;&lt; <span class="string">'EOF'</span></span></div><div class="line">[Service]</div><div class="line">MountFlags=shared</div><div class="line">EOF</div><div class="line"><span class="meta">#</span><span class="bash"> vim /usr/lib/systemd/system/docker.service</span></div><div class="line"><span class="meta">#</span><span class="bash"> ExecStart=/usr/bin/dockerd</span></div><div class="line">ExecStart=/usr/bin/dockerd --insecure-registry 192.168.10.139:4000</div></pre></td></tr></table></figure></p>
+<p>4.启动docker<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> systemctl daemon-reload</span></div><div class="line"><span class="meta">#</span><span class="bash"> systemctl restart docker</span></div><div class="line"><span class="meta">#</span><span class="bash"> systemctl <span class="built_in">enable</span> docker</span></div><div class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.</div><div class="line"><span class="meta">#</span><span class="bash"> systemctl status docker</span></div><div class="line"><span class="meta">#</span><span class="bash"> docker info</span></div></pre></td></tr></table></figure></p>
+<h3 id="安装ansible"><a href="#安装ansible" class="headerlink" title="安装ansible"></a>安装ansible</h3><p>ansible版本必须在2.0以上<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> yum -y install ansible -y</span></div></pre></td></tr></table></figure></p>
+<h3 id="搭建Registry"><a href="#搭建Registry" class="headerlink" title="搭建Registry"></a>搭建Registry</h3><p>默认docker的registry是使用5000端口，对于OpenStack来说，有端口冲突，所以我将端口改成了4000。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> docker run <span class="_">-d</span> -v /opt/registry:/var/lib/registry -p 4000:5000 \</span></div><div class="line">--restart=always --name registry registry:2</div><div class="line"><span class="meta">#</span><span class="bash"> docker ps</span></div><div class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES</div><div class="line">005883e5a115        registry:2          "/entrypoint.sh /e..."   24 seconds ago      Up 22 seconds       0.0.0.0:4000-&gt;5000/tcp   registry</div></pre></td></tr></table></figure></p>
+<h3 id="下载kolla官方提供的Pile镜像"><a href="#下载kolla官方提供的Pile镜像" class="headerlink" title="下载kolla官方提供的Pile镜像"></a>下载kolla官方提供的Pile镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> wget http://tarballs.openstack.org/kolla/images/centos-source-registry-pike.tar.gz</span></div><div class="line"><span class="meta">#</span><span class="bash"> du -sh centos-source-registry-pike.tar.gz</span></div><div class="line">4.2G	centos-source-registry-pike.tar.gz</div><div class="line"><span class="meta">#</span><span class="bash"> tar zxf centos-source-registry-pike.tar.gz -C /opt/registry/</span></div><div class="line"><span class="meta">#</span><span class="bash"> curl http://192.168.10.139:4000/v2/_catalog</span></div></pre></td></tr></table></figure>
+<h3 id="下载kolla-ansible，并配置"><a href="#下载kolla-ansible，并配置" class="headerlink" title="下载kolla-ansible，并配置"></a>下载kolla-ansible，并配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/openstack/kolla-ansible -b stable/pike</span></div><div class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> kolla-ansible/</span></div><div class="line"><span class="meta">#</span><span class="bash"> cp -r etc/kolla/ /etc/kolla/</span></div><div class="line"><span class="meta">#</span><span class="bash"> pip install . -i https://pypi.tuna.tsinghua.edu.cn/simple</span></div></pre></td></tr></table></figure>
+<h3 id="安装kolla"><a href="#安装kolla" class="headerlink" title="安装kolla"></a>安装kolla</h3><p>1.因为我是在虚拟机安装的kolla，希望可以启动虚拟机，那么需要把virt_type=qemu,默认是kvm<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> mkdir -p /etc/kolla/config/nova</span></div><div class="line"><span class="meta">#</span><span class="bash"> cat &lt;&lt; EOF &gt; /etc/kolla/config/nova/nova-compute.conf</span></div><div class="line"><span class="meta">&gt;</span><span class="bash"> [libvirt]</span></div><div class="line"><span class="meta">&gt;</span><span class="bash"> virt_type=qemu</span></div><div class="line"><span class="meta">&gt;</span><span class="bash"> cpu_mode = none</span></div><div class="line"><span class="meta">&gt;</span><span class="bash"> EOF</span></div></pre></td></tr></table></figure></p>
+<p>2.ceph打标签,下面两个命令分别用来快速删除 osd disk 的分区和快速给 disk 打 ceph 标签<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> lsblk</span></div><div class="line"><span class="meta">#</span><span class="bash"> lsblk | grep <span class="string">"^sd[^a]"</span> | awk <span class="string">'&#123;print $1&#125;'</span> | <span class="keyword">while</span> <span class="built_in">read</span> line; <span class="keyword">do</span> \</span></div><div class="line">parted /dev/$line -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_BOOTSTRAP 1 -1; \</div><div class="line">done</div><div class="line"><span class="meta">#</span><span class="bash"> lsblk</span></div></pre></td></tr></table></figure></p>
+<p>3.配置GLOBALS.YML文件<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> cat /etc/kolla/globals.yml |grep -Ev <span class="string">'^$|^#'</span></span></div><div class="line">---</div><div class="line">kolla_base_distro: "centos"</div><div class="line">kolla_install_type: "source"</div><div class="line">openstack_release: "5.0.1"</div><div class="line">kolla_internal_vip_address: "192.168.10.139"</div><div class="line">docker_registry: "192.168.10.139:4000"</div><div class="line">docker_namespace: "lokolla"</div><div class="line">network_interface: "ens33"</div><div class="line">neutron_external_interface: "ens34"</div><div class="line">keepalived_virtual_router_id: "52"</div><div class="line">enable_ceph: "yes"</div><div class="line">enable_chrony: "yes"</div><div class="line">enable_cinder: "yes"</div><div class="line">enable_haproxy: "no"</div><div class="line">enable_horizon: "yes"</div><div class="line">tempest_image_id:</div><div class="line">tempest_flavor_ref_id:</div><div class="line">tempest_public_network_id:</div><div class="line">tempest_floating_network_name:</div></pre></td></tr></table></figure></p>
+<p>4.创建 /etc/kolla/config/ceph.conf<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[global]</div><div class="line">osd pool default size = 1</div><div class="line">osd pool default min size = 1</div></pre></td></tr></table></figure></p>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>1.生成密码,编辑/etc/kolla/passwords.yml<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> kolla-genpwd</span></div><div class="line"><span class="meta">#</span><span class="bash"> vim /etc/kolla/passwords.yml</span></div><div class="line">keystone_admin_password: lijiawang</div></pre></td></tr></table></figure></p>
+<p>这是登录Dashboard，admin使用的密码，你可以根据自己需要进行修改<br>2.部署检查<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> kolla-ansible prechecks</span></div></pre></td></tr></table></figure></p>
+<p>3.部署<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> kolla-ansible deploy</span></div><div class="line"><span class="meta">#</span><span class="bash"> kolla-ansible post-deploy</span></div></pre></td></tr></table></figure></p>
+<h3 id="安装openstack-client-端"><a href="#安装openstack-client-端" class="headerlink" title="安装openstack client 端"></a>安装openstack client 端</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> pip install python-openstackclient</span></div></pre></td></tr></table></figure>
+<h3 id="创建网络"><a href="#创建网络" class="headerlink" title="创建网络"></a>创建网络</h3><p>1.编辑 /usr/share/kolla-ansible/init-runonce<br>网络需要根据实际情况修改,我都是用的nat模式<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">EXT_NET_CIDR='192.168.10.0/24'</div><div class="line">EXT_NET_RANGE='start=192.168.10.150,end=192.168.10.199'</div><div class="line">EXT_NET_GATEWAY='192.168.10.2'</div></pre></td></tr></table></figure></p>
+<p>2.运行脚本<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">source</span> /etc/kolla/admin-openrc.sh</span></div><div class="line"><span class="meta">#</span><span class="bash"> bash /usr/share/kolla-ansible/init-runonce</span></div></pre></td></tr></table></figure></p>
+<p>3.创建实例绑定浮动ip，测试网络<br>```shell<br>[root@pike ~]# nova list<br>+————————————–+——-+——–+————+————-+————————————+<br>| ID                                   | Name  | Status | Task State | Power State | Networks                           |<br>+————————————–+——-+——–+————+————-+————————————+<br>| cbc40238-3bee-4df1-abc0-a10fc269e6e0 | demo1 | ACTIVE | -          | Running     | demo-net=10.0.0.10, 192.168.10.154 |<br>+————————————–+——-+——–+————+————-+————————————+<br>[root@pike ~]# ping 192.168.10.154<br>PING 192.168.10.154 (192.168.10.154) 56(84) bytes of data.<br>64 bytes from 192.168.10.154: icmp_seq=1 ttl=63 time=3.91 ms<br>64 bytes from 192.168.10.154: icmp_seq=2 ttl=63 time=4.56 ms<br>64 bytes from 192.168.10.154: icmp_seq=3 ttl=63 time=2.04 ms</p>
 
       
     </div>
@@ -469,7 +492,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/awk/" rel="tag"># awk</a>
+            <a href="/tags/openstack/" rel="tag"># openstack</a>
           
         </div>
       
@@ -482,8 +505,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/linux-bond.html" rel="next" title="网卡Bond介绍">
-                <i class="fa fa-chevron-left"></i> 网卡Bond介绍
+              <a href="/posts/openstack-glance.html" rel="next" title="opensyack glance学习">
+                <i class="fa fa-chevron-left"></i> opensyack glance学习
               </a>
             
           </div>
@@ -491,10 +514,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/posts/openstack.html" rel="prev" title="虚拟机手动迁移">
-                虚拟机手动迁移 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -709,7 +728,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#在linux系统下使用awk工具详解"><span class="nav-number">1.</span> <span class="nav-text">在linux系统下使用awk工具详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导读"><span class="nav-number">2.</span> <span class="nav-text">导读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#awk-命令的基本格式"><span class="nav-number">3.</span> <span class="nav-text">awk 命令的基本格式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确认环境信息"><span class="nav-number">2.</span> <span class="nav-text">确认环境信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境初始化"><span class="nav-number">3.</span> <span class="nav-text">环境初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装基础包"><span class="nav-number">4.</span> <span class="nav-text">安装基础包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装ansible"><span class="nav-number">5.</span> <span class="nav-text">安装ansible</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建Registry"><span class="nav-number">6.</span> <span class="nav-text">搭建Registry</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载kolla官方提供的Pile镜像"><span class="nav-number">7.</span> <span class="nav-text">下载kolla官方提供的Pile镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载kolla-ansible，并配置"><span class="nav-number">8.</span> <span class="nav-text">下载kolla-ansible，并配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装kolla"><span class="nav-number">9.</span> <span class="nav-text">安装kolla</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署"><span class="nav-number">10.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装openstack-client-端"><span class="nav-number">11.</span> <span class="nav-text">安装openstack client 端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建网络"><span class="nav-number">12.</span> <span class="nav-text">创建网络</span></a></li></ol></div>
             
 
           </div>
