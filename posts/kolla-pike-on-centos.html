@@ -92,17 +92,17 @@
 
 
 
-<meta name="description" content="环境准备我这里用vorkstation 创建了一个虚拟机，安装centos7.4系统，这台虚拟机上有两张网卡，一张做openstack管理网，一张做为虚拟机的业务网卡。">
+<meta name="description" content="环境准备我这里用workstation 创建了一个虚拟机，安装centos7.4系统，这台虚拟机上有两张网卡，一张做openstack管理网，一张做为虚拟机的业务网卡。">
 <meta name="keywords" content="openstack Pile kolla">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kolla Pike on CentOS 7.4">
 <meta property="og:url" content="https://www.lijiawang.org/posts/kolla-pike-on-centos.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="环境准备我这里用vorkstation 创建了一个虚拟机，安装centos7.4系统，这台虚拟机上有两张网卡，一张做openstack管理网，一张做为虚拟机的业务网卡。">
-<meta property="og:updated_time" content="2017-11-22T07:08:26.303Z">
+<meta property="og:description" content="环境准备我这里用workstation 创建了一个虚拟机，安装centos7.4系统，这台虚拟机上有两张网卡，一张做openstack管理网，一张做为虚拟机的业务网卡。">
+<meta property="og:updated_time" content="2017-11-23T10:15:23.166Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kolla Pike on CentOS 7.4">
-<meta name="twitter:description" content="环境准备我这里用vorkstation 创建了一个虚拟机，安装centos7.4系统，这台虚拟机上有两张网卡，一张做openstack管理网，一张做为虚拟机的业务网卡。">
+<meta name="twitter:description" content="环境准备我这里用workstation 创建了一个虚拟机，安装centos7.4系统，这台虚拟机上有两张网卡，一张做openstack管理网，一张做为虚拟机的业务网卡。">
 
 
 
@@ -437,7 +437,7 @@
       
 
       
-        <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>我这里用vorkstation 创建了一个虚拟机，安装centos7.4系统，这台虚拟机上有两张网卡，一张做openstack管理网，一张做为虚拟机的业务网卡。<br><a id="more"></a></p>
+        <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>我这里用workstation 创建了一个虚拟机，安装centos7.4系统，这台虚拟机上有两张网卡，一张做openstack管理网，一张做为虚拟机的业务网卡。<br><a id="more"></a></p>
 <h3 id="确认环境信息"><a href="#确认环境信息" class="headerlink" title="确认环境信息"></a>确认环境信息</h3><p>1.确认系统版本<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> cat /etc/redhat-release</div><div class="line">CentOS Linux release 7.4.1708 (Core)</div></pre></td></tr></table></figure></p>
 <p>2.确认网卡个数和状态<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> ip a</div><div class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN qlen 1</div><div class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</div><div class="line">    inet 127.0.0.1/8 scope host lo</div><div class="line">       valid_lft forever preferred_lft forever</div><div class="line">    inet6 ::1/128 scope host</div><div class="line">       valid_lft forever preferred_lft forever</div><div class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000</div><div class="line">    link/ether 00:0c:29:a7:8c:91 brd ff:ff:ff:ff:ff:ff</div><div class="line">    inet 192.168.10.139/24 brd 192.168.10.255 scope global dynamic ens33</div><div class="line">       valid_lft 1555sec preferred_lft 1555sec</div><div class="line">    inet6 fe80::5057:38c5:6b65:b5/64 scope link</div><div class="line">       valid_lft forever preferred_lft forever</div><div class="line">3: ens34: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000</div><div class="line">    link/ether 00:0c:29:a7:8c:9b brd ff:ff:ff:ff:ff:ff</div><div class="line">    inet6 fe80::20c:29ff:fea7:8c9b/64 scope link</div><div class="line">       valid_lft forever preferred_lft forever</div></pre></td></tr></table></figure></p>
 <p>上面可以看出有两张网卡<code>ens33</code>和<code>ens34</code>，这里我用<code>ens33</code>做管理网，<code>ens34</code>做业务网，这里不需要配置ip，把<code>ens34</code>网卡up起来就好。</p>
