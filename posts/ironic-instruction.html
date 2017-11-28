@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="李家旺">
 <meta property="og:description" content="简介 “裸机功能使用说明”介绍了裸机配置中的一些技术细节，旨在帮助用户更好地了解和使用 ironic。">
 <meta property="og:image" content="https://ljw.howieli.cn/blog/2017-9-8/ironic.png">
-<meta property="og:updated_time" content="2017-09-08T04:11:33.219Z">
+<meta property="og:updated_time" content="2017-11-28T09:55:54.199Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ironic裸机服务使用说明">
 <meta name="twitter:description" content="简介 “裸机功能使用说明”介绍了裸机配置中的一些技术细节，旨在帮助用户更好地了解和使用 ironic。">
@@ -441,8 +441,8 @@
       
         <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><hr>
 <p>“裸机功能使用说明”介绍了裸机配置中的一些技术细节，旨在帮助用户更好地了解和使用 ironic。</p>
-<a id="more"></a>
 <hr>
+<a id="more"></a>
 <h3 id="whole-disk镜像和partition镜像区别"><a href="#whole-disk镜像和partition镜像区别" class="headerlink" title="whole disk镜像和partition镜像区别"></a>whole disk镜像和partition镜像区别</h3><hr>
 <p>partition image部署可以支持windows系统，但是不支持自定义分区，因为分区表在制作镜像时已经被确定下来。但partition image支持按照配置中规定的root,swap分区来自动进行磁盘分区。</p>
 <p>partition image方式部署的机器将kernel和ramdisk都存放在tftp server上，每次启动都需要访问tftp,whole disk部署的服务器启动时不需要访问tftp server。</p>

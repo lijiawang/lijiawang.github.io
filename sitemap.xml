@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/Openstack%20performance%20testing.html</loc>
+    
+    <lastmod>2017-11-28T09:56:49.075Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla-octavia.html</loc>
+    
+    <lastmod>2017-11-28T09:56:32.026Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/ironic-instruction.html</loc>
+    
+    <lastmod>2017-11-28T09:55:54.199Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/kolla-pike-on-centos.html</loc>
     
     <lastmod>2017-11-28T03:18:04.928Z</lastmod>
@@ -26,27 +47,6 @@
     <loc>https://www.lijiawang.org/posts/kolla-ironic.html</loc>
     
     <lastmod>2017-10-23T01:23:56.482Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/kolla-octavia.html</loc>
-    
-    <lastmod>2017-09-19T12:03:53.780Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/Openstack%20performance%20testing.html</loc>
-    
-    <lastmod>2017-09-12T07:59:02.403Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/ironic-instruction.html</loc>
-    
-    <lastmod>2017-09-08T04:11:33.219Z</lastmod>
     
   </url>
   
