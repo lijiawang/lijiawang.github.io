@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linux, python, shell, openstack" />
+  <meta name="keywords" content="swift" />
 
 
 
@@ -92,15 +92,17 @@
 
 
 
-<meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李家旺">
-<meta property="og:url" content="https://www.lijiawang.org/tags/tempest-rally/index.html">
+<meta name="description" content="kolla部署swift kolla实现对象存储方式有两种：  利用ceph_rgw实现 部署swift实现  本篇博客介绍利用kolla部署swift实现openstack对象存储">
+<meta name="keywords" content="swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kolla部署swift">
+<meta property="og:url" content="https://www.lijiawang.org/posts/kolla部署swift.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta property="og:description" content="kolla部署swift kolla实现对象存储方式有两种：  利用ceph_rgw实现 部署swift实现  本篇博客介绍利用kolla部署swift实现openstack对象存储">
+<meta property="og:updated_time" content="2017-11-29T07:20:16.232Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李家旺">
-<meta name="twitter:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta name="twitter:title" content="kolla部署swift">
+<meta name="twitter:description" content="kolla部署swift kolla实现对象存储方式有两种：  利用ceph_rgw实现 部署swift实现  本篇博客介绍利用kolla部署swift实现openstack对象存储">
 
 
 
@@ -128,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="https://www.lijiawang.org/tags/tempest-rally/"/>
+  <link rel="canonical" href="https://www.lijiawang.org/posts/kolla部署swift.html"/>
 
 
 
 
 
-  <title>标签: tempest rally | 李家旺</title>
+  <title>kolla部署swift | 李家旺</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -170,7 +172,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -318,44 +320,213 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h1>tempest rally<small>标签</small>
-      </h1>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://www.lijiawang.org/posts/kolla部署swift.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李家旺">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李家旺">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">kolla部署swift</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-29T15:12:57+08:00">
+                2017-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">openstack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/posts/kolla部署swift.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/posts/kolla部署swift.html" class="leancloud_visitors" data-flag-title="kolla部署swift">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <h3 id="kolla部署swift"><a href="#kolla部署swift" class="headerlink" title="kolla部署swift"></a>kolla部署swift</h3><hr>
+<p>kolla实现对象存储方式有两种：</p>
+<ul>
+<li>利用ceph_rgw实现</li>
+<li>部署swift实现</li>
+</ul>
+<p>本篇博客介绍利用kolla部署swift实现openstack对象存储</p>
+<hr>
+<a id="more"></a>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>我这是一个all-in-one的环境,利用kolla部署了一个pike版本,部署方法请参考<a href="https://www.lijiawang.org/posts/kolla-pike-on-centos.html#more">kolla部署openstack Pike版</a><br>我这台虚拟机一共有5块盘，分别为sda,sdb,sdc,sdd,sde。sda为系统盘，sdb,sdc,sdd,为ceph的osd用，sde用于做swift</p>
+<h3 id="打标签"><a href="#打标签" class="headerlink" title="打标签"></a>打标签</h3><p>swift要求可用的块设备用来存储，所以我事先准备了一个硬盘<code>sde</code>作为存储设备,在部署需要给这块盘打一个特殊的标签。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">index=0</div><div class="line">for d in sde; do</div><div class="line"><span class="meta">#</span> 因为我这就有一块用于swift存储的盘sde。</div><div class="line">    parted /dev/$&#123;d&#125; -s -- mklabel gpt mkpart KOLLA_SWIFT_DATA 1 -1</div><div class="line">    sudo mkfs.xfs -f -L d$&#123;index&#125; /dev/$&#123;d&#125;1</div><div class="line">    (( index++ ))</div><div class="line">done</div></pre></td></tr></table></figure></p>
+<h3 id="Rings"><a href="#Rings" class="headerlink" title="Rings"></a>Rings</h3><p>kolla在部署swift前，需要生成rings，这是一种二进制压缩文件，在较高的级别上，让各种快速服务知道集群中的数据在哪里，这里官方给了一个脚本，简单的配置一下即可。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> STORAGE_NODES=(192.168.0.2 192.168.0.3 192.168.0.4)</div><div class="line"><span class="meta">#</span> 这里是swift走的存储网络的ip，因为我是all-in-one环境，所以IP只有一个，这里我的swift存储用网将和管理网在一起</div><div class="line">STORAGE_NODES=(192.168.10.139)</div><div class="line"><span class="meta">#</span> KOLLA_SWIFT_BASE_IMAGE="docker_registry/docker_namespace/centos-source-swift-base:openstack_release"</div><div class="line"><span class="meta">#</span> 这里按照需求填写</div><div class="line">KOLLA_SWIFT_BASE_IMAGE="192.168.10.139:4000/lokolla/centos-source-swift-base:5.0.1"</div><div class="line"></div><div class="line">mkdir -p /etc/kolla/config/swift</div><div class="line"><span class="meta"></span></div><div class="line"># Object ring</div><div class="line">docker run \</div><div class="line">  --rm \</div><div class="line">  -v /etc/kolla/config/swift/:/etc/kolla/config/swift/ \</div><div class="line"><span class="meta">  $</span>KOLLA_SWIFT_BASE_IMAGE \</div><div class="line">  swift-ring-builder \</div><div class="line">    /etc/kolla/config/swift/object.builder create 10 3 1</div><div class="line"></div><div class="line">for node in $&#123;STORAGE_NODES[@]&#125;; do</div><div class="line">    for i in &#123;0..2&#125;; do</div><div class="line">      docker run \</div><div class="line">        --rm \</div><div class="line">        -v /etc/kolla/config/swift/:/etc/kolla/config/swift/ \</div><div class="line">        $KOLLA_SWIFT_BASE_IMAGE \</div><div class="line">        swift-ring-builder \</div><div class="line">          /etc/kolla/config/swift/object.builder add r1z1-$&#123;node&#125;:6000/d$&#123;i&#125; 1;</div><div class="line">    done</div><div class="line">done</div><div class="line"><span class="meta"></span></div><div class="line"># Account ring</div><div class="line">docker run \</div><div class="line">  --rm \</div><div class="line">  -v /etc/kolla/config/swift/:/etc/kolla/config/swift/ \</div><div class="line"><span class="meta">  $</span>KOLLA_SWIFT_BASE_IMAGE \</div><div class="line">  swift-ring-builder \</div><div class="line">    /etc/kolla/config/swift/account.builder create 10 3 1</div><div class="line"></div><div class="line">for node in $&#123;STORAGE_NODES[@]&#125;; do</div><div class="line">    for i in &#123;0..2&#125;; do</div><div class="line">      docker run \</div><div class="line">        --rm \</div><div class="line">        -v /etc/kolla/config/swift/:/etc/kolla/config/swift/ \</div><div class="line">        $KOLLA_SWIFT_BASE_IMAGE \</div><div class="line">        swift-ring-builder \</div><div class="line">          /etc/kolla/config/swift/account.builder add r1z1-$&#123;node&#125;:6001/d$&#123;i&#125; 1;</div><div class="line">    done</div><div class="line">done</div><div class="line"><span class="meta"></span></div><div class="line"># Container ring</div><div class="line">docker run \</div><div class="line">  --rm \</div><div class="line">  -v /etc/kolla/config/swift/:/etc/kolla/config/swift/ \</div><div class="line"><span class="meta">  $</span>KOLLA_SWIFT_BASE_IMAGE \</div><div class="line">  swift-ring-builder \</div><div class="line">    /etc/kolla/config/swift/container.builder create 10 3 1</div><div class="line"></div><div class="line">for node in $&#123;STORAGE_NODES[@]&#125;; do</div><div class="line">    for i in &#123;0..2&#125;; do</div><div class="line">      docker run \</div><div class="line">        --rm \</div><div class="line">        -v /etc/kolla/config/swift/:/etc/kolla/config/swift/ \</div><div class="line">        $KOLLA_SWIFT_BASE_IMAGE \</div><div class="line">        swift-ring-builder \</div><div class="line">          /etc/kolla/config/swift/container.builder add r1z1-$&#123;node&#125;:6002/d$&#123;i&#125; 1;</div><div class="line">    done</div><div class="line">done</div><div class="line"></div><div class="line">for ring in object account container; do</div><div class="line">  docker run \</div><div class="line">    --rm \</div><div class="line">    -v /etc/kolla/config/swift/:/etc/kolla/config/swift/ \</div><div class="line">    $KOLLA_SWIFT_BASE_IMAGE \</div><div class="line">    swift-ring-builder \</div><div class="line">      /etc/kolla/config/swift/$&#123;ring&#125;.builder rebalance;</div><div class="line">done</div></pre></td></tr></table></figure></p>
+<h3 id="globals-yml文件"><a href="#globals-yml文件" class="headerlink" title="globals.yml文件"></a>globals.yml文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> vim /etc/kolla/globals.yml</div><div class="line"><span class="meta">#</span>enable_ceph_rgw: "no"</div><div class="line">enable_swift: "yes"</div><div class="line"><span class="meta">#</span>enable_ceph_rgw_keystone: "no"</div></pre></td></tr></table></figure>
+<p>这里需要说下，ceph_rgw实现的对象存储和swift实现的对象存储二者不能共存。如果要想用ceph_rgw实现以上步骤均不要做直接修改globals文件后deploy即可<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> vim /etc/kolla/globals.yml</div><div class="line">enable_ceph_rgw: "yes"</div><div class="line"><span class="meta">#</span> enable_swift: "no"</div><div class="line">enable_ceph_rgw_keystone: "yes"</div></pre></td></tr></table></figure></p>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> kolla-ansible deploy</div></pre></td></tr></table></figure>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> source /etc/kolla/admin-openrc.sh </div><div class="line"><span class="meta">#</span> openstack container create mycontainer</div><div class="line">+---------------------------------------+-------------+------------------------------------+</div><div class="line">| account                               | container   | x-trans-id                         |</div><div class="line">+---------------------------------------+-------------+------------------------------------+</div><div class="line">| AUTH_2a568be969b34c288ef52a2987973145 | mycontainer | txc68d723c0c934a7282cfe-005a1e5d11 |</div><div class="line">+---------------------------------------+-------------+------------------------------------+</div><div class="line">[root@pike ~]# openstack object create mycontainer README.rst</div><div class="line">+------------+-------------+----------------------------------+</div><div class="line">| object     | container   | etag                             |</div><div class="line">+------------+-------------+----------------------------------+</div><div class="line">| README.rst | mycontainer | a2f288979d0af55c5e9313f525c75615 |</div><div class="line">+------------+-------------+----------------------------------+</div><div class="line"><span class="meta">#</span> openstack container show mycontainer</div><div class="line">+--------------+---------------------------------------+</div><div class="line">| Field        | Value                                 |</div><div class="line">+--------------+---------------------------------------+</div><div class="line">| account      | AUTH_2a568be969b34c288ef52a2987973145 |</div><div class="line">| bytes_used   | 39                                    |</div><div class="line">| container    | mycontainer                           |</div><div class="line">| object_count | 1                                     |</div><div class="line">+--------------+---------------------------------------+</div><div class="line"><span class="meta">#</span> openstack object store account show</div><div class="line">+------------+---------------------------------------+</div><div class="line">| Field      | Value                                 |</div><div class="line">+------------+---------------------------------------+</div><div class="line">| Account    | AUTH_2a568be969b34c288ef52a2987973145 |</div><div class="line">| Bytes      | 0                                     |</div><div class="line">| Containers | 1                                     |</div><div class="line">| Objects    | 0                                     |</div><div class="line">+------------+---------------------------------------+</div></pre></td></tr></table></figure>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="https://docs.openstack.org/kolla-ansible/latest/reference/swift-guide.html#rings" target="_blank" rel="external">https://docs.openstack.org/kolla-ansible/latest/reference/swift-guide.html#rings</a></p>
 
-      <h2 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/posts/Openstack performance testing.html" itemprop="url">
-              
-                <span itemprop="name">openstack性能测试</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-12T15:45:20+08:00"
-              content="2017-09-12" >
-          09-12
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/swift/" rel="tag"># swift</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/在openstack上的虚拟机绑定vip.html" rel="next" title="openstack虚拟机VIP配置步骤">
+                <i class="fa fa-chevron-left"></i> openstack虚拟机VIP配置步骤
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-591bd5ac9354483f" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -363,6 +534,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
 
         </div>
         
@@ -382,8 +559,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/touxiang.jpg"
@@ -524,6 +710,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#kolla部署swift"><span class="nav-number">1.</span> <span class="nav-text">kolla部署swift</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">2.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打标签"><span class="nav-number">3.</span> <span class="nav-text">打标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rings"><span class="nav-number">4.</span> <span class="nav-text">Rings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#globals-yml文件"><span class="nav-number">5.</span> <span class="nav-text">globals.yml文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署"><span class="nav-number">6.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证"><span class="nav-number">7.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文章"><span class="nav-number">8.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -641,6 +843,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 
