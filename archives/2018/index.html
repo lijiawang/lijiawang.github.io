@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="octavia" />
+  <meta name="keywords" content="linux, python, shell, openstack" />
 
 
 
@@ -92,19 +92,15 @@
 
 
 
-<meta name="description" content="octavia 介绍 openstack octavia 是 openstack Lbaas项目分出来的一个子项目，是提供虚拟机流量负载均衡，其实oactavia就是调用nova以及neutron的api生成两台安装好了haproxy和keepalived软件的虚拟机，并连接到目标网络。octavia共有4个组件housekeeping,worker,api,health-manager。详情请参">
-<meta name="keywords" content="octavia">
-<meta property="og:type" content="article">
-<meta property="og:title" content="kolla搭建octavia">
-<meta property="og:url" content="https://www.lijiawang.org/posts/kolla-octavia.html">
+<meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta property="og:type" content="website">
+<meta property="og:title" content="李家旺">
+<meta property="og:url" content="https://www.lijiawang.org/archives/2018/index.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="octavia 介绍 openstack octavia 是 openstack Lbaas项目分出来的一个子项目，是提供虚拟机流量负载均衡，其实oactavia就是调用nova以及neutron的api生成两台安装好了haproxy和keepalived软件的虚拟机，并连接到目标网络。octavia共有4个组件housekeeping,worker,api,health-manager。详情请参">
-<meta property="og:image" content="https://ljw.howieli.cn/blog/2017-9-8/octavia架构图.png">
-<meta property="og:updated_time" content="2017-11-29T09:20:09.802Z">
+<meta property="og:description" content="不看官网不足以熟练，不懂源码不足以精通">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="kolla搭建octavia">
-<meta name="twitter:description" content="octavia 介绍 openstack octavia 是 openstack Lbaas项目分出来的一个子项目，是提供虚拟机流量负载均衡，其实oactavia就是调用nova以及neutron的api生成两台安装好了haproxy和keepalived软件的虚拟机，并连接到目标网络。octavia共有4个组件housekeeping,worker,api,health-manager。详情请参">
-<meta name="twitter:image" content="https://ljw.howieli.cn/blog/2017-9-8/octavia架构图.png">
+<meta name="twitter:title" content="李家旺">
+<meta name="twitter:description" content="不看官网不足以熟练，不懂源码不足以精通">
 
 
 
@@ -132,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="https://www.lijiawang.org/posts/kolla-octavia.html"/>
+  <link rel="canonical" href="https://www.lijiawang.org/archives/2018/"/>
 
 
 
 
 
-  <title>kolla搭建octavia | 李家旺</title>
+  <title>归档 | 李家旺</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -174,7 +170,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left  page-archive  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -322,219 +318,66 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  <section id="posts" class="posts-collapse">
+    <span class="archive-move-on"></span>
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://www.lijiawang.org/posts/kolla-octavia.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="李家旺">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/touxiang.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李家旺">
+    <span class="archive-page-counter">
+      
+      
+      
+        
+      
+      嗯..! 目前共计 23 篇日志。 继续努力。
     </span>
 
     
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">kolla搭建octavia</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-11T09:48:37+08:00">
-                2017-09-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/openstack/" itemprop="url" rel="index">
-                    <span itemprop="name">openstack</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a class="cloud-tie-join-count" href="/posts/kolla-octavia.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/posts/kolla-octavia.html" class="leancloud_visitors" data-flag-title="kolla搭建octavia">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
 
       
       
-
       
-        <h3 id="octavia-介绍"><a href="#octavia-介绍" class="headerlink" title="octavia 介绍"></a>octavia 介绍</h3><hr>
-<p>openstack octavia 是 openstack Lbaas项目分出来的一个子项目，是提供虚拟机流量负载均衡，其实oactavia就是调用nova以及neutron的api生成两台安装好了haproxy和keepalived软件的虚拟机，并连接到目标网络。octavia共有4个组件housekeeping,worker,api,health-manager。详情请参考 <a href="https://docs.openstack.org/octavia/latest/reference/introduction.html" target="_blank" rel="external">octavia介绍</a></p>
-<hr>
-<a id="more"></a>
-<h3 id="octavia-架构图"><a href="#octavia-架构图" class="headerlink" title="octavia 架构图"></a>octavia 架构图</h3><p><img src="https://ljw.howieli.cn/blog/2017-9-8/octavia架构图.png" alt=""></p>
-<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>我事先准备好了一个kolla部署的多节点的openstack环境<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> openstack service list</span></div><div class="line">+----------------------------------+------------------+-------------------------+</div><div class="line">| ID                               | Name             | Type                    |</div><div class="line">+----------------------------------+------------------+-------------------------+</div><div class="line">| 11bb0c086a484e33bf65558298a13f2d | manila           | share                   |</div><div class="line">| 126fb7d3b45f44008f9b5649e7fa6772 | glance           | image                   |</div><div class="line">| 1963c13ceda74eaa846ce53447aa9663 | swift            | object-store            |</div><div class="line">| 1d73b2481e0e4c2996e902282f53ac94 | ceilometer       | metering                |</div><div class="line">| 277ac4e4d36b4170a13dff885133d497 | cinderv3         | volumev3                |</div><div class="line">| 313e8abeeb5f46968e21c47be64fe37a | panko            | event                   |</div><div class="line">| 3546da190ebe4cb69a5e4054c1b226e8 | ironic-inspector | baremetal-introspection |</div><div class="line">| 3559efb2c60c4532b0e20f4280d00d65 | gnocchi          | metric                  |</div><div class="line">| 38fa732db46a4bf99a656cc4b29f9955 | trove            | database                |</div><div class="line">| 5003dabefad4462f80758eecc883a185 | sahara           | data_processing         |</div><div class="line">| 5b3ab9520859475fb874e570be8ea064 | manilav2         | sharev2                 |</div><div class="line">| 659cd19c052b452a8a954bbadfd94a5a | nova             | compute                 |</div><div class="line">| 72fcd0fc324248bdb8c5f08f9c65a1ea | nova_legacy      | compute_legacy          |</div><div class="line">| 754afe3e3b4349a0a54d26b7d83fec5e | cinder           | volume                  |</div><div class="line">| 85c1d57869754c38989f228c08896d4c | ironic           | baremetal               |</div><div class="line">| 9962758f42c140c4b811940bdc4041b2 | heat             | orchestration           |</div><div class="line">| b7dc29ababc54104b31ad3b999eae6b5 | heat-cfn         | cloudformation          |</div><div class="line">| bee93d265f994dd3bd9e76a326df0d1b | cinderv2         | volumev2                |</div><div class="line">| d6f1862a19434267a4a51fd4c8a6d665 | neutron          | network                 |</div><div class="line">| ee90e0f359d84c1eb35c3cd9423f43db | placement        | placement               |</div><div class="line">| f7b5b57d52494869ab20501c28237613 | cloudkitty       | rating                  |</div><div class="line">| fdb4e5b1658d4d39a1f807f9d7b2b4d7 | keystone         | identity                |</div><div class="line">+----------------------------------+------------------+-------------------------+</div></pre></td></tr></table></figure></p>
-<h3 id="创建证书"><a href="#创建证书" class="headerlink" title="创建证书"></a>创建证书</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> git <span class="built_in">clone</span> https://review.openstack.org/p/openstack/octavia</span></div><div class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> octavia</span></div><div class="line"><span class="meta">#</span><span class="bash"> grep octavia_ca /etc/kolla/passwords.yml</span></div><div class="line">octavia_ca_password: mEUyBHLopKk501CX30WRnPuiDmoP3I7eNQIQbC6z</div><div class="line"><span class="meta">#</span><span class="bash"> sed -i <span class="string">'s/foobar/mEUyBHLopKk501CX30WRnPuiDmoP3I7eNQIQbC6z/g'</span> bin/create_certificates.sh</span></div><div class="line"><span class="meta">#</span><span class="bash"> ./bin/create_certificates.sh cert $(<span class="built_in">pwd</span>)/etc/certificates/openssl.cnf</span></div></pre></td></tr></table></figure>
-<p>然后你会得到一个文件夹<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ls -al cert/</span></div><div class="line">total 48</div><div class="line">drwxr-xr-x  4 root root  219 Sep  7 09:32 .</div><div class="line">drwxr-xr-x 17 root root 4096 Sep  7 09:32 ..</div><div class="line">-rw-r--r--  1 root root 1294 Sep  7 09:32 ca_01.pem</div><div class="line">-rw-r--r--  1 root root  989 Sep  7 09:32 client.csr</div><div class="line">-rw-r--r--  1 root root 1708 Sep  7 09:32 client.key</div><div class="line">-rw-r--r--  1 root root 4401 Sep  7 09:32 client-.pem</div><div class="line">-rw-r--r--  1 root root 6109 Sep  7 09:32 client.pem</div><div class="line">-rw-r--r--  1 root root   71 Sep  7 09:32 index.txt</div><div class="line">-rw-r--r--  1 root root   21 Sep  7 09:32 index.txt.attr</div><div class="line">-rw-r--r--  1 root root    0 Sep  7 09:32 index.txt.old</div><div class="line">drwxr-xr-x  2 root root   20 Sep  7 09:32 newcerts</div><div class="line">drwx------  2 root root   23 Sep  7 09:32 private</div><div class="line">-rw-r--r--  1 root root    3 Sep  7 09:32 serial</div><div class="line">-rw-r--r--  1 root root    3 Sep  7 09:32 serial.old</div></pre></td></tr></table></figure></p>
-<p>将认证放到kolla部署节点上的/etc/kolla/octavia目录里，首先要先在/etc/kolla目录下创建一个octavia文件<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> mkdir /etc/kolla/config/octavia</span></div><div class="line"><span class="meta">#</span><span class="bash"> ls -al /etc/kolla/config/octavia/</span></div><div class="line">total 20</div><div class="line">drwxr-xr-x 2 root root   58 Sep  8 12:37 .</div><div class="line">drwxr-xr-x 5 root root 4096 Sep  8 12:36 ..</div><div class="line">-rw-r--r-- 1 root root 1294 Sep  8 12:37 ca_01.pem</div><div class="line">-rw-r--r-- 1 root root 1743 Sep  8 12:37 cakey.pem</div><div class="line">-rw-r--r-- 1 root root 6109 Sep  8 12:37 client.pem</div></pre></td></tr></table></figure></p>
-<h3 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># pwd</div><div class="line">/root</div><div class="line"># cd octavia/diskimage-create/</div><div class="line"># ./diskimage-create.sh -i centos</div></pre></td></tr></table></figure>
-<p>会产生amphora-x64-haproxy.qcow2镜像<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ls amphora-x64-haproxy.qcow2</span></div><div class="line">amphora-x64-haproxy.qcow2</div></pre></td></tr></table></figure></p>
-<p>上传镜像，因为我kolla部署openstack时候后端存储用的ceph，所以首先要把镜像转换成raw格式,然后在上传镜像，上传镜像必须给镜像打一个amphora的tag。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> qemu-img convert <span class="_">-f</span> qcow2 -O raw amphora-x64-haproxy.qcow2 amphora-x64-haproxy.raw</span></div><div class="line"><span class="meta">#</span><span class="bash"> qemu-img info amphora-x64-haproxy.raw</span></div><div class="line">image: amphora-x64-haproxy.raw</div><div class="line">file format: raw</div><div class="line">virtual size: 2.0G (2147483648 bytes)</div><div class="line">disk size: 1.5G</div><div class="line"><span class="meta">#</span><span class="bash"> openstack image create --container-format bare --disk-format raw --private --file amphora-x64-haproxy.raw --tag amphora amphora</span></div></pre></td></tr></table></figure></p>
-<h3 id="准备openstack资源"><a href="#准备openstack资源" class="headerlink" title="准备openstack资源"></a>准备openstack资源</h3><p>octavia_amp_boot_network_list 网络,这里需要准备分给octavia用的网络ID,而且这个网络必须能和api互通<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> openstack network create --provider-physical-network physnet1 \</span></div><div class="line">    --provider-network-type vlan --provider-segment 121 lb-net</div><div class="line"><span class="meta">#</span><span class="bash"> openstack subnet create --allocation-pool --network lb-net --subnet-range 10.140.1.0/24 \</span></div><div class="line">    lb-subnet</div></pre></td></tr></table></figure></p>
-<p>还需要octavia_amp_flavor_id 值,这是octavia创建的虚拟机的大小。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> openstack flavor create --disk 40 --private --ram 4096 --vcpus 2 octavia_flavor</span></div></pre></td></tr></table></figure></p>
-<p>创建一个octavia的安全组，安全组的id值为octavia_amp_secgroup_list 值<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> openstack security group create --description <span class="string">'used by Octavia amphora instance'</span> octavia</span></div></pre></td></tr></table></figure></p>
-<p>为octavia安全组设置规则<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> openstack security group rule create --protocol icmp f97161c4-ffda-4205-b984<span class="_">-d</span>3ecad0f9ce1</span></div><div class="line"><span class="meta">#</span><span class="bash"> openstack security group rule create --protocol tcp --dst-port 5555 --egress f97161c4-ffda-4205-b984<span class="_">-d</span>3ecad0f9ce1</span></div><div class="line"><span class="meta">#</span><span class="bash"> openstack security group rule create --protocol tcp --dst-port 9443 --ingress f97161c4-ffda-4205-b984<span class="_">-d</span>3ecad0f9ce1</span></div></pre></td></tr></table></figure></p>
-<p>octavia 机器启动时注入的  key, octavia_ssh_key 名字是固定的，需要和 octavia.conf 配置文件相同。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> openstack keypair create --public-key /root/.ssh/id_rsa.pub octavia_ssh_key</span></div><div class="line"><span class="meta">#</span><span class="bash"> 我们也可以使用 octavia 账号去建虚拟机，所以 ssh key 要使用 octavia 账号创建。</span></div><div class="line"><span class="meta">#</span><span class="bash"> openstack --os-username octavia --os-password &lt;octavia_keystone_password&gt; keypair create --public-key /tmp/id_rsa.pub octavia_ssh_key</span></div></pre></td></tr></table></figure></p>
-<h3 id="更改globas-yml文件"><a href="#更改globas-yml文件" class="headerlink" title="更改globas.yml文件"></a>更改globas.yml文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> vim /etc/kolla/globals.yml</span></div><div class="line">enable_horizon_neutron_lbaas: "yes"</div><div class="line">enable_neutron_lbaas: "yes"</div><div class="line">enable_octavia: yes</div><div class="line"><span class="meta">#</span><span class="bash"> Load balancer topology options are [ SINGLE, ACTIVE_STANDBY ]</span></div><div class="line">octavia_loadbalancer_topology: "ACTIVE_STANDBY"</div><div class="line">octavia_amp_boot_network_list: ffc00802-c88b-4a5e-a51b-60071f4045d5</div><div class="line">octavia_amp_secgroup_list: f97161c4-ffda-4205-b984-d3ecad0f9ce1</div><div class="line">octavia_amp_flavor_id: 54f2cc50-81d4-44d3-8e44-a01686e4b2c6</div></pre></td></tr></table></figure>
-<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> kolla-ansible deploy -i multinode</span></div></pre></td></tr></table></figure>
 
-      
-    </div>
-
-    <div>
       
         
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/octavia/" rel="tag"># octavia</a>
-          
+        <div class="collection-title">
+          <h2 class="archive-year motion-element" id="archive-year-2018">2018</h2>
         </div>
       
+      
 
       
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
         
-      
+            <a class="post-title-link" href="/posts/ceph ( requests are blocked ) 异常解决方法.html" itemprop="url">
+              
+                <span itemprop="name">ceph ( requests are blocked ) 异常解决方法</span>
+              
+            </a>
+        
+      </h2>
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/posts/ironic-instruction.html" rel="next" title="ironic裸机服务使用说明">
-                <i class="fa fa-chevron-left"></i> ironic裸机服务使用说明
-              </a>
-            
-          </div>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-01-08T17:00:13+08:00"
+              content="2018-01-08" >
+          01-08
+        </time>
+      </div>
 
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/posts/Openstack performance testing.html" rel="prev" title="openstack性能测试">
-                openstack性能测试 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
 
-    <div class="post-spread">
-      
-        <!-- Go to www.addthis.com/dashboard to customize your tools -->
-<div class="addthis_inline_share_toolbox">
-  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-591bd5ac9354483f" async = "async" ></script>
-</div>
+    
 
-      
-    </div>
-  </div>
+  </section>
+
+  
+
 
 
           </div>
@@ -542,12 +385,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-    
-  </div>
-
 
         </div>
         
@@ -567,17 +404,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/touxiang.jpg"
@@ -718,22 +546,6 @@
       </section>
 
       
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#octavia-介绍"><span class="nav-number">1.</span> <span class="nav-text">octavia 介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#octavia-架构图"><span class="nav-number">2.</span> <span class="nav-text">octavia 架构图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">3.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建证书"><span class="nav-number">4.</span> <span class="nav-text">创建证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建镜像"><span class="nav-number">5.</span> <span class="nav-text">构建镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备openstack资源"><span class="nav-number">6.</span> <span class="nav-text">准备openstack资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改globas-yml文件"><span class="nav-number">7.</span> <span class="nav-text">更改globas.yml文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署"><span class="nav-number">8.</span> <span class="nav-text">部署</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
 
       
 
@@ -851,9 +663,11 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
-
+  
+    <script type="text/javascript" id="motion.page.archive">
+      $('.archive-year').velocity('transition.slideLeftIn');
+    </script>
+  
 
 
   
