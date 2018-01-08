@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/%E5%9C%A8kolla%E4%B8%AD%E9%85%8D%E7%BD%AEcinder%20ceph%E5%A4%9A%E5%90%8E%E7%AB%AF.html</loc>
+    
+    <lastmod>2018-01-08T09:27:37.824Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/ceph%20(%20requests%20are%20blocked%20)%20%E5%BC%82%E5%B8%B8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95.html</loc>
     
     <lastmod>2018-01-08T09:05:30.356Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://www.lijiawang.org/posts/%E7%AE%80%E5%8D%95shell%E5%AE%9E%E7%8E%B0%E5%B1%80%E5%9F%9F%E7%BD%91IP%E6%89%AB%E6%8F%8F.html</loc>
     
     <lastmod>2017-12-29T03:25:36.656Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/%E5%9C%A8kolla%E4%B8%AD%E9%85%8D%E7%BD%AEcider%20ceph%E5%A4%9A%E5%90%8E%E7%AB%AF.html</loc>
-    
-    <lastmod>2017-11-30T03:36:35.822Z</lastmod>
     
   </url>
   
