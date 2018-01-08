@@ -76,11 +76,11 @@
   </entry>
   
   <entry>
-    <title>在kolla中配置cider ceph多后端</title>
+    <title>在kolla中配置cinder ceph多后端</title>
     <link href="https://www.lijiawang.org/posts/%E5%9C%A8kolla%E4%B8%AD%E9%85%8D%E7%BD%AEcinder%20ceph%E5%A4%9A%E5%90%8E%E7%AB%AF.html"/>
     <id>https://www.lijiawang.org/posts/在kolla中配置cinder ceph多后端.html</id>
     <published>2017-11-30T03:10:44.000Z</published>
-    <updated>2018-01-08T09:27:37.824Z</updated>
+    <updated>2018-01-08T09:35:23.055Z</updated>
     
     <content type="html"><![CDATA[<h3 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h3><hr>
 <p>我一台有2块硬盘，1块ssd（性能盘）和1块sata（容量盘），共有3台同样的服务器（控制计算存储融合）<br>/dev/sdb  ssd<br>/dev/sdc  sata<br><img src="https://ljw.howieli.cn/blog/2017-11-30/ceph.png" alt=""></p>
