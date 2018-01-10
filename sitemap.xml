@@ -2,79 +2,79 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.lijiawang.org/posts/%E5%9C%A8kolla%E4%B8%AD%E9%85%8D%E7%BD%AEcinder%20ceph%E5%A4%9A%E5%90%8E%E7%AB%AF.html</loc>
+    <loc>https://www.lijiawang.org/posts/kolla-ironic.html</loc>
     
-    <lastmod>2018-01-08T09:35:23.055Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/ceph%20(%20requests%20are%20blocked%20)%20%E5%BC%82%E5%B8%B8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95.html</loc>
-    
-    <lastmod>2018-01-08T09:05:30.356Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/%E7%AE%80%E5%8D%95shell%E5%AE%9E%E7%8E%B0%E5%B1%80%E5%9F%9F%E7%BD%91IP%E6%89%AB%E6%8F%8F.html</loc>
-    
-    <lastmod>2017-12-29T03:25:36.656Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/kolla-octavia.html</loc>
-    
-    <lastmod>2017-11-29T09:20:09.802Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/kolla%E9%83%A8%E7%BD%B2swift.html</loc>
-    
-    <lastmod>2017-11-29T07:27:23.404Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/Openstack%20performance%20testing.html</loc>
-    
-    <lastmod>2017-11-28T09:56:49.075Z</lastmod>
+    <lastmod>2018-01-10T06:12:07.539Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.lijiawang.org/posts/ironic-instruction.html</loc>
     
-    <lastmod>2017-11-28T09:55:54.199Z</lastmod>
+    <lastmod>2018-01-10T06:11:34.858Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.lijiawang.org/posts/kolla-pike-on-centos.html</loc>
+    <loc>https://www.lijiawang.org/posts/kolla-octavia.html</loc>
     
-    <lastmod>2017-11-28T03:18:04.928Z</lastmod>
+    <lastmod>2018-01-10T06:11:13.024Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.lijiawang.org/posts/%E5%9C%A8openstack%E4%B8%8A%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BB%91%E5%AE%9Avip.html</loc>
+    <loc>https://www.lijiawang.org/posts/Openstack%20performance%20testing.html</loc>
     
-    <lastmod>2017-11-28T03:17:01.798Z</lastmod>
+    <lastmod>2018-01-10T06:10:45.134Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.lijiawang.org/posts/openstack-glance.html</loc>
     
-    <lastmod>2017-10-25T10:00:19.696Z</lastmod>
+    <lastmod>2018-01-10T06:10:10.910Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.lijiawang.org/posts/kolla-ironic.html</loc>
+    <loc>https://www.lijiawang.org/posts/kolla-pike-on-centos.html</loc>
     
-    <lastmod>2017-10-23T01:23:56.482Z</lastmod>
+    <lastmod>2018-01-10T06:09:26.627Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/%E5%9C%A8openstack%E4%B8%8A%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BB%91%E5%AE%9Avip.html</loc>
+    
+    <lastmod>2018-01-10T06:08:52.021Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/ceph%20(%20requests%20are%20blocked%20)%20%E5%BC%82%E5%B8%B8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95.html</loc>
+    
+    <lastmod>2018-01-10T06:06:16.073Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/%E7%AE%80%E5%8D%95shell%E5%AE%9E%E7%8E%B0%E5%B1%80%E5%9F%9F%E7%BD%91IP%E6%89%AB%E6%8F%8F.html</loc>
+    
+    <lastmod>2018-01-10T06:05:41.874Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/%E5%9C%A8kolla%E4%B8%AD%E9%85%8D%E7%BD%AEcinder%20ceph%E5%A4%9A%E5%90%8E%E7%AB%AF.html</loc>
+    
+    <lastmod>2018-01-10T06:05:03.643Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla%E9%83%A8%E7%BD%B2swift.html</loc>
+    
+    <lastmod>2018-01-10T06:03:05.948Z</lastmod>
     
   </url>
   
