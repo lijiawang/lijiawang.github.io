@@ -6,21 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.lijiawang.org">
-  <title>DevStack | 李家旺</title>
+  <title>ceph写流程分析 | 李家旺</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="DevStack安装openstack">
-<meta name="keywords" content="openstack DevStack ocata">
+  <meta name="description" content="ceph写流程分析 最近年底了，工作也不太忙了，这几天看看ceph，这几天总结的ceph写流程分析笔记（基于jewel版本&amp;gt;10.2.0），现分享出来，欢迎指点。">
+<meta name="keywords" content="ceph写流程分析">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DevStack">
-<meta property="og:url" content="https://www.lijiawang.org/posts/Openstack-DevStack-ocata.html">
+<meta property="og:title" content="ceph写流程分析">
+<meta property="og:url" content="https://www.lijiawang.org/posts/ceph写流程分析.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="DevStack安装openstack">
-<meta property="og:image" content="https://ljw.howieli.cn/blog/2017-6-20/dashboard.png">
-<meta property="og:updated_time" content="2017-06-25T00:21:44.772Z">
+<meta property="og:description" content="ceph写流程分析 最近年底了，工作也不太忙了，这几天看看ceph，这几天总结的ceph写流程分析笔记（基于jewel版本&amp;gt;10.2.0），现分享出来，欢迎指点。">
+<meta property="og:image" content="https://ljw.howieli.cn/blog/2018-02-09/ceph.jpg">
+<meta property="og:image" content="https://ljw.howieli.cn/blog/2018-02-09/WX20180209-105337.png">
+<meta property="og:image" content="https://ljw.howieli.cn/blog/2018-02-09/697113-20150928152213918-1722034221.jpg">
+<meta property="og:image" content="https://ljw.howieli.cn/blog/2018-02-09/WX20180209-110527.png">
+<meta property="og:image" content="https://ljw.howieli.cn/blog/2018-02-09/697113-20160507205321796-1810415144.jpg">
+<meta property="og:updated_time" content="2018-02-09T11:35:18.633Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DevStack">
-<meta name="twitter:description" content="DevStack安装openstack">
-<meta name="twitter:image" content="https://ljw.howieli.cn/blog/2017-6-20/dashboard.png">
+<meta name="twitter:title" content="ceph写流程分析">
+<meta name="twitter:description" content="ceph写流程分析 最近年底了，工作也不太忙了，这几天看看ceph，这几天总结的ceph写流程分析笔记（基于jewel版本&amp;gt;10.2.0），现分享出来，欢迎指点。">
+<meta name="twitter:image" content="https://ljw.howieli.cn/blog/2018-02-09/ceph.jpg">
   
     <link rel="alternative" href="/atom.xml" title="李家旺" type="application/atom+xml">
   
@@ -178,53 +182,89 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Openstack-DevStack-ocata" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-ceph写流程分析" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      DevStack
+      ceph写流程分析
     </h1>
   
 
         
-        <a href="/posts/Openstack-DevStack-ocata.html" class="archive-article-date">
-  	<time datetime="2017-06-20T12:37:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-20</time>
+        <a href="/posts/ceph写流程分析.html" class="archive-article-date">
+  	<time datetime="2018-02-09T11:33:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="DevStack安装openstack"><a href="#DevStack安装openstack" class="headerlink" title="DevStack安装openstack"></a><code>DevStack</code>安装<code>openstack</code></h3><a id="more"></a>
-<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><h4 id="关闭iptables防火墙或firewalld防火墙"><a href="#关闭iptables防火墙或firewalld防火墙" class="headerlink" title="关闭iptables防火墙或firewalld防火墙"></a>关闭<code>iptables</code>防火墙或<code>firewalld</code>防火墙</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> systemctl stop iptables</div><div class="line"><span class="meta">#</span> systemctl disable iptables</div><div class="line"><span class="meta">#</span> systemctl stop firewalld</div><div class="line"><span class="meta">#</span> systemctl disable firewalld</div></pre></td></tr></table></figure>
-<h4 id="关闭SElinux"><a href="#关闭SElinux" class="headerlink" title="关闭SElinux"></a>关闭<code>SElinux</code></h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> sed -i 'SELINUX=enforcing/SELINUX=disable/' /etc/selinux/config</div><div class="line"><span class="meta">#</span> reboot</div></pre></td></tr></table></figure>
-<h4 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装<code>git</code></h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> yum -y install epel-release git</div></pre></td></tr></table></figure>
-<h3 id="准备openstack环境"><a href="#准备openstack环境" class="headerlink" title="准备openstack环境"></a>准备<code>openstack</code>环境</h3><p>下载代码<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> cd /home</div><div class="line"><span class="meta">#</span> git clone https://github.com/openstack-dev/devstack -b stable/ocata</div><div class="line">//指定安装openstack ocata版本，如果你想安装其他版本，则指定其他版本名即可。</div></pre></td></tr></table></figure></p>
-<h3 id="创建stack用户"><a href="#创建stack用户" class="headerlink" title="创建stack用户"></a>创建<code>stack</code>用户</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> bash devstack/tools/create-stack-user.sh</div></pre></td></tr></table></figure>
-<h3 id="修改devstack目录的权限，让stack用户可以访问"><a href="#修改devstack目录的权限，让stack用户可以访问" class="headerlink" title="修改devstack目录的权限，让stack用户可以访问"></a>修改<code>devstack</code>目录的权限，让stack用户可以访问</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> chown -R stack:stack /home/devstack</div><div class="line"><span class="meta">#</span> chmod 777 /opt/stack -R</div></pre></td></tr></table></figure>
-<h3 id="切换到stack用户下"><a href="#切换到stack用户下" class="headerlink" title="切换到stack用户下"></a>切换到<code>stack</code>用户下</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> su stack</div><div class="line"><span class="meta">$</span> cd /home/devstack/</div></pre></td></tr></table></figure>
-<h3 id="创建一个local-conf文件，添加如下内容。"><a href="#创建一个local-conf文件，添加如下内容。" class="headerlink" title="创建一个local.conf文件，添加如下内容。"></a>创建一个<code>local.conf</code>文件，添加如下内容。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> vim local.conf</div><div class="line">[[local|localrc]]</div><div class="line">ADMIN_PASSWORD=admin</div><div class="line">DATABASE_PASSWORD=$ADMIN_PASSWORD</div><div class="line">RABBIT_PASSWORD=$ADMIN_PASSWORD</div><div class="line">SERVICE_PASSWORD=$ADMIN_PASSWORD</div></pre></td></tr></table></figure>
-<h3 id="运行DevStack，执行安装"><a href="#运行DevStack，执行安装" class="headerlink" title="运行DevStack，执行安装"></a>运行<code>DevStack</code>，执行安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> ./stack.sh</div></pre></td></tr></table></figure>
-<p>大约30分钟安装完成</p>
-<h3 id="默认DevStack会创建admin和demo两个用户，通过设置环境变量可以进行相关的操作。进入到-home-devstack目录下。"><a href="#默认DevStack会创建admin和demo两个用户，通过设置环境变量可以进行相关的操作。进入到-home-devstack目录下。" class="headerlink" title="默认DevStack会创建admin和demo两个用户，通过设置环境变量可以进行相关的操作。进入到/home/devstack目录下。"></a>默认<code>DevStack</code>会创建<code>admin</code>和<code>demo</code>两个用户，通过设置环境变量可以进行相关的操作。进入到<code>/home/devstack</code>目录下。</h3><h4 id="admin用户："><a href="#admin用户：" class="headerlink" title="admin用户："></a><code>admin</code>用户：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> source openrc admin admin</div></pre></td></tr></table></figure>
-<h4 id="demo用户"><a href="#demo用户" class="headerlink" title="demo用户"></a><code>demo</code>用户</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> source openrc demo demo</div></pre></td></tr></table></figure>
-<h3 id="安装失败时，可以再次执行安装命令。"><a href="#安装失败时，可以再次执行安装命令。" class="headerlink" title="安装失败时，可以再次执行安装命令。"></a>安装失败时，可以再次执行安装命令。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> ./unstack.sh &amp;&amp; ./stack.sh</div></pre></td></tr></table></figure>
-<h3 id="配置网络"><a href="#配置网络" class="headerlink" title="配置网络"></a>配置网络</h3><ul>
-<li><p>由于在<code>DevStack</code>安装过程中，将<code>br-ex</code>的地址设置成了其他<code>IP</code>地址，因此需要将<code>br-ex</code>地址清楚掉，重新配置。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> sudo ip addr flush br-ex</div></pre></td></tr></table></figure>
+        <h3 id="ceph写流程分析"><a href="#ceph写流程分析" class="headerlink" title="ceph写流程分析"></a>ceph写流程分析</h3><blockquote>
+<p>最近年底了，工作也不太忙了，这几天看看ceph，这几天总结的ceph写流程分析笔记（基于jewel版本&gt;10.2.0），现分享出来，欢迎指点。</p>
+</blockquote>
+<p><img src="https://ljw.howieli.cn/blog/2018-02-09/ceph.jpg" alt=""></p>
+<a id="more"></a>
+<h3 id="rbd到OSD映射关系"><a href="#rbd到OSD映射关系" class="headerlink" title="rbd到OSD映射关系"></a>rbd到OSD映射关系</h3><p>客户端使用<code>RBD</code>设备，使用<code>librbd</code>、<code>librados</code>库进行访问管理块设备。</p>
+<ul>
+<li><p>1、创建 一个<code>pool</code>，为这个<code>pool</code>指定<code>pg</code>的数量，同时在这个<code>pool</code>中指明保存数据的副本数（通常为<code>3</code>个副本）。</p>
 </li>
-<li><p>然后将物理网卡<code>eth0</code>作为<code>br-ex</code>的端口，这样创建的虚拟机就可以通过<code>eth0</code>访问外部网络，外部网络也可以通过<code>Floating IP</code>访问虚拟机。下面给出配置内容。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> cat ifcfg-eth0</div><div class="line">TYPE=OVSPort</div><div class="line">DEVICE=eth0</div><div class="line">DEVICETYPE=ovs</div><div class="line">OVS_BRIDGE=br-ex</div><div class="line">ONBOOT=yes</div><div class="line"><span class="meta">#</span>###############################################################</div><div class="line"><span class="meta">#</span> cat ifcfg-br-ex</div><div class="line">TYPE=OVSBridge</div><div class="line">DEVICE=br-ex</div><div class="line">DEVICETYPE=ovs</div><div class="line">BOOTPROTO=static</div><div class="line">IPADDR=192.168.23.100</div><div class="line">NETMASK=255.255.255.0</div><div class="line">GATEWAY=192.168.23.1</div></pre></td></tr></table></figure>
+<li><p>2、在这个<code>pool</code>中创建一个<code>rbd</code>设备<code>rbd0</code>，那么这个<code>rbd0</code>都会保存三份，在创建<code>rbd0</code>时必须指定<code>rbd</code>的<code>size</code>，对于这个<code>rbd0</code>的任何操作不能超过这个<code>size</code>。</p>
 </li>
-<li><p>接袭来，设置<code>br-ex</code>外部网桥和重启网络。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> ovs-vsctl add-port br-ex eth0</div><div class="line"><span class="meta">#</span> systemctl restart network</div></pre></td></tr></table></figure>
+<li><p>3、将这个块设备进行切块，每个块的大小默认为<code>4M</code>，并且每个块都有一个名字，名字就是<code>object+</code>序号。</p>
+</li>
+<li><p>4、将每个<code>object</code>通过<code>pg</code>进行副本位置的分配，<code>pg</code>会寻找<code>3</code>个<code>osd</code>，把这个<code>object</code>分别保存在这三个<code>osd</code>上。最后对于<code>object</code>的存储就变成了存储一个文件 <code>rbd0.object1.file</code>。数据层次映射图如下：<br><img src="https://ljw.howieli.cn/blog/2018-02-09/WX20180209-105337.png" alt=""></p>
 </li>
 </ul>
-<h3 id="登录Dashboard"><a href="#登录Dashboard" class="headerlink" title="登录Dashboard"></a>登录<code>Dashboard</code></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">http://192.168.23.100</div><div class="line">账户名： admin</div><div class="line">密  码： admin</div></pre></td></tr></table></figure>
-<p><img src="https://ljw.howieli.cn/blog/2017-6-20/dashboard.png" alt=""></p>
+<p>经过<code>pool</code>，<code>rbd</code>，<code>object</code>、<code>pg</code>的层层映射关系，在<code>PG</code>这一层中，已经知道存储数据的<code>3</code>个<code>OSD</code>所在位置及主从关系。<br>客户端与<code>primay OSD</code>建立<code>SOCKET</code> 通信，将要写入的数据传给<code>primary OSD</code>，由<code>primary OSD</code>再将数据发送给其他<code>replica OSD</code>数据节点。</p>
+<h4 id="RBD保存形式"><a href="#RBD保存形式" class="headerlink" title="RBD保存形式"></a>RBD保存形式</h4><p>如下图所示，<code>Ceph</code> 系统中不同层次的组件/用户所看到的数据的形式是不一样的：<br><img src="https://ljw.howieli.cn/blog/2018-02-09/697113-20150928152213918-1722034221.jpg" alt=""></p>
+<ul>
+<li><code>Ceph</code> 客户端所见的是一个完整的连续的二进制数据块，其大小为创建 <code>RBD image</code> 是设置的大小或者 <code>resize</code> 的大小，客户端可以从头或者从某个位置开始写入二进制数据。</li>
+<li><code>librados</code> 负责在 <code>RADOS</code> 中创建对象（<code>object</code>），其大小为 <code>pool</code> 的 <code>order</code> 决定，默认情况下 <code>order = 22</code> 此时 <code>object</code> 大小为 <code>4MB</code>；以及负责将客户端传入的二进制块条带化为若干个条带（<code>stripe</code>）。</li>
+<li><code>librados</code> 控制哪个条带由哪个 <code>OSD</code> 写入（条带 —写入哪个—-&gt; <code>object</code> —-位于哪个 —-&gt; <code>OSD</code>）</li>
+</ul>
+<p><code>OSD</code> 负责创建在文件系统中创建文件，并将 <code>librados</code> 传入的数据写入数据。</p>
+<ol>
+<li><code>Ceph client</code> 调用 <code>librados</code> 创建一个 <code>RBD image</code>，这时候不会做存储空间分配，而是创建若干元数据对象来保存元数据信息。</li>
+<li><code>Ceph client</code> 调用 <code>librados</code> 开始写数据。<code>librados</code> 计算条带、<code>object</code> 等，然后开始写第一个 <code>stripe</code> 到特定的目标 <code>object</code>。</li>
+<li><code>librados</code> 根据 <code>CRUSH</code> 算法，计算出 <code>object</code> 所对应的主 <code>OSD ID</code>，并将二进制数据发给它。</li>
+<li>主 <code>OSD</code> 负责调用文件系统接口将二进制数据写入磁盘上的文件（每个 <code>object</code> 对应一个 <code>file，file</code> 的内容是一个或者多个 <code>stripe</code>）。</li>
+<li><p>主 <code>ODS</code> 完成数据写入后，它使用 <code>CRUSH</code> 算啊计算出第二个<code>OSD</code>（<code>secondary OSD</code>）和第三个<code>OSD</code>（<code>tertiary OSD</code>）的位置，然后向这两个 <code>OSD</code> 拷贝对象。都完成后，它向 <code>ceph client</code>反馈该 <code>object</code> 保存完毕。</p>
+<p><code>Ceph client</code> 向一个 <code>RBD image</code> 写入二进制数据（假设 pool 的拷贝份数为 3）<br><img src="https://ljw.howieli.cn/blog/2018-02-09/WX20180209-110527.png" alt=""></p>
+</li>
+</ol>
+<h3 id="客户的写流程操作"><a href="#客户的写流程操作" class="headerlink" title="客户的写流程操作"></a>客户的写流程操作</h3><p>在客户端使用 rbd 时一般有两种方法：</p>
+<ul>
+<li>第一种 是 <code>Kernel rbd</code>。就是创建了<code>rbd</code>设备后，把<code>rbd</code>设备<code>map</code>到内核中，形成一个虚拟的块设备，这时这个块设备同其他通用块设备一样，一般的设备文件为<code>/dev/rbd0</code>，后续直接使用这个块设备文件就可以了，可以把 <code>/dev/rbd0</code> 格式化后 <code>mount</code> 到某个目录，也可以直接作为裸设备使用。这时对<code>rbd</code>设备的操作都通过<code>kernel rbd</code>操作方法进行的。 </li>
+<li>第二种是 <code>librbd</code> 方式。就是创建了<code>rbd</code>设备后，这时可以使用<code>librbd</code>、<code>librados</code>库进行访问管理块设备。这种方式不会<code>map</code>到内核，直接调用<code>librbd</code>提供的接口，可以实现对<code>rbd</code>设备的访问和管理，但是不会在客户端产生块设备文件。</li>
+</ul>
+<p>应用写入<code>rbd</code>块设备的过程：</p>
+<ol>
+<li>应用调用 <code>librbd</code> 接口或者对<code>linux</code> 内核虚拟块设备写入二进制块。下面以 <code>librbd</code> 为例。</li>
+<li><code>librbd</code> 对二进制块进行分块，默认块大小为 <code>4M</code>，每一块都有名字，成为一个对象</li>
+<li><code>librbd</code> 调用 <code>librados</code> 将对象写入 <code>Ceph</code> 集群</li>
+<li><code>librados</code> 向主 <code>OSD</code> 写入分好块的二进制数据块 (先建立<code>TCP/IP</code>连接，然后发送消息给 <code>OSD</code>，<code>OSD</code> 接收后写入其磁盘)</li>
+<li>主 <code>OSD</code> 负责同时向一个或者多个次 <code>OSD</code> 写入副本。注意这里是写到日志（<code>Journal</code>）就返回，因此，使用<code>SSD</code>作为<code>Journal</code>的话，可以提高响应速度，做到服务器端对客户端的快速同步返回写结果（<code>ack</code>）。</li>
+<li>当主次<code>OSD</code>都写入完成后，主 <code>OSD</code> 向客户端返回写入成功。</li>
+<li>当一段时间（也许得几秒钟）后<code>Journal</code> 中的数据向磁盘写入成功后，<code>Ceph</code>通过事件通知客户端数据写入磁盘成功（<code>commit</code>），此时，客户端可以将写缓存中的数据彻底清除掉了。</li>
+<li>默认地，<code>Ceph</code> 客户端会缓存写入的数据直到收到集群的<code>commit</code>通知。如果此阶段内（在写方法返回到收到<code>commit</code>通知之间）<code>OSD</code> 出故障导致数据写入文件系统失败，<code>Ceph</code> 将会允许客户端重做尚未提交的操作（<code>replay</code>）。因此，<code>PG</code> 有个状态叫 <code>replay：“The placement group is waiting for clients to replay operations after an OSD crashed.”</code>。<br><img src="https://ljw.howieli.cn/blog/2018-02-09/697113-20160507205321796-1810415144.jpg" alt=""><br>也就是，文件系统负责文件处理，<code>librbd</code> 负责块处理，<code>librados</code> 负责对象处理，<code>OSD</code> 负责将数据写入在<code>Journal</code>和磁盘中。</li>
+</ol>
+<h3 id="osd端写操作处理流程"><a href="#osd端写操作处理流程" class="headerlink" title="osd端写操作处理流程"></a>osd端写操作处理流程</h3><p>而对于写操作而言，由于要保证数据写入的同步性就会复杂很多：</p>
+<ol>
+<li><p>首先客户端会将数据发送给主osd，</p>
+</li>
+<li><p>主<code>osd</code>同样要先进行写操作预处理，完成后它要发送写消息给其他的从<code>osd</code>，让他们对副本<code>pg</code>进行更改，</p>
+</li>
+<li><p>从<code>osd</code>通过<code>FileJournal</code>完成写操作到<code>Journal</code>中后发送消息告诉主<code>osd</code>说完成，进入<code>5</code></p>
+</li>
+<li><p>当主<code>osd</code>收到所有的从<code>osd</code>完成写操作的消息后，会通过<code>FileJournal</code>完成自身的写操作到<code>Journal</code>中。完成后会通知客户端，已经完成了写操作。</p>
+</li>
+<li><p>主<code>osd</code>，从<code>osd</code>的线程开始工作调用<code>Filestore</code>将<code>Journal</code>中的数据写入到底层文件系统中。</p>
+</li>
+</ol>
+<p>今天就先总结这么多，总结的不太好，请谅解</p>
 
       
 
@@ -238,7 +278,7 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">openstack</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">ceph</a>
         		</li>
       		
 		</ul>
@@ -250,7 +290,7 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/openstack//" class="article-tag-list-link color5">openstack</a>
+        			<a href="/categories/ceph//" class="article-tag-list-link color5">ceph</a>
         		</li>
       		
 		</ul>
@@ -305,7 +345,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://www.lijiawang.org/posts/Openstack-DevStack-ocata.html" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://www.lijiawang.org/posts/ceph写流程分析.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -319,18 +359,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/posts/kolla-openstack-ocata.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          利用kolla快速搭建openstack-ocata单节点
-        
-      </div>
-    </a>
   
-  
-    <a href="/posts/openstack.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">虚拟机手动迁移</div>
+    <a href="/posts/手动构建Openstack镜像.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">手动构建Openstack镜像</div>
       <i class="icon-circle-right"></i>
     </a>
   

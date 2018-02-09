@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/ceph%E5%86%99%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90.html</loc>
+    
+    <lastmod>2018-02-09T11:35:18.633Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/%E6%89%8B%E5%8A%A8%E6%9E%84%E5%BB%BAOpenstack%E9%95%9C%E5%83%8F.html</loc>
     
     <lastmod>2018-01-12T06:57:56.878Z</lastmod>
