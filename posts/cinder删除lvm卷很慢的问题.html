@@ -6,18 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.lijiawang.org">
-  <title>Archives | 李家旺</title>
+  <title>cinder删除lvm卷很慢的问题 | 李家旺</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
-<meta name="keywords" content="linux, python, shell, openstack">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李家旺">
-<meta property="og:url" content="https://www.lijiawang.org/archives/index.html">
+  <meta name="description" content="cinder删除lvm卷很慢的问题最近搞kolla部署cinder，使用lvm做后端，在cinder-volume服务删除数据卷，数据卷会删除的很慢，在删除这段时间发现宿主机的load飙高，但是检查虚拟机负载没有异常。">
+<meta name="keywords" content="openstack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cinder删除lvm卷很慢的问题">
+<meta property="og:url" content="https://www.lijiawang.org/posts/cinder删除lvm卷很慢的问题.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta property="og:description" content="cinder删除lvm卷很慢的问题最近搞kolla部署cinder，使用lvm做后端，在cinder-volume服务删除数据卷，数据卷会删除的很慢，在删除这段时间发现宿主机的load飙高，但是检查虚拟机负载没有异常。">
+<meta property="og:image" content="https://ljw.howieli.cn/blog/2018-03-20/WechatIMG33.jpeg">
+<meta property="og:updated_time" content="2018-03-22T06:16:57.509Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李家旺">
-<meta name="twitter:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta name="twitter:title" content="cinder删除lvm卷很慢的问题">
+<meta name="twitter:description" content="cinder删除lvm卷很慢的问题最近搞kolla部署cinder，使用lvm做后端，在cinder-volume服务删除数据卷，数据卷会删除的很慢，在删除这段时间发现宿主机的load飙高，但是检查虚拟机负载没有异常。">
+<meta name="twitter:image" content="https://ljw.howieli.cn/blog/2018-03-20/WechatIMG33.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="李家旺" type="application/atom+xml">
   
@@ -175,389 +178,56 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-cinder删除lvm卷很慢的问题" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      cinder删除lvm卷很慢的问题
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/posts/cinder删除lvm卷很慢的问题.html" class="archive-article-date">
+
+        
+        <a href="/posts/cinder删除lvm卷很慢的问题.html" class="archive-article-date">
   	<time datetime="2018-03-22T06:15:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-22</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/posts/cinder删除lvm卷很慢的问题.html">cinder删除lvm卷很慢的问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">openstack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/openstack//" class="article-tag-list-link color5">openstack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
+        
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/posts/ceph写流程分析.html" class="archive-article-date">
-  	<time datetime="2018-02-09T11:33:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/posts/ceph写流程分析.html">ceph写流程分析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">ceph</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/ceph//" class="article-tag-list-link color5">ceph</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/posts/手动构建Openstack镜像.html" class="archive-article-date">
-  	<time datetime="2018-01-12T06:29:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/posts/手动构建Openstack镜像.html">手动构建Openstack镜像</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">openstack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/openstack//" class="article-tag-list-link color5">openstack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/posts/ceph ( requests are blocked ) 异常解决方法.html" class="archive-article-date">
-  	<time datetime="2018-01-08T09:00:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/posts/ceph ( requests are blocked ) 异常解决方法.html">ceph ( requests are blocked ) 异常解决方法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">ceph</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/ceph//" class="article-tag-list-link color5">ceph</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
+    <div class="article-entry" itemprop="articleBody">
       
-        </div></section>
+        <h3 id="cinder删除lvm卷很慢的问题"><a href="#cinder删除lvm卷很慢的问题" class="headerlink" title="cinder删除lvm卷很慢的问题"></a>cinder删除lvm卷很慢的问题</h3><p>最近搞<code>kolla</code>部署<code>cinder</code>，使用<code>lvm</code>做后端，在<code>cinder-volume</code>服务删除数据卷，数据卷会删除的很慢，在删除这段时间发现宿主机的<code>load</code>飙高，但是检查虚拟机负载没有异常。</p>
+<a id="more"></a>
+<h3 id="查找原因"><a href="#查找原因" class="headerlink" title="查找原因"></a>查找原因</h3><p><img src="https://ljw.howieli.cn/blog/2018-03-20/WechatIMG33.jpeg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DEBUG oslo_concurrency.processutils [req-beeeb583-c07e-4f23-8b63-1f76fc729c9a 0a266a36e53e4469a376f5baa4375064 0a266a36e53e4469a376f5baa4375064 - default default] CMD &quot;sudo cinder-rootwrap /etc/cinder/rootwrap.conf dd count=0 if=/dev/zero of=/dev/mapper/cinder--volumes-volume--beeeb583--c07e--4f23--8b63--1f76fc729c9a  oflag=direct&quot; returned: 0 in 0.127s execute /usr/lib/python2.7/site-packages/oslo_concurrency/processutils.py:374</div></pre></td></tr></table></figure>
+<p>从日志里面看到，<code>volume</code>服务调用<code>dd</code>命令对数据卷进行数据清空，同时采用<code>oflag=direct</code>参数直接操作块设备。所以，<code>cinder</code>在删除卷的时间长短和卷的大小有着直接关系。（删除期间<code>iowait</code>值会增高，怪不得<code>load</code>也会飙高）</p>
+<h3 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h3><p><code>cinder</code>在删除卷之前要对其做<code>dd</code>操作，是因为<code>LVM</code>在<code>lvremove</code>后重新<code>lvcreate</code>，新的<code>lv</code>里面还保留着老的数据，原来直接删除的<code>lv</code>并不会抹除卷上的数据。<code>cinder</code>之所以要用<code>dd zero</code>,就是为了避免租户<code>A</code>删除卷后，数据不会串到租户<code>B</code>新创建的数据卷上。这样一方面保证租户<code>A</code>的数据安全性，另一方面也避免租户<code>B</code>在使用数据卷的产生的疑惑。</p>
+<h3 id="处理问题"><a href="#处理问题" class="headerlink" title="处理问题"></a>处理问题</h3><ol>
+<li>关闭volume安全删除<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># Allowed values: none, zero, shred</div><div class="line">volume_clear = none</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><code>volume_clear</code>采用<code>shred</code>永久删除,</p>
+<ol>
+<li><p>置零<code>volume</code>头部<code>100MB</code>左右数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># Size in MiB to wipe at start of old volumes. 0 =&gt; all (integer value)</div><div class="line">volume_clear_size = 100</div></pre></td></tr></table></figure>
+</li>
+<li><p>调整<code>dd</code>进程<code>io</code>调度优先策略</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># The flag to pass to ionice to alter the i/o priority of the process used to</div><div class="line"># zero a volume after deletion, for example &quot;-c3&quot; for idle only priority.</div><div class="line"># (string value)</div><div class="line">volume_clear_ionice = -c3</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="保证数据绝对安全"><a href="#保证数据绝对安全" class="headerlink" title="保证数据绝对安全"></a>保证数据绝对安全</h4><p><code>volume_clear</code>采用<code>shred</code>永久删除，根据服务器情况适当调整<code>volume_clear_ionice</code>的值。<br>shred会用一些随机内容覆盖文件所在的节点和数据块，<code>cinder</code>在这里条用<code>shred</code>默认参数采用<code>-n 3</code>即重写<code>3</code>次。</p>
+<h4 id="数据相对安全的同时，降低数据卷删除时间"><a href="#数据相对安全的同时，降低数据卷删除时间" class="headerlink" title="数据相对安全的同时，降低数据卷删除时间"></a>数据相对安全的同时，降低数据卷删除时间</h4><p><code>volume_clear</code>采用<code>zero</code>填充，根据情况设置<code>volume_clear_size</code>大小，我们都知道，磁盘的开头部分保存着文件系统的元数据以及索引，清空这部分可以一定程度上保证数据的安全。</p>
+<p>至于<code>volume_clear=none</code>这种直接删除<code>lv</code>而不清空数据的方式，我就不建议采用了</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/posts/简单shell实现局域网IP扫描.html" class="archive-article-date">
-  	<time datetime="2017-12-29T03:23:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/posts/简单shell实现局域网IP扫描.html">shell实现局域网IP扫描</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">shell</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/shell//" class="article-tag-list-link color1">shell</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/posts/在kolla中配置cinder ceph多后端.html" class="archive-article-date">
-  	<time datetime="2017-11-30T03:10:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/posts/在kolla中配置cinder ceph多后端.html">在kolla中配置cinder ceph多后端</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ceph cinder</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/openstack//" class="article-tag-list-link color5">openstack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/posts/kolla部署swift.html" class="archive-article-date">
-  	<time datetime="2017-11-29T07:12:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/posts/kolla部署swift.html">kolla部署swift</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/openstack//" class="article-tag-list-link color5">openstack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/posts/在openstack上的虚拟机绑定vip.html" class="archive-article-date">
-  	<time datetime="2017-11-28T02:57:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/posts/在openstack上的虚拟机绑定vip.html">openstack虚拟机VIP配置步骤</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -569,7 +239,7 @@ var _hmt = _hmt || [];
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -582,118 +252,103 @@ var _hmt = _hmt || [];
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://www.lijiawang.org/posts/cinder删除lvm卷很慢的问题.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/posts/kolla-pike-on-centos.html" class="archive-article-date">
-  	<time datetime="2017-11-22T03:42:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-22</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/posts/ceph写流程分析.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ceph写流程分析</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/posts/kolla-pike-on-centos.html">kolla Pike on CentOS 7.4</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">openstack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/openstack//" class="article-tag-list-link color5">openstack</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/posts/openstack-glance.html" class="archive-article-date">
-  	<time datetime="2017-10-25T04:03:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/posts/openstack-glance.html">opensyack glance学习</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">openstack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/openstack//" class="article-tag-list-link color5">openstack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
   
 
 
@@ -717,8 +372,8 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
