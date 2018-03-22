@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.lijiawang.org/"/>
-  <updated>2018-03-22T06:21:12.729Z</updated>
+  <updated>2018-03-22T14:22:56.708Z</updated>
   <id>https://www.lijiawang.org/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://www.lijiawang.org/posts/cinder%E5%88%A0%E9%99%A4lvm%E5%8D%B7%E5%BE%88%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98.html"/>
     <id>https://www.lijiawang.org/posts/cinder删除lvm卷很慢的问题.html</id>
     <published>2018-03-22T06:15:00.000Z</published>
-    <updated>2018-03-22T06:21:12.729Z</updated>
+    <updated>2018-03-22T14:22:56.708Z</updated>
     
     <content type="html"><![CDATA[<h3 id="cinder删除lvm卷很慢的问题"><a href="#cinder删除lvm卷很慢的问题" class="headerlink" title="cinder删除lvm卷很慢的问题"></a>cinder删除lvm卷很慢的问题</h3><p>最近搞<code>kolla</code>部署<code>cinder</code>，使用<code>lvm</code>做后端，在<code>cinder-volume</code>服务删除数据卷，数据卷会删除的很慢，在删除这段时间发现宿主机的<code>load</code>飙高，但是检查虚拟机负载没有异常。</p>
 <a id="more"></a>
@@ -28,19 +28,19 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DEBUG oslo_concurrency.processutils [req-beeeb583-c07e-4f23-8b63-1f76fc729c9a 0a266a36e53e4469a376f5baa4375064 0a266a36e53e4469a376f5baa4375064 - default default] CMD "sudo cinder-rootwrap /etc/cinder/rootwrap.conf dd count=0 if=/dev/zero of=/dev/mapper/cinder--volumes-volume--beeeb583--c07e--4f23--8b63--1f76fc729c9a  oflag=direct" returned: 0 in 0.127s execute /usr/lib/python2.7/site-packages/oslo_concurrency/processutils.py:374</div></pre></td></tr></table></figure>
 <p>从日志里面看到，<code>volume</code>服务调用<code>dd</code>命令对数据卷进行数据清空，同时采用<code>oflag=direct</code>参数直接操作块设备。所以，<code>cinder</code>在删除卷的时间长短和卷的大小有着直接关系。（删除期间<code>iowait</code>值会增高，怪不得<code>load</code>也会飙高）</p>
 <h3 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h3><p><code>cinder</code>在删除卷之前要对其做<code>dd</code>操作，是因为<code>LVM</code>在<code>lvremove</code>后重新<code>lvcreate</code>，新的<code>lv</code>里面还保留着老的数据，原来直接删除的<code>lv</code>并不会抹除卷上的数据。<code>cinder</code>之所以要用<code>dd zero</code>,就是为了避免租户<code>A</code>删除卷后，数据不会串到租户<code>B</code>新创建的数据卷上。这样一方面保证租户<code>A</code>的数据安全性，另一方面也避免租户<code>B</code>在使用数据卷的产生的疑惑。</p>
-<h3 id="处理问题"><a href="#处理问题" class="headerlink" title="处理问题"></a>处理问题</h3><ol>
+<h3 id="处理问题"><a href="#处理问题" class="headerlink" title="处理问题"></a>处理问题</h3><ul>
 <li>关闭volume安全删除<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># Allowed values: none, zero, shred</div><div class="line">volume_clear = none</div></pre></td></tr></table></figure>
 </li>
-</ol>
+</ul>
 <p><code>volume_clear</code>采用<code>shred</code>永久删除,</p>
-<ol>
+<ul>
 <li><p>置零<code>volume</code>头部<code>100MB</code>左右数据</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># Size in MiB to wipe at start of old volumes. 0 =&gt; all (integer value)</div><div class="line">volume_clear_size = 100</div></pre></td></tr></table></figure>
 </li>
 <li><p>调整<code>dd</code>进程<code>io</code>调度优先策略</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># The flag to pass to ionice to alter the i/o priority of the process used to</div><div class="line"># zero a volume after deletion, for example &quot;-c3&quot; for idle only priority.</div><div class="line"># (string value)</div><div class="line">volume_clear_ionice = -c3</div></pre></td></tr></table></figure>
 </li>
-</ol>
+</ul>
 <h4 id="保证数据绝对安全"><a href="#保证数据绝对安全" class="headerlink" title="保证数据绝对安全"></a>保证数据绝对安全</h4><p><code>volume_clear</code>采用<code>shred</code>永久删除，根据服务器情况适当调整<code>volume_clear_ionice</code>的值。<br>shred会用一些随机内容覆盖文件所在的节点和数据块，<code>cinder</code>在这里条用<code>shred</code>默认参数采用<code>-n 3</code>即重写<code>3</code>次。</p>
 <h4 id="数据相对安全的同时，降低数据卷删除时间"><a href="#数据相对安全的同时，降低数据卷删除时间" class="headerlink" title="数据相对安全的同时，降低数据卷删除时间"></a>数据相对安全的同时，降低数据卷删除时间</h4><p><code>volume_clear</code>采用<code>zero</code>填充，根据情况设置<code>volume_clear_size</code>大小，我们都知道，磁盘的开头部分保存着文件系统的元数据以及索引，清空这部分可以一定程度上保证数据的安全。</p>
 <p>至于<code>volume_clear=none</code>这种直接删除<code>lv</code>而不清空数据的方式，我就不建议采用了</p>
