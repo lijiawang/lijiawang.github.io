@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.lijiawang.org/"/>
-  <updated>2018-03-29T13:02:08.328Z</updated>
+  <updated>2018-03-29T13:09:35.974Z</updated>
   <id>https://www.lijiawang.org/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://www.lijiawang.org/posts/kolla%20queens%20on%20centos7.41.html"/>
     <id>https://www.lijiawang.org/posts/kolla queens on centos7.41.html</id>
     <published>2018-03-29T11:37:20.000Z</published>
-    <updated>2018-03-29T13:02:08.328Z</updated>
+    <updated>2018-03-29T13:09:35.974Z</updated>
     
     <content type="html"><![CDATA[<h3 id="kolla-queens-on-centos7-4"><a href="#kolla-queens-on-centos7-4" class="headerlink" title="kolla queens on centos7.4"></a>kolla queens on centos7.4</h3><p><img src="https://ljw.howieli.cn/blog/2018-03-29/WX20180329-171345.png" alt=""><br><a id="more"></a></p>
 <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>我这里用<code>workstation</code> 创建了一个虚拟机，安装<code>centos7.4</code>系统，这台虚拟机上有两张网卡，一张做<code>openstack</code>管理网，一张做为虚拟机的业务网卡。</p>
@@ -106,7 +106,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># kolla-ansible destroy -i /home/multinode --yes-i-really-really-mean-it</div></pre></td></tr></table></figure>
 </li>
 <li><p>除此外，还有一些小工具，在需要时，可以使用</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 可用于从系统中移除部署的容器:</div><div class="line">tools/cleanup-containers</div><div class="line"><span class="meta">#</span> 可用于移除由于网络变化引发的 Docker 启动的neutron-agents 主机：</div><div class="line">tools/cleanup-host</div><div class="line"><span class="meta">#</span> 可用于从本地缓存中移除所有的 Docker image</div><div class="line"><span class="meta">#</span> tools/cleanup-images</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 可用于从系统中移除部署的容器:</div><div class="line">tools/cleanup-containers</div><div class="line"><span class="meta">#</span> 可用于移除由于网络变化引发的 Docker 启动的neutron-agents 主机：</div><div class="line">tools/cleanup-host</div><div class="line"><span class="meta">#</span> 可用于从本地缓存中移除所有的 Docker image</div><div class="line">tools/cleanup-images</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="故障诊断与排除"><a href="#故障诊断与排除" class="headerlink" title="故障诊断与排除"></a>故障诊断与排除</h3><p>通过 <code>Kolla</code> 和 <code>Ansible</code> 部署或运行 <code>OpenStack</code> 环境时，如果出现问题，通常可以使用如下一些方法来排查/解决</p>

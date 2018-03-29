@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://ljw.howieli.cn/blog/2018-03-29/WX20180329-171345.png">
 <meta property="og:image" content="https://ljw.howieli.cn/blog/2018-03-29/WX20180329-170306.png">
 <meta property="og:image" content="https://ljw.howieli.cn/blog/2018-03-29/WX20180329-170337.png">
-<meta property="og:updated_time" content="2018-03-29T13:02:08.328Z">
+<meta property="og:updated_time" content="2018-03-29T13:09:35.974Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kolla queens on centos7.4">
 <meta name="twitter:description" content="kolla queens on centos7.4">
@@ -284,7 +284,7 @@ var _hmt = _hmt || [];
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># kolla-ansible destroy -i /home/multinode --yes-i-really-really-mean-it</div></pre></td></tr></table></figure>
 </li>
 <li><p>除此外，还有一些小工具，在需要时，可以使用</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 可用于从系统中移除部署的容器:</div><div class="line">tools/cleanup-containers</div><div class="line"><span class="meta">#</span> 可用于移除由于网络变化引发的 Docker 启动的neutron-agents 主机：</div><div class="line">tools/cleanup-host</div><div class="line"><span class="meta">#</span> 可用于从本地缓存中移除所有的 Docker image</div><div class="line"><span class="meta">#</span> tools/cleanup-images</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 可用于从系统中移除部署的容器:</div><div class="line">tools/cleanup-containers</div><div class="line"><span class="meta">#</span> 可用于移除由于网络变化引发的 Docker 启动的neutron-agents 主机：</div><div class="line">tools/cleanup-host</div><div class="line"><span class="meta">#</span> 可用于从本地缓存中移除所有的 Docker image</div><div class="line">tools/cleanup-images</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="故障诊断与排除"><a href="#故障诊断与排除" class="headerlink" title="故障诊断与排除"></a>故障诊断与排除</h3><p>通过 <code>Kolla</code> 和 <code>Ansible</code> 部署或运行 <code>OpenStack</code> 环境时，如果出现问题，通常可以使用如下一些方法来排查/解决</p>
