@@ -3,6 +3,132 @@
   
     
     <entry>
+      <title><![CDATA[kolla queens on centos7.4]]></title>
+      <url>/posts/kolla%20queens%20on%20centos7.41.html</url>
+      <content type="html"><![CDATA[<h3 id="kolla-queens-on-centos7-4"><a href="#kolla-queens-on-centos7-4" class="headerlink" title="kolla queens on centos7.4"></a>kolla queens on centos7.4</h3><p><img src="https://ljw.howieli.cn/blog/2018-03-29/WX20180329-171345.png" alt=""><br><a id="more"></a></p>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>我这里用<code>workstation</code> 创建了一个虚拟机，安装<code>centos7.4</code>系统，这台虚拟机上有两张网卡，一张做<code>openstack</code>管理网，一张做为虚拟机的业务网卡。</p>
+<h3 id="确定环境信息"><a href="#确定环境信息" class="headerlink" title="确定环境信息"></a>确定环境信息</h3><ul>
+<li><p>确认系统版本信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> cat /etc/redhat-release</div><div class="line">CentOS Linux release 7.4.1708 (Core)</div><div class="line"><span class="meta">#</span> uname -r</div><div class="line">3.10.0-693.5.2.el7.x86_64</div></pre></td></tr></table></figure>
+</li>
+<li><p>确认网卡个数和状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> ip a</div><div class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN qlen 1</div><div class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</div><div class="line">    inet 127.0.0.1/8 scope host lo</div><div class="line">       valid_lft forever preferred_lft forever</div><div class="line">    inet6 ::1/128 scope host</div><div class="line">       valid_lft forever preferred_lft forever</div><div class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000</div><div class="line">    link/ether 00:0c:29:a7:8c:91 brd ff:ff:ff:ff:ff:ff</div><div class="line">    inet 192.168.254.15/24 brd 192.168.254.255 scope global dynamic ens33</div><div class="line">       valid_lft 1555sec preferred_lft 1555sec</div><div class="line">    inet6 fe80::5057:38c5:6b65:b5/64 scope link</div><div class="line">       valid_lft forever preferred_lft forever</div><div class="line">3: ens34: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000</div><div class="line">    link/ether 00:0c:29:a7:8c:9b brd ff:ff:ff:ff:ff:ff</div><div class="line">    inet6 fe80::20c:29ff:fea7:8c9b/64 scope link</div><div class="line">       valid_lft forever preferred_lft forever</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上面可以看出有两张网卡<code>ens33</code>和<code>ens34</code>，这里我用<code>ens33</code>做管理网，<code>ens34</code>做业务网，这里不需要配置<code>ip</code>，把<code>ens34</code>网卡<code>up</code>起来就好。</p>
+<ul>
+<li>查看主机名<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> hostname</div><div class="line">queens</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="环境初始化"><a href="#环境初始化" class="headerlink" title="环境初始化"></a>环境初始化</h3><ul>
+<li><p>关闭<code>NetworkManager</code>,<code>firewalld</code>,<code>selinux</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> systemctl stop NetworkManager</div><div class="line"><span class="meta">#</span> systemctl disable NetworkManager</div><div class="line">Removed symlink /etc/systemd/system/multi-user.target.wants/NetworkManager.service.</div><div class="line">Removed symlink /etc/systemd/system/dbus-org.freedesktop.NetworkManager.service.</div><div class="line">Removed symlink /etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service.</div><div class="line"><span class="meta">#</span> systemctl stop firewalld</div><div class="line"><span class="meta">#</span> systemctl disable firewalld</div><div class="line">Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.</div><div class="line">Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.</div><div class="line"><span class="meta">#</span> sed -i "s/SELINUX=enforcing/SELINUX=disabled/" /etc/selinux/config</div><div class="line"><span class="meta">#</span> setenforce 0</div><div class="line"><span class="meta">#</span> getenforce</div><div class="line">Permissive</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看是否开启了虚拟化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> egrep "vmx|svm" /proc/cpuinfo</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="安装基础软件包"><a href="#安装基础软件包" class="headerlink" title="安装基础软件包"></a>安装基础软件包</h3><p>配置配置<code>epel</code>源安装基础包<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> yum install epel-release</div><div class="line"><span class="meta">#</span> yum install axel vim git curl wget lrzsz gcc  python-devel python-pip</div></pre></td></tr></table></figure></p>
+<h3 id="安装配置docker"><a href="#安装配置docker" class="headerlink" title="安装配置docker"></a>安装配置<code>docker</code></h3><ul>
+<li><p>安装<code>docker</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> wget -O /etc/yum.repos.d/docker-ce.repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</div><div class="line"><span class="meta">#</span> yum install -y docker-ce</div></pre></td></tr></table></figure>
+</li>
+<li><p>配置<code>docker</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> mkdir /etc/systemd/system/docker.service.d</div><div class="line"><span class="meta">#</span> tee /etc/systemd/system/docker.service.d/kolla.conf &lt;&lt; 'EOF'</div><div class="line">[Service]</div><div class="line">MountFlags=shared</div><div class="line">EOF</div><div class="line"><span class="meta">#</span> vim /usr/lib/systemd/system/docker.service</div><div class="line"><span class="meta">#</span> ExecStart=/usr/bin/dockerd</div><div class="line">ExecStart=/usr/bin/dockerd --registry-mirror=http://f2d6cb40.m.daocloud.io --storage-driver=overlay2</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这里<code>docker</code>的文件系统我用<code>overlay2</code></p>
+<ul>
+<li><p>配置阿里云的 <code>Docker</code> 加速器，加快 <code>pull registry</code> 镜像</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">mkdir -p /etc/docker</div><div class="line">tee /etc/docker/daemon.json &lt;&lt;-'EOF'</div><div class="line">&#123;</div><div class="line">"registry-mirrors": ["https://a5aghnme.mirror.aliyuncs.com"]</div><div class="line">&#125;</div><div class="line">EOF</div></pre></td></tr></table></figure>
+</li>
+<li><p>启动<code>docker</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> systemctl daemon-reload</div><div class="line"><span class="meta">#</span> systemctl restart docker</div><div class="line"><span class="meta">#</span> systemctl enable docker</div><div class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.</div><div class="line"><span class="meta">#</span> systemctl status docker</div><div class="line"><span class="meta">#</span> docker info</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="安装ansible"><a href="#安装ansible" class="headerlink" title="安装ansible"></a>安装<code>ansible</code></h3><p><code>ansible</code>版本必须在2.0以上<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> yum -y install ansible -y</div></pre></td></tr></table></figure></p>
+<h3 id="下载kolla-ansible，并安装配置"><a href="#下载kolla-ansible，并安装配置" class="headerlink" title="下载kolla-ansible，并安装配置"></a>下载<code>kolla-ansible</code>，并安装配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> git clone https://github.com/openstack/kolla-ansible -b stable/queens</div><div class="line"><span class="meta">#</span> cd kolla-ansible/</div><div class="line"><span class="meta">#</span> cp -r etc/kolla/ /etc/kolla/</div><div class="line"><span class="meta">#</span> pip install . -i https://pypi.tuna.tsinghua.edu.cn/simple</div></pre></td></tr></table></figure>
+<h3 id="配置globals-yml文件"><a href="#配置globals-yml文件" class="headerlink" title="配置globals.yml文件"></a>配置<code>globals.yml</code>文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># egrep &quot;^[^#]&quot; /etc/kolla/globals.yml</div><div class="line">---</div><div class="line">kolla_base_distro: &quot;centos&quot;</div><div class="line">kolla_install_type: &quot;source&quot;</div><div class="line">openstack_release: &quot;queens&quot;</div><div class="line">kolla_internal_vip_address: &quot;192.168.254.11&quot;</div><div class="line">docker_namespace: &quot;kolla&quot;</div><div class="line">network_interface: &quot;eth0&quot;</div><div class="line">neutron_external_interface: &quot;eth1&quot;</div><div class="line">enable_haproxy: &quot;no&quot;</div><div class="line">nova_compute_virt_type: &quot;qemu&quot;</div><div class="line">ironic_dnsmasq_dhcp_range:</div><div class="line">tempest_image_id:</div><div class="line">tempest_flavor_ref_id:</div><div class="line">tempest_public_network_id:</div><div class="line">tempest_floating_network_name:</div></pre></td></tr></table></figure>
+<p>说明：这里我直接在<a href="https://hub.docker.com/search/?isAutomated=0&amp;isOfficial=0&amp;page=1&amp;pullCount=0&amp;q=kolla&amp;starCount=0" target="_blank" rel="external">docker hub</a>上拉镜像。如果是在虚拟机里安装 <code>Kolla</code>，希望可以在 <code>OpenStack</code> 平台上创建虚拟机，那么你需要在 <code>globals.yml</code> 文件中把 <code>nova_compute_virt_type</code> 配置项设置为 <code>qemu</code>，默认是 <code>KVM</code>。</p>
+<h3 id="安装kolla"><a href="#安装kolla" class="headerlink" title="安装kolla"></a>安装<code>kolla</code></h3><ul>
+<li><p>生成密码文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># kolla-genpwd</div></pre></td></tr></table></figure>
+</li>
+<li><p>编辑 <code>/etc/kolla/passwords.yml</code> 文件，配置 <code>keystone</code> 管理员用户的密码。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keystone_admin_password: password</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>同时，也是登录 <code>Dashboard，admin</code> 使用的密码，你可以根据自己需要进行修改。</p>
+<ul>
+<li><p>运行 <code>prechecks</code> 检查配置是否正确，如果有错误，可以先忽略。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> kolla-ansible prechecks</div></pre></td></tr></table></figure>
+</li>
+<li><p>从<code>docker hub</code>上<code>pull</code>镜像</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> kolla-ansible pull</div></pre></td></tr></table></figure>
+</li>
+<li><p>部署<code>openstack</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> kolla-ansible deploy</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建环境变量文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> kolla-ansible post-deploy</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这样就创建了<code>/etc/kolla/admin-openrc.sh</code> 环境变量文件。</p>
+<ul>
+<li><p>安装 <code>OpenStack Client</code> 端</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> pip install python-openstackclient</div></pre></td></tr></table></figure>
+</li>
+<li><p>编辑<code>init-runonce</code>文件,设置<code>public network</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> vim /usr/share/kolla-ansible/init-runonce</div><div class="line">EXT_NET_CIDR='10.10.20.0/24'</div><div class="line">EXT_NET_RANGE='start=10.10.20.110,end=10.10.20.254'</div><div class="line">EXT_NET_GATEWAY='10.10.20.1'</div></pre></td></tr></table></figure>
+</li>
+<li><p>加载<code>OpenStack CLI</code>所需的环境变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> source /etc/kolla/admin-openrc.sh</div></pre></td></tr></table></figure>
+</li>
+<li><p>初始化部署</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> cd /usr/share/kolla-ansible/ &amp;&amp; ./init-runonce</div></pre></td></tr></table></figure>
+</li>
+<li><p>登陆<code>Dashboard</code><br>用浏览器访问<code>192.168.254.15</code>登陆<code>Dashboard</code><br><img src="https://ljw.howieli.cn/blog/2018-03-29/WX20180329-170306.png" alt=""><br><img src="https://ljw.howieli.cn/blog/2018-03-29/WX20180329-170337.png" alt=""></p>
+</li>
+<li><p>如果，在部署过程中失败了，亦或是变更了配置信息，需要重新部署，则执行如下命令，清除掉已部署的 <code>Docker</code> 容器，即 <code>OpenStack</code> 服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># kolla-ansible destroy -i /home/multinode --yes-i-really-really-mean-it</div></pre></td></tr></table></figure>
+</li>
+<li><p>除此外，还有一些小工具，在需要时，可以使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 可用于从系统中移除部署的容器:</div><div class="line">tools/cleanup-containers</div><div class="line"><span class="meta">#</span> 可用于移除由于网络变化引发的 Docker 启动的neutron-agents 主机：</div><div class="line">tools/cleanup-host</div><div class="line"><span class="meta">#</span> 可用于从本地缓存中移除所有的 Docker image</div><div class="line"><span class="meta">#</span> tools/cleanup-images</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="故障诊断与排除"><a href="#故障诊断与排除" class="headerlink" title="故障诊断与排除"></a>故障诊断与排除</h3><p>通过 <code>Kolla</code> 和 <code>Ansible</code> 部署或运行 <code>OpenStack</code> 环境时，如果出现问题，通常可以使用如下一些方法来排查/解决</p>
+<ul>
+<li><p>查看指定容器（即指定的服务）的输出日志信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> docker logs container_name</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看指定服务的日志<br>直接 <code>CD</code> 到主机的 <code>/var/lib/docker/volumes/kollalogs/data/</code> 目录下，查看指定服务的日志信息。</p>
+</li>
+<li>查看容器的状态<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> docker ps</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可以使用 <code>docker ps -a</code> 命令查看到安装的 <code>OpenStack</code> 所有服务的容器</p>
+<ul>
+<li>进入某个容器<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> docker exec -it -u root container_name bash</div></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> openstack </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> kolla </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[cinder删除lvm卷很慢的问题]]></title>
       <url>/posts/cinder%E5%88%A0%E9%99%A4lvm%E5%8D%B7%E5%BE%88%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98.html</url>
       <content type="html"><![CDATA[<h3 id="cinder删除lvm卷很慢的问题"><a href="#cinder删除lvm卷很慢的问题" class="headerlink" title="cinder删除lvm卷很慢的问题"></a>cinder删除lvm卷很慢的问题</h3><p>最近搞<code>kolla</code>部署<code>cinder</code>，使用<code>lvm</code>做后端，在<code>cinder-volume</code>服务删除数据卷，数据卷会删除的很慢，在删除这段时间发现宿主机的<code>load</code>飙高，但是检查虚拟机负载没有异常。</p>
