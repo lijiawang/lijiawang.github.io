@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/ceph-for-openstack-storage.html</loc>
+    
+    <lastmod>2018-05-03T06:11:22.093Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/kolla-%E5%A4%9Aregion%E6%90%AD%E5%BB%BA.html</loc>
     
     <lastmod>2018-04-10T02:30:27.120Z</lastmod>
