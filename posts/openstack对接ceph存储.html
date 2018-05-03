@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="https://www.lijiawang.org">
   <title>ceph-for-openstack-storage | 李家旺</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="简介 截至2018年5月3日，OpenStack也已经伴随着我们走过了8个年头了，并且成为了云计算领域中最火热的项目之一，逐渐成为IaaS的事实标准，私有云项目的部署首选； OpenStack发展如此的迅速，以至于部署规模愈发的庞大，此时就该思量OpenStack集群的部署支持以及持续可扩展性； OpenStack和Ceph的集成更让开源项目锦上添花，Ceph作为优秀的分布式存储系统，实现对Ope">
+  <meta name="description" content="openstack对接ceph存储简介 截至2018年5月3日，OpenStack也已经伴随着我们走过了8个年头了，并且成为了云计算领域中最火热的项目之一，逐渐成为IaaS的事实标准，私有云项目的部署首选； OpenStack发展如此的迅速，以至于部署规模愈发的庞大，此时就该思量OpenStack集群的部署支持以及持续可扩展性； OpenStack和Ceph的集成更让开源项目锦上添花，Ceph作为">
 <meta name="keywords" content="linux, python, shell, openstack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ceph-for-openstack-storage">
-<meta property="og:url" content="https://www.lijiawang.org/posts/ceph-for-openstack-storage.html">
+<meta property="og:url" content="https://www.lijiawang.org/posts/openstack对接ceph存储.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="简介 截至2018年5月3日，OpenStack也已经伴随着我们走过了8个年头了，并且成为了云计算领域中最火热的项目之一，逐渐成为IaaS的事实标准，私有云项目的部署首选； OpenStack发展如此的迅速，以至于部署规模愈发的庞大，此时就该思量OpenStack集群的部署支持以及持续可扩展性； OpenStack和Ceph的集成更让开源项目锦上添花，Ceph作为优秀的分布式存储系统，实现对Ope">
-<meta property="og:updated_time" content="2018-05-03T06:11:22.093Z">
+<meta property="og:description" content="openstack对接ceph存储简介 截至2018年5月3日，OpenStack也已经伴随着我们走过了8个年头了，并且成为了云计算领域中最火热的项目之一，逐渐成为IaaS的事实标准，私有云项目的部署首选； OpenStack发展如此的迅速，以至于部署规模愈发的庞大，此时就该思量OpenStack集群的部署支持以及持续可扩展性； OpenStack和Ceph的集成更让开源项目锦上添花，Ceph作为">
+<meta property="og:updated_time" content="2018-05-03T06:15:23.697Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ceph-for-openstack-storage">
-<meta name="twitter:description" content="简介 截至2018年5月3日，OpenStack也已经伴随着我们走过了8个年头了，并且成为了云计算领域中最火热的项目之一，逐渐成为IaaS的事实标准，私有云项目的部署首选； OpenStack发展如此的迅速，以至于部署规模愈发的庞大，此时就该思量OpenStack集群的部署支持以及持续可扩展性； OpenStack和Ceph的集成更让开源项目锦上添花，Ceph作为优秀的分布式存储系统，实现对Ope">
+<meta name="twitter:description" content="openstack对接ceph存储简介 截至2018年5月3日，OpenStack也已经伴随着我们走过了8个年头了，并且成为了云计算领域中最火热的项目之一，逐渐成为IaaS的事实标准，私有云项目的部署首选； OpenStack发展如此的迅速，以至于部署规模愈发的庞大，此时就该思量OpenStack集群的部署支持以及持续可扩展性； OpenStack和Ceph的集成更让开源项目锦上添花，Ceph作为">
   
     <link rel="alternative" href="/atom.xml" title="李家旺" type="application/atom+xml">
   
@@ -186,7 +186,7 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-ceph-for-openstack-storage" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-openstack对接ceph存储" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -198,7 +198,7 @@ var _hmt = _hmt || [];
   
 
         
-        <a href="/posts/ceph-for-openstack-storage.html" class="archive-article-date">
+        <a href="/posts/openstack对接ceph存储.html" class="archive-article-date">
   	<time datetime="2018-05-03T06:08:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-03</time>
 </a>
         
@@ -206,7 +206,7 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+        <h2 id="openstack对接ceph存储"><a href="#openstack对接ceph存储" class="headerlink" title="openstack对接ceph存储"></a><code>openstack</code>对接<code>ceph</code>存储</h2><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
 <li>截至<code>2018</code>年<code>5</code>月<code>3</code>日，<code>OpenStack</code>也已经伴随着我们走过了<code>8</code>个年头了，并且成为了云计算领域中最火热的项目之一，逐渐成为<code>IaaS</code>的事实标准，私有云项目的部署首选；</li>
 <li><code>OpenStack</code>发展如此的迅速，以至于部署规模愈发的庞大，此时就该思量<code>OpenStack</code>集群的部署支持以及持续可扩展性；</li>
 <li><code>OpenStack</code>和<code>Ceph</code>的集成更让开源项目锦上添花，<code>Ceph</code>作为优秀的分布式存储系统，实现对<code>OpenStack</code>相关子项目进行集成或替代，目前在<code>OpenStack</code>中扮演者非常重要的角色；</li>
@@ -362,7 +362,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://www.lijiawang.org/posts/ceph-for-openstack-storage.html" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://www.lijiawang.org/posts/openstack对接ceph存储.html" alt="微信分享二维码">
     </div>
 </div>
 

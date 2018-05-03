@@ -4,8 +4,8 @@
     
     <entry>
       <title><![CDATA[ceph-for-openstack-storage]]></title>
-      <url>/posts/ceph-for-openstack-storage.html</url>
-      <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+      <url>/posts/openstack%E5%AF%B9%E6%8E%A5ceph%E5%AD%98%E5%82%A8.html</url>
+      <content type="html"><![CDATA[<h2 id="openstack对接ceph存储"><a href="#openstack对接ceph存储" class="headerlink" title="openstack对接ceph存储"></a><code>openstack</code>对接<code>ceph</code>存储</h2><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
 <li>截至<code>2018</code>年<code>5</code>月<code>3</code>日，<code>OpenStack</code>也已经伴随着我们走过了<code>8</code>个年头了，并且成为了云计算领域中最火热的项目之一，逐渐成为<code>IaaS</code>的事实标准，私有云项目的部署首选；</li>
 <li><code>OpenStack</code>发展如此的迅速，以至于部署规模愈发的庞大，此时就该思量<code>OpenStack</code>集群的部署支持以及持续可扩展性；</li>
 <li><code>OpenStack</code>和<code>Ceph</code>的集成更让开源项目锦上添花，<code>Ceph</code>作为优秀的分布式存储系统，实现对<code>OpenStack</code>相关子项目进行集成或替代，目前在<code>OpenStack</code>中扮演者非常重要的角色；</li>

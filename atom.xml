@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.lijiawang.org/"/>
-  <updated>2018-05-03T06:11:22.093Z</updated>
+  <updated>2018-05-03T06:15:23.697Z</updated>
   <id>https://www.lijiawang.org/</id>
   
   <author>
@@ -17,12 +17,12 @@
   
   <entry>
     <title>ceph-for-openstack-storage</title>
-    <link href="https://www.lijiawang.org/posts/ceph-for-openstack-storage.html"/>
-    <id>https://www.lijiawang.org/posts/ceph-for-openstack-storage.html</id>
+    <link href="https://www.lijiawang.org/posts/openstack%E5%AF%B9%E6%8E%A5ceph%E5%AD%98%E5%82%A8.html"/>
+    <id>https://www.lijiawang.org/posts/openstack对接ceph存储.html</id>
     <published>2018-05-03T06:08:17.000Z</published>
-    <updated>2018-05-03T06:11:22.093Z</updated>
+    <updated>2018-05-03T06:15:23.697Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+    <content type="html"><![CDATA[<h2 id="openstack对接ceph存储"><a href="#openstack对接ceph存储" class="headerlink" title="openstack对接ceph存储"></a><code>openstack</code>对接<code>ceph</code>存储</h2><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
 <li>截至<code>2018</code>年<code>5</code>月<code>3</code>日，<code>OpenStack</code>也已经伴随着我们走过了<code>8</code>个年头了，并且成为了云计算领域中最火热的项目之一，逐渐成为<code>IaaS</code>的事实标准，私有云项目的部署首选；</li>
 <li><code>OpenStack</code>发展如此的迅速，以至于部署规模愈发的庞大，此时就该思量<code>OpenStack</code>集群的部署支持以及持续可扩展性；</li>
 <li><code>OpenStack</code>和<code>Ceph</code>的集成更让开源项目锦上添花，<code>Ceph</code>作为优秀的分布式存储系统，实现对<code>OpenStack</code>相关子项目进行集成或替代，目前在<code>OpenStack</code>中扮演者非常重要的角色；</li>
@@ -124,7 +124,7 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;ul&gt;
+      &lt;h2 id=&quot;openstack对接ceph存储&quot;&gt;&lt;a href=&quot;#openstack对接ceph存储&quot; class=&quot;headerlink&quot; title=&quot;openstack对接ceph存储&quot;&gt;&lt;/a&gt;&lt;code&gt;openstack&lt;/code&gt;对接&lt;code&gt;ceph&lt;/code&gt;存储&lt;/h2&gt;&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;截至&lt;code&gt;2018&lt;/code&gt;年&lt;code&gt;5&lt;/code&gt;月&lt;code&gt;3&lt;/code&gt;日，&lt;code&gt;OpenStack&lt;/code&gt;也已经伴随着我们走过了&lt;code&gt;8&lt;/code&gt;个年头了，并且成为了云计算领域中最火热的项目之一，逐渐成为&lt;code&gt;IaaS&lt;/code&gt;的事实标准，私有云项目的部署首选；&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;OpenStack&lt;/code&gt;发展如此的迅速，以至于部署规模愈发的庞大，此时就该思量&lt;code&gt;OpenStack&lt;/code&gt;集群的部署支持以及持续可扩展性；&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;OpenStack&lt;/code&gt;和&lt;code&gt;Ceph&lt;/code&gt;的集成更让开源项目锦上添花，&lt;code&gt;Ceph&lt;/code&gt;作为优秀的分布式存储系统，实现对&lt;code&gt;OpenStack&lt;/code&gt;相关子项目进行集成或替代，目前在&lt;code&gt;OpenStack&lt;/code&gt;中扮演者非常重要的角色；&lt;/li&gt;
