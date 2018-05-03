@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.lijiawang.org/"/>
-  <updated>2018-05-03T06:15:23.697Z</updated>
+  <updated>2018-05-03T06:17:53.890Z</updated>
   <id>https://www.lijiawang.org/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://www.lijiawang.org/posts/openstack%E5%AF%B9%E6%8E%A5ceph%E5%AD%98%E5%82%A8.html"/>
     <id>https://www.lijiawang.org/posts/openstack对接ceph存储.html</id>
     <published>2018-05-03T06:08:17.000Z</published>
-    <updated>2018-05-03T06:15:23.697Z</updated>
+    <updated>2018-05-03T06:17:53.890Z</updated>
     
     <content type="html"><![CDATA[<h2 id="openstack对接ceph存储"><a href="#openstack对接ceph存储" class="headerlink" title="openstack对接ceph存储"></a><code>openstack</code>对接<code>ceph</code>存储</h2><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
 <li>截至<code>2018</code>年<code>5</code>月<code>3</code>日，<code>OpenStack</code>也已经伴随着我们走过了<code>8</code>个年头了，并且成为了云计算领域中最火热的项目之一，逐渐成为<code>IaaS</code>的事实标准，私有云项目的部署首选；</li>
@@ -132,6 +132,10 @@
     
     </summary>
     
+      <category term="openstack" scheme="https://www.lijiawang.org/categories/openstack/"/>
+    
+    
+      <category term="openstack ceph" scheme="https://www.lijiawang.org/tags/openstack-ceph/"/>
     
   </entry>
   
