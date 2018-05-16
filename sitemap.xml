@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/kolla-octavia.html</loc>
+    
+    <lastmod>2018-05-16T06:08:01.531Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/openstack%E5%AF%B9%E6%8E%A5ceph%E5%AD%98%E5%82%A8.html</loc>
     
     <lastmod>2018-05-03T06:17:53.890Z</lastmod>
@@ -54,13 +61,6 @@
     <loc>https://www.lijiawang.org/posts/ironic-instruction.html</loc>
     
     <lastmod>2018-01-10T06:11:34.858Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/kolla-octavia.html</loc>
-    
-    <lastmod>2018-01-10T06:11:13.024Z</lastmod>
     
   </url>
   
