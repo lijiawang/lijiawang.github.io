@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/docker%E7%BD%91%E7%BB%9C.html</loc>
+    
+    <lastmod>2018-06-14T01:44:58.801Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/kolla-octavia.html</loc>
     
     <lastmod>2018-05-16T06:08:01.531Z</lastmod>
