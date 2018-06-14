@@ -8,13 +8,13 @@
   <link rel="dns-prefetch" href="https://www.lijiawang.org">
   <title>docker网络 | 李家旺</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="docker四种单节点网络Docker在创建容器时有四种网络模式，bridge为默认不需要用–net去指定，其他三种模式需要在创建容器时使用–net去指定。四种单节点网络模式如下：none模式，使用–net=none指定；host模式，使用–net=host指定；bridge模式，使用–net=bridge指定，默认设置；container模式，使用–net=container:容器名称或ID指定">
+  <meta name="description" content="docker四种单节点网络Docker在创建容器时有四种网络模式，bridge为默认不需要用–net去指定，其他三种模式需要在创建容器时使用–net去指定。四种单节点网络模式如下：none模式，使用–-net=none指定；host模式，使用–-net=host指定；bridge模式，使用–-net=bridge指定，默认设置；container模式，使用–-net=container:容器名称或">
 <meta name="keywords" content="docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker网络">
 <meta property="og:url" content="https://www.lijiawang.org/posts/docker网络.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="docker四种单节点网络Docker在创建容器时有四种网络模式，bridge为默认不需要用–net去指定，其他三种模式需要在创建容器时使用–net去指定。四种单节点网络模式如下：none模式，使用–net=none指定；host模式，使用–net=host指定；bridge模式，使用–net=bridge指定，默认设置；container模式，使用–net=container:容器名称或ID指定">
+<meta property="og:description" content="docker四种单节点网络Docker在创建容器时有四种网络模式，bridge为默认不需要用–net去指定，其他三种模式需要在创建容器时使用–net去指定。四种单节点网络模式如下：none模式，使用–-net=none指定；host模式，使用–-net=host指定；bridge模式，使用–-net=bridge指定，默认设置；container模式，使用–-net=container:容器名称或">
 <meta property="og:image" content="https://ljw.howieli.cn/blog/2018-06-12/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180612122600.png">
 <meta property="og:image" content="https://ljw.howieli.cn/blog/2018-06-12/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180612155934.png">
 <meta property="og:image" content="https://ljw.howieli.cn/blog/2018-06-12/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180612160912.png">
@@ -23,10 +23,10 @@
 <meta property="og:image" content="https://ljw.howieli.cn/blog/2018-06-12/docker0.png">
 <meta property="og:image" content="https://ljw.howieli.cn/blog/2018-06-12/docker1.png">
 <meta property="og:image" content="https://ljw.howieli.cn/blog/2018-06-12/docker2.png">
-<meta property="og:updated_time" content="2018-06-14T02:37:51.235Z">
+<meta property="og:updated_time" content="2018-06-14T02:42:43.388Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker网络">
-<meta name="twitter:description" content="docker四种单节点网络Docker在创建容器时有四种网络模式，bridge为默认不需要用–net去指定，其他三种模式需要在创建容器时使用–net去指定。四种单节点网络模式如下：none模式，使用–net=none指定；host模式，使用–net=host指定；bridge模式，使用–net=bridge指定，默认设置；container模式，使用–net=container:容器名称或ID指定">
+<meta name="twitter:description" content="docker四种单节点网络Docker在创建容器时有四种网络模式，bridge为默认不需要用–net去指定，其他三种模式需要在创建容器时使用–net去指定。四种单节点网络模式如下：none模式，使用–-net=none指定；host模式，使用–-net=host指定；bridge模式，使用–-net=bridge指定，默认设置；container模式，使用–-net=container:容器名称或">
 <meta name="twitter:image" content="https://ljw.howieli.cn/blog/2018-06-12/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180612122600.png">
   
     <link rel="alternative" href="/atom.xml" title="李家旺" type="application/atom+xml">
@@ -215,7 +215,7 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="docker四种单节点网络"><a href="#docker四种单节点网络" class="headerlink" title="docker四种单节点网络"></a>docker四种单节点网络</h3><p><code>Docker</code>在创建容器时有四种网络模式，<code>bridge</code>为默认不需要用<code>–net</code>去指定，其他三种模式需要在创建容器时使用<code>–net</code>去指定。<br>四种单节点网络模式如下：<br><code>none</code>模式，使用<code>–net=none</code>指定；<br><code>host</code>模式，使用<code>–net=host</code>指定；<br><code>bridge</code>模式，使用<code>–net=bridge</code>指定，默认设置；<br><code>container</code>模式，使用<code>–net=container</code>:容器名称或ID指定。<br>在<code>Docker</code>安装时会自动在<code>host</code>上创建三个网络,我们可以通过<code>docker network ls</code>查看：<br><img src="https://ljw.howieli.cn/blog/2018-06-12/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180612122600.png" alt=""></p>
+        <h3 id="docker四种单节点网络"><a href="#docker四种单节点网络" class="headerlink" title="docker四种单节点网络"></a>docker四种单节点网络</h3><p><code>Docker</code>在创建容器时有四种网络模式，<code>bridge</code>为默认不需要用<code>–net</code>去指定，其他三种模式需要在创建容器时使用<code>–net</code>去指定。<br>四种单节点网络模式如下：<br><code>none</code>模式，使用<code>–-net=none</code>指定；<br><code>host</code>模式，使用<code>–-net=host</code>指定；<br><code>bridge</code>模式，使用<code>–-net=bridge</code>指定，默认设置；<br><code>container</code>模式，使用<code>–-net=container</code>:容器名称或ID指定。<br>在<code>Docker</code>安装时会自动在<code>host</code>上创建三个网络,我们可以通过<code>docker network ls</code>查看：<br><img src="https://ljw.howieli.cn/blog/2018-06-12/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180612122600.png" alt=""></p>
 <a id="more"></a>
 <h3 id="none网络"><a href="#none网络" class="headerlink" title="none网络"></a>none网络</h3><p><code>none</code> 网络就是什么都没有的网络。挂在这个网络下的容器除了 <code>lo</code>，没有其他任何网卡。容器创建时，可以通过 <code>--network=none</code> 指定使用 <code>none</code> 网络。<br><img src="https://ljw.howieli.cn/blog/2018-06-12/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180612155934.png" alt=""><br>此模式下创建容器是不会为容器配置任何网络参数的，如：容器网卡、<code>IP</code>、通信路由等，全部需要自己去配置。<br>其应用场景，封闭意味着隔离，一些对安全性要求高并且不需要联网的应用可以使用 <code>none</code> 网络，比如唯一用途是生成随机密码，就可以放到 <code>none</code> 网络中避免密码被窃取。</p>
 <h3 id="host网络"><a href="#host网络" class="headerlink" title="host网络"></a>host网络</h3><p>连接到 <code>host</code> 网络的容器共享 <code>Docker host</code> 的网络栈，容器的网络配置与 host 完全一样。可以通过 <code>--network=host</code>指定使用 <code>host</code> 网络。<br><code>Host</code> 模式并没有为容器创建一个隔离的网络环境。而之所以称之为<code>host</code>模式，是因为该模式下的 <code>Docker</code> 容器会和 <code>host</code> 宿主机共享同一个网络 <code>namespace</code>，故 <code>Docker Container</code>可以和宿主机一样，使用宿主机的<code>eth0</code>，实现和外界的通信。换言之，<code>Docker Container</code>的 <code>IP</code> 地址即为宿主机 <code>eth0</code> 的 <code>IP</code> 地址。其特点包括：</p>
@@ -229,7 +229,7 @@ var _hmt = _hmt || [];
 <p>直接使用 <code>Docker host</code> 的网络最大的好处就是性能，如果容器对网络传输效率有较高要求，则可以选择 <code>host</code> 网络。当然不便之处就是牺牲一些灵活性，比如要考虑端口冲突问题，<code>Docker host</code> 上已经使用的端口就不能再用了.<br><code>Docker host</code> 的另一个用途是让容器可以直接配置 <code>host</code> 网路。比如某些跨 <code>host</code> 的网络解决方案，其本身也是以容器方式运行的，这些方案需要对网络进行配置，比如管理 <code>iptables</code>。</p>
 <h3 id="bridge网络"><a href="#bridge网络" class="headerlink" title="bridge网络"></a>bridge网络</h3><p><code>Docker</code> 安装时会创建一个命名为 <code>docker0</code> 的 <code>linux bridge</code>。如果不指定<code>--network</code>，创建的容器默认都会挂到 <code>docker0</code> 上。<br><img src="https://ljw.howieli.cn/blog/2018-06-12/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180612165740.png" alt=""><br>当前 <code>docker0</code> 上没有任何其他网络设备，我们创建一个容器看看有什么变化。<br><img src="https://ljw.howieli.cn/blog/2018-06-12/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180612170225.png" alt=""></p>
 <p>当创建httpd容器后，一个新的网络接口<code>veth303a751</code>被挂到了<code>docker0</code>上，<code>veth303a751</code>就是新创建的虚拟网卡。当<code>stop</code>掉<code>httpd</code>容器虚拟网卡消失。<br>下图是<code>docker bridge</code>模式网络架构图<br><img src="https://ljw.howieli.cn/blog/2018-06-12/docker0.png" alt=""></p>
-<h3 id="container网络"><a href="#container网络" class="headerlink" title="container网络"></a>container网络</h3><p>这个模式指定新创建的容器和已经存在的一个容器共享一个<code>Network Namespace</code>，而不是和宿主机共享。新创建的容器不会创建自己的网卡，配置自己的<code>IP</code>，而是和一个指定的容器共享IP、端口范围等。同样，两个容器除了网络方面，其他的如文件系统、进程列表等还是隔离的。两个容器的进程可以通过<code>lo</code>网卡设备通信。<br>使用<code>–net =container</code>模式启动容器：<br><img src="https://ljw.howieli.cn/blog/2018-06-12/docker1.png" alt=""></p>
+<h3 id="container网络"><a href="#container网络" class="headerlink" title="container网络"></a>container网络</h3><p>这个模式指定新创建的容器和已经存在的一个容器共享一个<code>Network Namespace</code>，而不是和宿主机共享。新创建的容器不会创建自己的网卡，配置自己的<code>IP</code>，而是和一个指定的容器共享IP、端口范围等。同样，两个容器除了网络方面，其他的如文件系统、进程列表等还是隔离的。两个容器的进程可以通过<code>lo</code>网卡设备通信。<br>使用<code>–-net=container:CONIAINER ID</code>模式启动容器：<br><img src="https://ljw.howieli.cn/blog/2018-06-12/docker1.png" alt=""></p>
 <p><img src="https://ljw.howieli.cn/blog/2018-06-12/docker2.png" alt=""></p>
 
       
