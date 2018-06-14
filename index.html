@@ -207,7 +207,7 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="docker四种单节点网络"><a href="#docker四种单节点网络" class="headerlink" title="docker四种单节点网络"></a>docker四种单节点网络</h3><p><code>Docker</code>在创建容器时有四种网络模式，<code>bridge</code>为默认不需要用<code>–net</code>去指定，其他三种模式需要在创建容器时使用<code>–net</code>去指定。<br>四种单节点网络模式如下：<br><code>none</code>模式，使用<code>–-net=none</code>指定；<br><code>host</code>模式，使用<code>–-net=host</code>指定；<br><code>bridge</code>模式，使用<code>–-net=bridge</code>指定，默认设置；<br><code>container</code>模式，使用<code>–-net=container</code>:容器名称或ID指定。<br>在<code>Docker</code>安装时会自动在<code>host</code>上创建三个网络,我们可以通过<code>docker network ls</code>查看：<br><img src="https://ljw.howieli.cn/blog/2018-06-12/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180612122600.png" alt=""></p>
+        <h3 id="docker四种单节点网络"><a href="#docker四种单节点网络" class="headerlink" title="docker四种单节点网络"></a>docker四种单节点网络</h3><p><code>Docker</code>在创建容器时有四种网络模式，<code>bridge</code>为默认不需要用<code>-–net</code>去指定，其他三种模式需要在创建容器时使用<code>–-net</code>去指定。<br>四种单节点网络模式如下：<br><code>none</code>模式，使用<code>–-net=none</code>指定；<br><code>host</code>模式，使用<code>–-net=host</code>指定；<br><code>bridge</code>模式，使用<code>–-net=bridge</code>指定，默认设置；<br><code>container</code>模式，使用<code>–-net=container</code>:容器名称或ID指定。<br>在<code>Docker</code>安装时会自动在<code>host</code>上创建三个网络,我们可以通过<code>docker network ls</code>查看：<br><img src="https://ljw.howieli.cn/blog/2018-06-12/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180612122600.png" alt=""></p>
         
           <a class="article-more-a" href="/posts/docker网络.html#more">more >></a>
         
