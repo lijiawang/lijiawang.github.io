@@ -6,19 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.lijiawang.org">
-  <title>kolla部署openstack对接华为san存储 | 李家旺</title>
+  <title>Archives: 2019/5 | 李家旺</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="kolla部署openstack对接华为san存储openstack O版对接华为SAN存储（kolla部署模式）">
-<meta name="keywords" content="openstack">
-<meta property="og:type" content="article">
-<meta property="og:title" content="kolla部署openstack对接华为san存储">
-<meta property="og:url" content="https://www.lijiawang.org/posts/kolla部署openstack对接华为san存储.html">
+  <meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta name="keywords" content="linux, python, shell, openstack">
+<meta property="og:type" content="website">
+<meta property="og:title" content="李家旺">
+<meta property="og:url" content="https://www.lijiawang.org/archives/2019/05/index.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="kolla部署openstack对接华为san存储openstack O版对接华为SAN存储（kolla部署模式）">
-<meta property="og:updated_time" content="2018-08-02T03:37:03.896Z">
+<meta property="og:description" content="不看官网不足以熟练，不懂源码不足以精通">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="kolla部署openstack对接华为san存储">
-<meta name="twitter:description" content="kolla部署openstack对接华为san存储openstack O版对接华为SAN存储（kolla部署模式）">
+<meta name="twitter:title" content="李家旺">
+<meta name="twitter:description" content="不看官网不足以熟练，不懂源码不足以精通">
   
     <link rel="alternative" href="/atom.xml" title="李家旺" type="application/atom+xml">
   
@@ -186,176 +185,71 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-kolla部署openstack对接华为san存储" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      kolla部署openstack对接华为san存储
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/posts/harbor搭建.html" class="archive-article-date">
+  	<time datetime="2019-05-31T14:49:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-31</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/posts/harbor搭建.html">harbor搭建</a>
     </h1>
   
 
-        
-        <a href="/posts/kolla部署openstack对接华为san存储.html" class="archive-article-date">
-  	<time datetime="2018-08-02T03:25:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="kolla部署openstack对接华为san存储"><a href="#kolla部署openstack对接华为san存储" class="headerlink" title="kolla部署openstack对接华为san存储"></a>kolla部署openstack对接华为san存储</h3><p>openstack O版对接华为SAN存储（kolla部署模式）</p>
-<a id="more"></a>
-<h3 id="修改globals-yml文件"><a href="#修改globals-yml文件" class="headerlink" title="修改globals.yml文件"></a>修改globals.yml文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> grep enable_multipathd /etc/kolla/globals.yml </span></div><div class="line">enable_multipathd: "yes"</div></pre></td></tr></table></figure>
-<h3 id="修改multinode文件"><a href="#修改multinode文件" class="headerlink" title="修改multinode文件"></a>修改multinode文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> vim multinode</span></div><div class="line"><span class="meta">#</span><span class="bash"> Multipathd</span></div><div class="line">[multipathd:children]</div><div class="line">control</div><div class="line">compute</div></pre></td></tr></table></figure>
-<h3 id="修改config下的cinder-conf文件"><a href="#修改config下的cinder-conf文件" class="headerlink" title="修改config下的cinder.conf文件"></a>修改config下的cinder.conf文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> cat /etc/kolla/config/cinder.conf </span></div><div class="line">[DEFAULT]</div><div class="line">enabled_backends = rbd-1,18000V1_FC,18000V1_FC_SAS01,18000V1_FC_SAS02</div><div class="line">host = drkmcontrol</div><div class="line"></div><div class="line">[18000V1_FC]</div><div class="line">volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver</div><div class="line">cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</div><div class="line">volume_backend_name = 18000V1_FC</div><div class="line"></div><div class="line">[18000V1_FC_SAS01]</div><div class="line">volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver</div><div class="line">cinder_huawei_conf_file = /etc/cinder/cinder_huawei_sas01_conf.xml</div><div class="line">volume_backend_name = 18000V1_FC_SAS01</div><div class="line"></div><div class="line">[18000V1_FC_SAS02]</div><div class="line">volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver</div><div class="line">cinder_huawei_conf_file = /etc/cinder/cinder_huawei_sas02_conf.xml</div><div class="line">volume_backend_name = 18000V1_FC_SAS02</div></pre></td></tr></table></figure>
-<h3 id="编写xml文件"><a href="#编写xml文件" class="headerlink" title="编写xml文件"></a>编写xml文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> cat /etc/kolla/cinder-volume/cinder_huawei_sas01_conf.xml </span></div><div class="line">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</div><div class="line">&lt;config&gt;</div><div class="line">    &lt;Storage&gt;</div><div class="line">        &lt;Product&gt;18000&lt;/Product&gt;</div><div class="line">        &lt;Protocol&gt;FC&lt;/Protocol&gt;</div><div class="line">        &lt;RestURL&gt;https://10.15.188.100:8088/deviceManager/rest/&lt;/RestURL&gt;</div><div class="line">        &lt;UserName&gt;openstack&lt;/UserName&gt;</div><div class="line">        &lt;UserPassword&gt;VFR$5tgb3$&lt;/UserPassword&gt;</div><div class="line">    &lt;/Storage&gt;</div><div class="line">    &lt;LUN&gt; </div><div class="line">        &lt;StoragePool&gt;StoragePool_SMB0_1;StoragePool_SMB0_2;StoragePool_SMB0_3;StoragePool_SMB0_4&lt;/StoragePool&gt;</div><div class="line">    &lt;/LUN&gt;</div><div class="line">&lt;/config&gt;</div><div class="line"><span class="meta"></span></div><div class="line"></div><div class="line">#<span class="bash"> cat /etc/kolla/cinder-volume/cinder_huawei_sas02_conf.xml </span></div><div class="line">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</div><div class="line">&lt;config&gt;</div><div class="line">    &lt;Storage&gt;</div><div class="line">        &lt;Product&gt;18000&lt;/Product&gt;</div><div class="line">        &lt;Protocol&gt;FC&lt;/Protocol&gt;</div><div class="line">        &lt;RestURL&gt;https://10.15.188.100:8088/deviceManager/rest/&lt;/RestURL&gt;</div><div class="line">        &lt;UserName&gt;openstack&lt;/UserName&gt;</div><div class="line">        &lt;UserPassword&gt;VFR$5tgb3$&lt;/UserPassword&gt;</div><div class="line">    &lt;/Storage&gt;</div><div class="line">    &lt;LUN&gt; </div><div class="line">        &lt;StoragePool&gt;StoragePool_SMB0_5;StoragePool_SMB1_1;StoragePool_SMB1_2&lt;/StoragePool&gt;</div><div class="line">    &lt;/LUN&gt;</div><div class="line">&lt;/config&gt;</div><div class="line"><span class="meta"></span></div><div class="line"></div><div class="line">#<span class="bash"> cat /etc/kolla/cinder-volume/cinder_huawei_conf.xml </span></div><div class="line">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</div><div class="line">&lt;config&gt;</div><div class="line">    &lt;Storage&gt;</div><div class="line">        &lt;Product&gt;18000&lt;/Product&gt;</div><div class="line">        &lt;Protocol&gt;FC&lt;/Protocol&gt;</div><div class="line">        &lt;RestURL&gt;https://10.15.188.100:8088/deviceManager/rest/&lt;/RestURL&gt;</div><div class="line">        &lt;UserName&gt;openstack&lt;/UserName&gt;</div><div class="line">        &lt;UserPassword&gt;VFR$5tgb3$&lt;/UserPassword&gt;</div><div class="line">    &lt;/Storage&gt;</div><div class="line">    &lt;LUN&gt; </div><div class="line">        &lt;StoragePool&gt;StoragePool_SMB0_8&lt;/StoragePool&gt;</div><div class="line">    &lt;/LUN&gt;</div><div class="line">&lt;/config&gt;</div></pre></td></tr></table></figure>
-<h3 id="修改cinder-volume-json-j2-增加以下内容"><a href="#修改cinder-volume-json-j2-增加以下内容" class="headerlink" title="修改cinder-volume.json.j2,增加以下内容"></a>修改cinder-volume.json.j2,增加以下内容</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> vim /usr/share/kolla-ansible/ansible/roles/cinder/templates/cinder-volume.json.j2</span></div><div class="line">        &#123;</div><div class="line">            "source": "&#123;&#123; container_config_directory &#125;&#125;/cinder_*_conf.xml",</div><div class="line">            "dest": "/etc/cinder/",</div><div class="line">            "owner": "cinder",</div><div class="line">            "perm": "0600"</div><div class="line">        &#125;,</div></pre></td></tr></table></figure>
-<h3 id="利用ansible下发配置文件"><a href="#利用ansible下发配置文件" class="headerlink" title="利用ansible下发配置文件"></a>利用ansible下发配置文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ansible -i multinode control -m copy <span class="_">-a</span> <span class="string">"src=/etc/kolla/cinder-volume/cinder_huawei_* dest=/etc/kolla/cinder-volume/"</span></span></div></pre></td></tr></table></figure>
-<h3 id="部署cinder"><a href="#部署cinder" class="headerlink" title="部署cinder"></a>部署cinder</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> kolla-ansible -i multinode reconfigure -t cinder</span></div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> cinder service-list</span></div><div class="line">+------------------+------------------------------+------+---------+-------+----------------------------+-----------------+</div><div class="line">| Binary           | Host                         | Zone | Status  | State | Updated_at                 | Disabled Reason |</div><div class="line">+------------------+------------------------------+------+---------+-------+----------------------------+-----------------+</div><div class="line">| cinder-backup    | drkmcontrol                  | nova | enabled | up    | 2018-06-27T02:13:58.000000 | -               |</div><div class="line">| cinder-scheduler | drkmcontrol                  | nova | enabled | up    | 2018-06-27T02:13:52.000000 | -               |</div><div class="line">| cinder-volume    | drkmcontrol@18000V1_FC       | nova | enabled | up    | 2018-06-27T02:13:58.000000 | -               |</div><div class="line">| cinder-volume    | drkmcontrol@18000V1_FC_SAS01 | nova | enabled | up    | 2018-06-27T02:13:51.000000 | -               |</div><div class="line">| cinder-volume    | drkmcontrol@18000V1_FC_SAS02 | nova | enabled | up    | 2018-06-27T02:13:51.000000 | -               |</div><div class="line">| cinder-volume    | drkmcontrol@rbd-1            | nova | enabled | up    | 2018-06-27T02:13:56.000000 | -               |</div><div class="line">+------------------+------------------------------+------+---------+-------+----------------------------+-----------------+</div></pre></td></tr></table></figure>
-<h3 id="查看HBA卡ww暗号"><a href="#查看HBA卡ww暗号" class="headerlink" title="查看HBA卡ww暗号"></a>查看HBA卡ww暗号</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@drkm01070104u config]# cat /sys/class/fc_host/host2/port_id </div><div class="line">0x3f0000</div><div class="line">[root@drkm01070104u config]# cat /sys/class/fc_host/host1/port_id </div><div class="line">0x350000</div></pre></td></tr></table></figure>
-<h3 id="配置cinder多后端"><a href="#配置cinder多后端" class="headerlink" title="配置cinder多后端"></a>配置cinder多后端</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> cinder <span class="built_in">type</span>-create Ceph		</span></div><div class="line"><span class="meta">		</span></div><div class="line">#<span class="bash"> cinder <span class="built_in">type</span>-list</span></div><div class="line">+--------------------------------------+------------------+-------------+-----------+</div><div class="line">| ID                                   | Name             | Description | Is_Public |</div><div class="line">+--------------------------------------+------------------+-------------+-----------+</div><div class="line">| 2996c5a8-e312-42b8-b7f1-ca649a32eadb | 标准云盘FC01-SAN |             | True      |</div><div class="line">| 8f77dc78-689d-40ae-a673-dba37eaf7004 | 标准云盘FC02-SAN |             | True      |</div><div class="line">| ac318ed1-7de2-4ebb-8233-c35301ba77bd | Ceph             |             | True      |</div><div class="line">| bb5298dc-3790-4f06-8e26-b28c3fc7b56e | 高性能FC-SAN     |             | True      |</div><div class="line">+--------------------------------------+------------------+-------------+-----------+</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> cinder <span class="built_in">type</span>-key Ceph <span class="built_in">set</span> volume_backend_name=rbd-1</span></div><div class="line"><span class="meta">#</span><span class="bash"> cinder  extra-specs-list</span></div><div class="line">+--------------------------------------+------------------+---------------------------------------------+</div><div class="line">| ID                                   | Name             | extra_specs                                 |</div><div class="line">+--------------------------------------+------------------+---------------------------------------------+</div><div class="line">| 2996c5a8-e312-42b8-b7f1-ca649a32eadb | 标准云盘FC01-SAN | &#123;'volume_backend_name': '18000V1_FC_SAS01'&#125; |</div><div class="line">| 8f77dc78-689d-40ae-a673-dba37eaf7004 | 标准云盘FC02-SAN | &#123;'volume_backend_name': '18000V1_FC_SAS02'&#125; |</div><div class="line">| ac318ed1-7de2-4ebb-8233-c35301ba77bd | Ceph             | &#123;'volume_backend_name': 'rbd-1'&#125;            |</div><div class="line">| bb5298dc-3790-4f06-8e26-b28c3fc7b56e | 高性能FC-SAN     | &#123;'volume_backend_name': '18000V1_FC'&#125;       |</div><div class="line">+--------------------------------------+------------------+---------------------------------------------+</div></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">openstack</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/openstack//" class="article-tag-list-link color5">openstack</a>
+        			<a href="/categories/docker//" class="article-tag-list-link color2">docker</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://www.lijiawang.org/posts/kolla部署openstack对接华为san存储.html" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/posts/使用Kubeadm安装最新版Kubernetes 1.12.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          使用Kubeadm安装最新版Kubernetes 1.12
-        
-      </div>
-    </a>
   
   
-    <a href="/posts/docker网络.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">docker网络</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -378,8 +272,8 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

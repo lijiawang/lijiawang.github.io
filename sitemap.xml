@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/harbor%E6%90%AD%E5%BB%BA.html</loc>
+    
+    <lastmod>2019-05-31T14:56:14.193Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/%E4%BD%BF%E7%94%A8Kubeadm%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88Kubernetes%201.12.html</loc>
     
     <lastmod>2018-10-25T13:42:45.347Z</lastmod>

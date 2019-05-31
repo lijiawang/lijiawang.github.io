@@ -208,7 +208,7 @@ var _hmt = _hmt || [];
       
         <h3 id="tmux介绍"><a href="#tmux介绍" class="headerlink" title="tmux介绍"></a>tmux介绍</h3><a id="more"></a>
 <p>tmux是指通过一个终端登录远程主机并运行后，在其中可以开启多个控制台的终端复用软件。<br>有一本关于Tmux的书tmux：<a href="https://www.amazon.com/tmux-Productive-Development-Brian-Hogan/dp/1934356964" target="_blank" rel="external">Productive Mouse-Free Development</a><br>自己在centos7.2系统上简单的使用了一下</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> yum install tmux -y</div></pre></td></tr></table></figure>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> yum install tmux -y</span></div></pre></td></tr></table></figure>
 <h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">Ctrl+b ? 显示快捷键帮助</div><div class="line">Ctrl+b C-o 调换窗口位置，类似与vim 里的C-w</div><div class="line">Ctrl+b 空格键 采用下一个内置布局</div><div class="line">Ctrl+b ! 把当前窗口变为新窗口</div><div class="line">Ctrl+b “ 横向分隔窗口</div><div class="line">Ctrl+b % 纵向分隔窗口</div><div class="line">Ctrl+b q 显示分隔窗口的编号</div><div class="line">Ctrl+b o 跳到下一个分隔窗口</div><div class="line">Ctrl+b 上下键 上一个及下一个分隔窗口</div><div class="line">Ctrl+b C-方向键 调整分隔窗口大小</div><div class="line">Ctrl+b c 创建新窗口</div><div class="line">Ctrl+b 0~9 选择几号窗口</div><div class="line">Ctrl+b c 创建新窗口</div><div class="line">Ctrl+b n 选择下一个窗口</div><div class="line">Ctrl+b l 切换到最后使用的窗口</div><div class="line">Ctrl+b p 选择前一个窗口</div><div class="line">Ctrl+b w 以菜单方式显示及选择窗口</div><div class="line">Ctrl+b t 显示时钟</div><div class="line">Ctrl+b ; 切换到最后一个使用的面板</div><div class="line">Ctrl+b x 关闭面板</div><div class="line">Ctrl+b &amp; 关闭窗口</div><div class="line">Ctrl+b s 以菜单方式显示和选择会话</div><div class="line">Ctrl+b d 退出tumx，并保存当前会话，这时，tmux仍在后台运行，可以通过tmux attach进入 到指定的会话</div></pre></td></tr></table></figure>
       
 
@@ -357,7 +357,7 @@ var _hmt = _hmt || [];
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 李家旺
+    		&copy; 2019 李家旺
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -440,10 +440,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tmux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
@@ -452,23 +448,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">awk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">openstack</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">awk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tmux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ceph</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">类</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tempest rally</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -480,10 +472,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">swift</a>
               </li>
              
@@ -492,7 +480,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack ceph</a>
+                <a href="javascript:void(0)" class="js-tag color4">tempest rally</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">shell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -500,7 +492,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">openstack ceph</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">类</a>
               </li>
             
             <div class="clearfix"></div>
