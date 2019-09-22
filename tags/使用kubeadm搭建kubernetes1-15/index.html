@@ -6,22 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.lijiawang.org">
-  <title>基于CentOS 7.3 安装Ceph Jewel 10.2.9 | 李家旺</title>
+  <title>Tag: 使用kubeadm搭建kubernetes1.15 | 李家旺</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="基于CentOS 7.3 安装Ceph Jewel 10.2.9">
-<meta name="keywords" content="ceph">
-<meta property="og:type" content="article">
-<meta property="og:title" content="基于CentOS 7.3 安装Ceph Jewel 10.2.9">
-<meta property="og:url" content="https://www.lijiawang.org/posts/intsall-ceph.html">
+  <meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta name="keywords" content="linux, python, shell, openstack">
+<meta property="og:type" content="website">
+<meta property="og:title" content="李家旺">
+<meta property="og:url" content="https://www.lijiawang.org/tags/使用kubeadm搭建kubernetes1-15/index.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="基于CentOS 7.3 安装Ceph Jewel 10.2.9">
-<meta property="og:image" content="https://ljw.howieli.cn/blog/2017-7-18/ceph-top.png">
-<meta property="og:image" content="https://ljw.howieli.cn/blog/2017-7-18/ceph-lab-configure.png">
-<meta property="og:updated_time" content="2017-07-18T08:59:03.496Z">
+<meta property="og:description" content="不看官网不足以熟练，不懂源码不足以精通">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="基于CentOS 7.3 安装Ceph Jewel 10.2.9">
-<meta name="twitter:description" content="基于CentOS 7.3 安装Ceph Jewel 10.2.9">
-<meta name="twitter:image" content="https://ljw.howieli.cn/blog/2017-7-18/ceph-top.png">
+<meta name="twitter:title" content="李家旺">
+<meta name="twitter:description" content="不看官网不足以熟练，不懂源码不足以精通">
   
     <link rel="alternative" href="/atom.xml" title="李家旺" type="application/atom+xml">
   
@@ -189,210 +185,71 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-intsall-ceph" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      基于CentOS 7.3 安装Ceph Jewel 10.2.9
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/posts/使用kubeadm搭建kubernetes1.15.html" class="archive-article-date">
+  	<time datetime="2019-09-01T14:07:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-01</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/posts/使用kubeadm搭建kubernetes1.15.html">使用kubeadm搭建kubernetes1.15</a>
     </h1>
   
 
-        
-        <a href="/posts/intsall-ceph.html" class="archive-article-date">
-  	<time datetime="2017-07-18T08:45:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="基于CentOS-7-3-安装Ceph-Jewel-10-2-9"><a href="#基于CentOS-7-3-安装Ceph-Jewel-10-2-9" class="headerlink" title="基于CentOS 7.3 安装Ceph Jewel 10.2.9"></a>基于<code>CentOS 7.3</code> 安装<code>Ceph Jewel 10.2.9</code></h3><a id="more"></a>
-<h3 id="网络架构图"><a href="#网络架构图" class="headerlink" title="网络架构图"></a>网络架构图</h3><p><img src="https://ljw.howieli.cn/blog/2017-7-18/ceph-top.png" alt=""></p>
-<h3 id="节点信息配置"><a href="#节点信息配置" class="headerlink" title="节点信息配置"></a>节点信息配置</h3><p><img src="https://ljw.howieli.cn/blog/2017-7-18/ceph-lab-configure.png" alt=""></p>
-<h3 id="配置说明："><a href="#配置说明：" class="headerlink" title="配置说明："></a>配置说明：</h3><blockquote>
-<p>采用了4台centos7.3系统的虚拟机，1台Ceph-Master作为安装节点，NTP Server；3台Ceph节点，既作为OSD节点，也作为Monitor节点。每个OSD节点有6个盘：300G的系统盘，3个2TB作为SATA池的OSD，800GB作为SSD池的OSD，240GB SSD盘作为日志盘。</p>
-</blockquote>
-<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>这里安装centos7.3的操作系统我就不多说了，下面我说一下环境准备工作。</p>
-<p>1.检查操作系统的版本<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> cat /etc/redhat-release</span></div><div class="line">CentOS Linux release 7.3.1611 (Core)</div></pre></td></tr></table></figure></p>
-<p>2.查看系统内核版本<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> uname -r</span></div><div class="line">3.10.0-514.26.2.el7.x86_64</div></pre></td></tr></table></figure></p>
-<p>3.关闭防火墙和<code>selinux</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sed -i 's/SELINUX=.*/SELINUX=disabled/' /etc/selinux/config</div><div class="line">setenforce 0</div><div class="line">systemctl stop firewalld</div><div class="line">systemctl disable firewalld</div></pre></td></tr></table></figure></p>
-<p>4.查看设备信息（所有的<code>OSD</code>节点）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> lsblk</span></div><div class="line">NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</div><div class="line">sda           8:0    0  300G  0 disk </div><div class="line">├─sda1        8:1    0    1G  0 part /boot</div><div class="line">└─sda2        8:2    0  299G  0 part </div><div class="line">  ├─cl-root 253:0    0   50G  0 lvm  /</div><div class="line">  ├─cl-swap 253:1    0    2G  0 lvm  [SWAP]</div><div class="line">  └─cl-home 253:2    0  247G  0 lvm  /home</div><div class="line">sdb           8:16   0    2T  0 disk </div><div class="line">sdc           8:32   0    2T  0 disk </div><div class="line">sdd           8:48   0    2T  0 disk </div><div class="line">sde           8:64   0  800G  0 disk </div><div class="line">sdf           8:80   0  240G  0 disk </div><div class="line">sr0          11:0    1 1024M  0 rom</div></pre></td></tr></table></figure></p>
-<p>5.查看网卡配置（所有<code>OSD</code>节点）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ip a</span></div><div class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN qlen 1</div><div class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</div><div class="line">    inet 127.0.0.1/8 scope host lo</div><div class="line">       valid_lft forever preferred_lft forever</div><div class="line">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000</div><div class="line">    link/ether 00:0c:29:06:c8:a4 brd ff:ff:ff:ff:ff:ff</div><div class="line">    inet 172.16.0.11/24 brd 172.16.0.255 scope global eth0</div><div class="line">       valid_lft forever preferred_lft forever</div><div class="line">3: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000</div><div class="line">    link/ether 00:0c:29:06:c8:ae brd ff:ff:ff:ff:ff:ff</div><div class="line">    inet 192.168.0.11/24 brd 192.168.0.255 scope global eth1</div><div class="line">       valid_lft forever preferred_lft forever</div></pre></td></tr></table></figure></p>
-<p>6.在所有节点配置<code>hosts</code>解析<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">172.16.0.10 ceph-master</div><div class="line">172.16.0.11 ceph-node-1</div><div class="line">172.16.0.12 ceph-node-2</div><div class="line">172.16.0.13 ceph-node-3</div></pre></td></tr></table></figure></p>
-<p>7.安装基础的软件包(所有节点)<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install tree nmap sysstat lrzsz dos2unix wegt git net-tools -y</div></pre></td></tr></table></figure></p>
-<p>8.建立<code>SSH</code>通信（在<code>ceph-master</code>节点上执行）<br>（1）生成秘钥文件<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa</div></pre></td></tr></table></figure></p>
-<p>（2）拷贝秘钥文件<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id root@ceph-master</div><div class="line">ssh-copy-id root@ceph-node-1</div><div class="line">ssh-copy-id root@ceph-node-2</div><div class="line">ssh-copy-id root@ceph-node-3</div></pre></td></tr></table></figure></p>
-<p>环境准备基本完成</p>
-<h3 id="配置NTP服务"><a href="#配置NTP服务" class="headerlink" title="配置NTP服务"></a>配置<code>NTP</code>服务</h3><p>首先我们要在所有的节点上安装<code>NTP</code>服务<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> yum install -y ntp</span></div></pre></td></tr></table></figure></p>
-<h4 id="在ceph-master节点上配置"><a href="#在ceph-master节点上配置" class="headerlink" title="在ceph-master节点上配置"></a>在<code>ceph-master</code>节点上配置</h4><p>1.修改<code>NTP</code>配置文件<code>/etc/ntp.conf</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> vim /etc/ntp.conf</span></div><div class="line"><span class="meta">#</span><span class="bash">server 0.centos.pool.ntp.org iburst</span></div><div class="line"><span class="meta">#</span><span class="bash">server 1.centos.pool.ntp.org iburst</span></div><div class="line"><span class="meta">#</span><span class="bash">server 2.centos.pool.ntp.org iburst</span></div><div class="line"><span class="meta">#</span><span class="bash">server 3.centos.pool.ntp.org iburst</span></div><div class="line">restrict 172.16.0.0 mask 255.255.255.0 nomodify notrap</div><div class="line">server 127.127.1.0 minpoll 4</div><div class="line">fudge 127.127.1.0 stratum 0</div></pre></td></tr></table></figure></p>
-<p>2.修改配置文件<code>/etc/ntp/step-tickers</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> vim /etc/ntp/step-tickers</span></div><div class="line"><span class="meta">#</span><span class="bash">0.centos.pool.ntp.org</span></div><div class="line">127.127.1.0</div></pre></td></tr></table></figure></p>
-<p>3.启动<code>NTP</code>服务，并设置开机启动<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl enable ntpd ; systemctl start ntpd</div></pre></td></tr></table></figure></p>
-<h4 id="在所有的OSD节点配置"><a href="#在所有的OSD节点配置" class="headerlink" title="在所有的OSD节点配置"></a>在所有的<code>OSD</code>节点配置</h4><p>1.修改NTP配置文件<code>/etc/ntp.conf</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> vim /etc/ntp.conf</span></div><div class="line"><span class="meta">#</span><span class="bash">server 0.centos.pool.ntp.org iburst</span></div><div class="line"><span class="meta">#</span><span class="bash">server 1.centos.pool.ntp.org iburst</span></div><div class="line"><span class="meta">#</span><span class="bash">server 2.centos.pool.ntp.org iburst</span></div><div class="line"><span class="meta">#</span><span class="bash">server 3.centos.pool.ntp.org iburst</span></div><div class="line">server 172.16.0.10</div></pre></td></tr></table></figure></p>
-<p>2.启动<code>NTP</code>服务，并设置开机启动<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl enable ntpd ; systemctl start ntpd</div></pre></td></tr></table></figure></p>
-<h4 id="验证NTP"><a href="#验证NTP" class="headerlink" title="验证NTP"></a>验证<code>NTP</code></h4><p>在所有节点执行<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ntpq -p</span></div><div class="line"></div><div class="line">     remote           refid      st t when poll reach   delay   offset  jitter</div><div class="line">==============================================================================</div><div class="line">*ceph-master     .LOCL.           1 u   16   64  377    0.269    0.032   0.269</div></pre></td></tr></table></figure></p>
-<p>前面有 * 表示已经同步。</p>
-<h3 id="安装ceph"><a href="#安装ceph" class="headerlink" title="安装ceph"></a>安装<code>ceph</code></h3><p>####跟新系统源(所有节点执行)<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">rm -rf /etc/yum.repos.d/*.repo</div><div class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</div><div class="line">wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo</div><div class="line">sed -i '/aliyuncs/d' /etc/yum.repos.d/CentOS-Base.repo</div><div class="line">sed -i 's/$releasever/7/g' /etc/yum.repos.d/CentOS-Base.repo</div><div class="line">sed -i '/aliyuncs/d' /etc/yum.repos.d/epel.repo</div><div class="line">yum clean all</div><div class="line">yum makecache fast</div></pre></td></tr></table></figure></p>
-<h4 id="安装ceph-deploy"><a href="#安装ceph-deploy" class="headerlink" title="安装ceph-deploy"></a>安装<code>ceph-deploy</code></h4><p>以下在<code>ceph-master</code>节点上执行<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> yum install http://mirrors.163.com/ceph/rpm-jewel/el7/noarch/ceph-deploy-1.5.38-0.noarch.rpm</span></div></pre></td></tr></table></figure></p>
-<h4 id="查看ceph-deploy版本"><a href="#查看ceph-deploy版本" class="headerlink" title="查看ceph-deploy版本"></a>查看<code>ceph-deploy</code>版本</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ceph-deploy --version</span></div><div class="line">1.5.38</div></pre></td></tr></table></figure>
-<h4 id="创建ceph集群"><a href="#创建ceph集群" class="headerlink" title="创建ceph集群"></a>创建<code>ceph</code>集群</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ceph-deploy new ceph-node-1 ceph-node-2 ceph-node-3</div></pre></td></tr></table></figure>
-<h4 id="编辑ceph配置文件"><a href="#编辑ceph配置文件" class="headerlink" title="编辑ceph配置文件"></a>编辑<code>ceph</code>配置文件</h4><p>在<code>global</code>下添加以下配置：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> vim ceph.conf </span></div><div class="line">[global]</div><div class="line">mon_clock_drift_allowed = 5</div><div class="line">osd_journal_size = 20480</div><div class="line">public_network=172.16.0.0/24</div></pre></td></tr></table></figure></p>
-<h4 id="安装Ceph"><a href="#安装Ceph" class="headerlink" title="安装Ceph"></a>安装<code>Ceph</code></h4><p>直接指定源地址，不用担心<code>ceph.com</code>官方源无法下载了。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ceph-deploy install --release jewel --repo-url http://mirrors.163.com/ceph/rpm-jewel/el7 --gpg-url http://mirrors.163.com/ceph/keys/release.asc ceph-master ceph-node-1 ceph-node-2 ceph-node-3</div></pre></td></tr></table></figure></p>
-<h4 id="检查ceph版本"><a href="#检查ceph版本" class="headerlink" title="检查ceph版本"></a>检查<code>ceph</code>版本</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ceph -v</div><div class="line">ceph version 10.2.9 (2ee413f77150c0f375ff6f10edd6c8f9c7d060d0)</div></pre></td></tr></table></figure>
-<h4 id="初始化mom节点"><a href="#初始化mom节点" class="headerlink" title="初始化mom节点"></a>初始化<code>mom</code>节点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ceph-deploy mon create-initial</div></pre></td></tr></table></figure>
-<h4 id="查看集群状态（在OSD节点上查看）"><a href="#查看集群状态（在OSD节点上查看）" class="headerlink" title="查看集群状态（在OSD节点上查看）"></a>查看集群状态（在<code>OSD</code>节点上查看）</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ceph <span class="_">-s</span></span></div><div class="line">    cluster 60597e53-ad29-44bd-8dcd-db6aeae6f580</div><div class="line">     health HEALTH_ERR</div><div class="line">            no osds</div><div class="line">     monmap e2: 3 mons at &#123;ceph-node-1=172.16.0.11:6789/0,ceph-node-2=172.16.0.12:6789/0,ceph-node-3=172.16.0.13:6789/0&#125;</div><div class="line">            election epoch 6, quorum 0,1,2 ceph-node-1,ceph-node-2,ceph-node-3</div><div class="line">     osdmap e1: 0 osds: 0 up, 0 in</div><div class="line">            flags sortbitwise,require_jewel_osds</div><div class="line">      pgmap v2: 64 pgs, 1 pools, 0 bytes data, 0 objects</div><div class="line">            0 kB used, 0 kB / 0 kB avail</div><div class="line">                  64 creating</div></pre></td></tr></table></figure>
-<h3 id="配置管理节点ceph-master"><a href="#配置管理节点ceph-master" class="headerlink" title="配置管理节点ceph-master"></a>配置管理节点<code>ceph-master</code></h3><p>为什么每次查看<code>ceph –s</code>的只能在<code>OSD</code>节点上执行，而不能在<code>Master</code>节点上执行？<br>用<code>ceph-deploy</code>把配置文件和<code>admin</code>密钥拷贝到<code>Master</code>节点<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ceph-deploy admin ceph-master</span></div></pre></td></tr></table></figure></p>
-<p>确保你对<code>ceph.client.admin.keyring</code>有正确的操作权限<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> chmod +r /etc/ceph/ceph.client.admin.keyring</span></div></pre></td></tr></table></figure></p>
-<p>检查集群的健康状况<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ceph <span class="_">-s</span></span></div><div class="line">    cluster 60597e53-ad29-44bd-8dcd-db6aeae6f580</div><div class="line">     health HEALTH_ERR</div><div class="line">            no osds</div><div class="line">     monmap e2: 3 mons at &#123;ceph-node-1=172.16.0.11:6789/0,ceph-node-2=172.16.0.12:6789/0,ceph-node-3=172.16.0.13:6789/0&#125;</div><div class="line">            election epoch 6, quorum 0,1,2 ceph-node-1,ceph-node-2,ceph-node-3</div><div class="line">     osdmap e1: 0 osds: 0 up, 0 in</div><div class="line">            flags sortbitwise,require_jewel_osds</div><div class="line">      pgmap v2: 64 pgs, 1 pools, 0 bytes data, 0 objects</div><div class="line">            0 kB used, 0 kB / 0 kB avail</div><div class="line">                  64 creating</div></pre></td></tr></table></figure></p>
-<h3 id="对OSD节点配置"><a href="#对OSD节点配置" class="headerlink" title="对OSD节点配置"></a>对<code>OSD</code>节点配置</h3><h4 id="磁盘分区"><a href="#磁盘分区" class="headerlink" title="磁盘分区"></a>磁盘分区</h4><p>将<code>240G</code>的<code>SSD</code>盘分出<code>4</code>个<code>20G</code>的分区用作 <code>journal</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> fdisk /dev/sdf</span></div><div class="line">Welcome to fdisk (util-linux 2.23.2).</div><div class="line">Changes will remain in memory only, until you decide to write them.</div><div class="line">Be careful before using the write command.</div><div class="line">Device does not contain a recognized partition table</div><div class="line">Building a new DOS disklabel with disk identifier 0x9ec0a047.</div><div class="line">Command (m for help): g</div><div class="line">Building a new GPT disklabel (GUID: 31D328DD-E9A0-4306-9C99-8D42F7BA8008)</div><div class="line">Command (m for help): n</div><div class="line">Partition number (1-128, default 1): </div><div class="line">First sector (2048-503316446, default 2048): </div><div class="line">Last sector, +sectors or +size&#123;K,M,G,T,P&#125; (2048-503316446, default 503316446): +20G</div><div class="line">Created partition 1</div><div class="line">Command (m for help): n</div><div class="line">Partition number (2-128, default 2): </div><div class="line">First sector (41945088-503316446, default 41945088): </div><div class="line">Last sector, +sectors or +size&#123;K,M,G,T,P&#125; (41945088-503316446, default 503316446): +20G</div><div class="line">Created partition 2</div><div class="line">Command (m for help): n</div><div class="line">Partition number (3-128, default 3): </div><div class="line">First sector (83888128-503316446, default 83888128): </div><div class="line">Last sector, +sectors or +size&#123;K,M,G,T,P&#125; (83888128-503316446, default 503316446): +20G</div><div class="line">Created partition 3</div><div class="line">Command (m for help): n</div><div class="line">Partition number (4-128, default 4): </div><div class="line">First sector (125831168-503316446, default 125831168): </div><div class="line">Last sector, +sectors or +size&#123;K,M,G,T,P&#125; (125831168-503316446, default 503316446): +20G</div><div class="line">Created partition 4</div><div class="line">Command (m for help): p</div><div class="line">Disk /dev/sdf: 257.7 GB, 257698037760 bytes, 503316480 sectors</div><div class="line">Units = sectors of 1 * 512 = 512 bytes</div><div class="line">Sector size (logical/physical): 512 bytes / 512 bytes</div><div class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</div><div class="line">Disk label type: gpt</div><div class="line"><span class="meta">#</span><span class="bash">         Start          End    Size  Type            Name</span></div><div class="line"> 1         2048     41945087     20G  Linux filesyste </div><div class="line"> 2     41945088     83888127     20G  Linux filesyste </div><div class="line"> 3     83888128    125831167     20G  Linux filesyste </div><div class="line"> 4    125831168    167774207     20G  Linux filesyste </div><div class="line">Command (m for help): w</div><div class="line">The partition table has been altered!</div><div class="line">Calling ioctl() to re-read partition table.</div><div class="line">Syncing disks.</div></pre></td></tr></table></figure></p>
-<h4 id="查看分区"><a href="#查看分区" class="headerlink" title="查看分区"></a>查看分区</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> lsblk</span></div><div class="line">NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</div><div class="line">sda           8:0    0  300G  0 disk </div><div class="line">├─sda1        8:1    0    1G  0 part /boot</div><div class="line">└─sda2        8:2    0  299G  0 part </div><div class="line">  ├─cl-root 253:0    0   50G  0 lvm  /</div><div class="line">  ├─cl-swap 253:1    0    2G  0 lvm  [SWAP]</div><div class="line">  └─cl-home 253:2    0  247G  0 lvm  /home</div><div class="line">sdb           8:16   0    2T  0 disk </div><div class="line">sdc           8:32   0    2T  0 disk </div><div class="line">sdd           8:48   0    2T  0 disk </div><div class="line">sde           8:64   0  800G  0 disk </div><div class="line">sdf           8:80   0  240G  0 disk </div><div class="line">├─sdf1        8:81   0   20G  0 part </div><div class="line">├─sdf2        8:82   0   20G  0 part </div><div class="line">├─sdf3        8:83   0   20G  0 part </div><div class="line">└─sdf4        8:84   0   20G  0 part </div><div class="line">sr0          11:0    1 1024M  0 rom</div></pre></td></tr></table></figure>
-<h4 id="修改-Journal-分区权限"><a href="#修改-Journal-分区权限" class="headerlink" title="修改 Journal 分区权限"></a>修改 <code>Journal</code> 分区权限</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown ceph:ceph /dev/sdf[1-4]</div></pre></td></tr></table></figure>
-<h3 id="添加OSD"><a href="#添加OSD" class="headerlink" title="添加OSD"></a>添加<code>OSD</code></h3><p>在<code>ceph-master</code>执行<br>先部署<code>SATA</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ceph-deploy osd prepare ceph-node-1:/dev/sdb:/dev/sdf1 ceph-node-1:/dev/sdc:/dev/sdf2 ceph-node-1:/dev/sdd:/dev/sdf3 ceph-node-2:/dev/sdb:/dev/sdf1 ceph-node-2:/dev/sdc:/dev/sdf2 ceph-node-2:/dev/sdd:/dev/sdf3 ceph-node-3:/dev/sdb:/dev/sdf1 ceph-node-3:/dev/sdc:/dev/sdf2 ceph-node-3:/dev/sdd:/dev/sdf3</div></pre></td></tr></table></figure></p>
-<p>再部署<code>SSD</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ceph-deploy osd prepare ceph-node-1:/dev/sde:/dev/sdf4 ceph-node-2:/dev/sde:/dev/sdf4 ceph-node-3:/dev/sde:/dev/sdf4</div></pre></td></tr></table></figure></p>
-<p>先部署<code>SATA</code>，再部署<code>SSD</code>，这样序号就会连续了…<br>查看集群状态<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ceph <span class="_">-s</span></span></div><div class="line">    cluster f9dba93b-c40f-4b31-8e6d-6ea830cad944</div><div class="line">     health HEALTH_OK</div><div class="line">     monmap e1: 3 mons at &#123;ceph-node-1=172.16.0.11:6789/0,ceph-node-2=172.16.0.12:6789/0,ceph-node-3=172.16.0.13:6789/0&#125;</div><div class="line">            election epoch 6, quorum 0,1,2 ceph-node-1,ceph-node-2,ceph-node-3</div><div class="line">     osdmap e56: 12 osds: 12 up, 12 in</div><div class="line">            flags sortbitwise,require_jewel_osds</div><div class="line">      pgmap v142: 128 pgs, 1 pools, 0 bytes data, 0 objects</div><div class="line">            413 MB used, 20821 GB / 20821 GB avail</div><div class="line">                 128 active+clean</div></pre></td></tr></table></figure></p>
-<p>查看<code>OSD</code>的分布<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ceph osd tree</span></div><div class="line">ID WEIGHT   TYPE NAME            UP/DOWN REWEIGHT PRIMARY-AFFINITY </div><div class="line">-1 20.33363 root default                                           </div><div class="line">-2  6.77788     host ceph-node-1                                   </div><div class="line"> 0  1.99899         osd.0             up  1.00000          1.00000 </div><div class="line"> 1  1.99899         osd.1             up  1.00000          1.00000 </div><div class="line"> 4  1.99899         osd.4             up  1.00000          1.00000 </div><div class="line"> 9  0.78090         osd.9             up  1.00000          1.00000 </div><div class="line">-3  6.77788     host ceph-node-2                                   </div><div class="line"> 2  1.99899         osd.2             up  1.00000          1.00000 </div><div class="line"> 3  1.99899         osd.3             up  1.00000          1.00000 </div><div class="line"> 5  1.99899         osd.5             up  1.00000          1.00000 </div><div class="line">10  0.78090         osd.10            up  1.00000          1.00000 </div><div class="line">-4  6.77788     host ceph-node-3                                   </div><div class="line"> 6  1.99899         osd.6             up  1.00000          1.00000 </div><div class="line"> 7  1.99899         osd.7             up  1.00000          1.00000 </div><div class="line"> 8  1.99899         osd.8             up  1.00000          1.00000 </div><div class="line">11  0.78090         osd.11            up  1.00000          1.00000</div></pre></td></tr></table></figure></p>
-<h3 id="安装完毕"><a href="#安装完毕" class="headerlink" title="安装完毕"></a>安装完毕</h3><p><code>ceph</code>安装完毕</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">ceph</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">使用kubeadm搭建kubernetes1.15</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/ceph//" class="article-tag-list-link color5">ceph</a>
+        			<a href="/categories/kubernetes//" class="article-tag-list-link color1">kubernetes</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://www.lijiawang.org/posts/intsall-ceph.html" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/posts/python-class.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Python中类的定义与使用
-        
-      </div>
-    </a>
   
   
-    <a href="/posts/openstack-nova.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">openstack新建云主机流程介绍</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -415,9 +272,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
