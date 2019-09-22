@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.lijiawang.org/"/>
-  <updated>2019-09-22T14:20:57.150Z</updated>
+  <updated>2019-09-22T14:24:49.559Z</updated>
   <id>https://www.lijiawang.org/</id>
   
   <author>
@@ -20,9 +20,10 @@
     <link href="https://www.lijiawang.org/posts/%E4%BD%BF%E7%94%A8kubeadm%E6%90%AD%E5%BB%BAkubernetes1.15.html"/>
     <id>https://www.lijiawang.org/posts/使用kubeadm搭建kubernetes1.15.html</id>
     <published>2019-09-01T14:07:30.000Z</published>
-    <updated>2019-09-22T14:20:57.150Z</updated>
+    <updated>2019-09-22T14:24:49.559Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="使用kubeadm方式安装kubernetes"><a href="#使用kubeadm方式安装kubernetes" class="headerlink" title="使用kubeadm方式安装kubernetes"></a>使用<code>kubeadm</code>方式安装<code>kubernetes</code></h3><p>[TOC]</p>
+    <content type="html"><![CDATA[<h3 id="使用kubeadm方式安装kubernetes"><a href="#使用kubeadm方式安装kubernetes" class="headerlink" title="使用kubeadm方式安装kubernetes"></a>使用<code>kubeadm</code>方式安装<code>kubernetes</code></h3><a id="more"></a>
+<p>[TOC]</p>
 <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>在所有节点执行，此环节所有的节点操作系统均匀<code>centos7.6</code></p>
 <h4 id="1、配置hosts解析"><a href="#1、配置hosts解析" class="headerlink" title="1、配置hosts解析"></a>1、配置<code>hosts</code>解析</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> cat /etc/hosts</div><div class="line">10.122.17.206 k8s-node3</div><div class="line">10.122.17.205 k8s-node2</div><div class="line">10.122.17.204 k8s-node1</div><div class="line">10.122.17.200 k8s-master</div><div class="line"><span class="meta">#</span> masker 主机到node免密</div></pre></td></tr></table></figure>
 <h4 id="2、禁用防火墙"><a href="#2、禁用防火墙" class="headerlink" title="2、禁用防火墙"></a>2、禁用防火墙</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">systemctl stop firewalld</div><div class="line">systemctl disable firewalld</div></pre></td></tr></table></figure>
@@ -72,7 +73,7 @@
     
     <summary type="html">
     
-      &lt;h3 id=&quot;使用kubeadm方式安装kubernetes&quot;&gt;&lt;a href=&quot;#使用kubeadm方式安装kubernetes&quot; class=&quot;headerlink&quot; title=&quot;使用kubeadm方式安装kubernetes&quot;&gt;&lt;/a&gt;使用&lt;code&gt;kubeadm&lt;/
+      &lt;h3 id=&quot;使用kubeadm方式安装kubernetes&quot;&gt;&lt;a href=&quot;#使用kubeadm方式安装kubernetes&quot; class=&quot;headerlink&quot; title=&quot;使用kubeadm方式安装kubernetes&quot;&gt;&lt;/a&gt;使用&lt;code&gt;kubeadm&lt;/code&gt;方式安装&lt;code&gt;kubernetes&lt;/code&gt;&lt;/h3&gt;
     
     </summary>
     
