@@ -6,18 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.lijiawang.org">
-  <title>Category: shell | 李家旺</title>
+  <title>ingress-nginx部署 | 李家旺</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
-<meta name="keywords" content="linux, python, shell, openstack">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李家旺">
-<meta property="og:url" content="https://www.lijiawang.org/categories/shell/index.html">
+  <meta name="description" content="[TOC] 部署nginx-ingress环境准备准备一套k8s环境12345678910111213141516# kubectl get csNAME                 STATUS    MESSAGE             ERRORcontroller-manager   Healthy   ok                  scheduler">
+<meta name="keywords" content="Kubernetes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ingress-nginx部署">
+<meta property="og:url" content="https://www.lijiawang.org/posts/ingress-nginx部署.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta property="og:description" content="[TOC] 部署nginx-ingress环境准备准备一套k8s环境12345678910111213141516# kubectl get csNAME                 STATUS    MESSAGE             ERRORcontroller-manager   Healthy   ok                  scheduler">
+<meta property="og:image" content="https://ljw.howieli.cn/blog/2019-9-18/http0.png">
+<meta property="og:image" content="https://ljw.howieli.cn/blog/2019-9-18/http1.png">
+<meta property="og:image" content="https://ljw.howieli.cn/blog/2019-9-18/https0.png">
+<meta property="og:image" content="https://ljw.howieli.cn/blog/2019-9-18/https1.png">
+<meta property="og:updated_time" content="2019-11-05T14:35:11.382Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李家旺">
-<meta name="twitter:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta name="twitter:title" content="ingress-nginx部署">
+<meta name="twitter:description" content="[TOC] 部署nginx-ingress环境准备准备一套k8s环境12345678910111213141516# kubectl get csNAME                 STATUS    MESSAGE             ERRORcontroller-manager   Healthy   ok                  scheduler">
+<meta name="twitter:image" content="https://ljw.howieli.cn/blog/2019-9-18/http0.png">
   
     <link rel="alternative" href="/atom.xml" title="李家旺" type="application/atom+xml">
   
@@ -185,71 +191,176 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-ingress-nginx部署" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/posts/简单shell实现局域网IP扫描.html" class="archive-article-date">
-  	<time datetime="2017-12-29T03:23:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-29</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/posts/简单shell实现局域网IP扫描.html">shell实现局域网IP扫描</a>
+    <h1 class="article-title" itemprop="name">
+      ingress-nginx部署
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/posts/ingress-nginx部署.html" class="archive-article-date">
+  	<time datetime="2019-11-05T14:32:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>[TOC]</p>
+<h3 id="部署nginx-ingress"><a href="#部署nginx-ingress" class="headerlink" title="部署nginx-ingress"></a>部署<code>nginx-ingress</code></h3><h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>准备一套<code>k8s</code>环境<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> kubectl get cs</span></div><div class="line">NAME                 STATUS    MESSAGE             ERROR</div><div class="line">controller-manager   Healthy   ok                  </div><div class="line">scheduler            Healthy   ok                  </div><div class="line">etcd-0               Healthy   &#123;"health":"true"&#125;   </div><div class="line"><span class="meta">#</span><span class="bash"> kubectl cluster-info</span></div><div class="line">Kubernetes master is running at https://10.122.17.200:6443</div><div class="line">KubeDNS is running at https://10.122.17.200:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy</div><div class="line"></div><div class="line">To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.</div><div class="line"><span class="meta">#</span><span class="bash"> kubectl get nodes</span></div><div class="line">NAME         STATUS   ROLES    AGE    VERSION</div><div class="line">k8s-master   Ready    master   4d1h   v1.15.3</div><div class="line">k8s-node1    Ready    &lt;none&gt;   4d1h   v1.15.3</div><div class="line">k8s-node2    Ready    &lt;none&gt;   4d     v1.15.3</div><div class="line">k8s-node3    Ready    &lt;none&gt;   4d     v1.15.3</div></pre></td></tr></table></figure></p>
+<h3 id="下载安装nginx-ingress的yaml文件"><a href="#下载安装nginx-ingress的yaml文件" class="headerlink" title="下载安装nginx-ingress的yaml文件"></a>下载安装<code>nginx-ingress</code>的<code>yaml</code>文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> wget https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml</span></div></pre></td></tr></table></figure>
+<h3 id="设置nginx-ingress-controller调度节点"><a href="#设置nginx-ingress-controller调度节点" class="headerlink" title="设置nginx-ingress-controller调度节点"></a>设置<code>nginx-ingress-controller</code>调度节点</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> kubectl label nodes k8s-node1 hosts=nginx-ingress-controller</span></div><div class="line"><span class="meta">#</span><span class="bash"> kubectl get node <span class="_">-l</span> hosts=nginx-ingress-controller --show-labels </span></div><div class="line">NAME        STATUS   ROLES    AGE    VERSION   LABELS</div><div class="line">k8s-node1   Ready    &lt;none&gt;   4d6h   v1.15.3   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,hosts=nginx-ingress-controller,kubernetes.io/arch=amd64,kubernetes.io/hostname=k8s-node1,kubernetes.io/os=linux</div></pre></td></tr></table></figure>
+<h3 id="修改mandatory-yaml文件"><a href="#修改mandatory-yaml文件" class="headerlink" title="修改mandatory.yaml文件"></a>修改<code>mandatory.yaml</code>文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> vim mandatory.yaml</span></div><div class="line">......</div><div class="line">apiVersion: apps/v1</div><div class="line">kind: Deployment</div><div class="line">......</div><div class="line">spec:</div><div class="line">  replicas: 1</div><div class="line">  selector:</div><div class="line">    matchLabels:</div><div class="line">      app.kubernetes.io/name: ingress-nginx</div><div class="line">      app.kubernetes.io/part-of: ingress-nginx</div><div class="line">  template:</div><div class="line">    ......</div><div class="line">    spec:</div><div class="line">      hostNetwork: true    # 使用hostNetwork 模式</div><div class="line">      nodeSelector:        # 使用nodeSelector</div><div class="line">        hosts: nginx-ingress-controller   # 选择标签为hosts=nginx-ingress-controller节点</div><div class="line">      serviceAccountName: nginx-ingress-serviceaccount</div><div class="line">      containers:</div><div class="line">        - name: nginx-ingress-controller</div><div class="line">          image: lijiawang/nginx-ingress-controller:0.25.1   # 更换镜像源</div><div class="line">		  ......</div><div class="line">......</div></pre></td></tr></table></figure>
+<h3 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> kubectl apply <span class="_">-f</span> mandatory.yaml</span></div><div class="line"><span class="meta">#</span><span class="bash"> kubectl get pod -n ingress-nginx</span></div><div class="line"><span class="meta">#</span><span class="bash"> kubectl get pod -n ingress-nginx -o wide</span></div><div class="line">NAME                                        READY   STATUS    RESTARTS   AGE   IP              NODE        NOMINATED NODE   READINESS GATES</div><div class="line">nginx-ingress-controller-6956498fcf-jkzbs   1/1     Running   0          55s   10.122.17.204   k8s-node1   &lt;none&gt;           &lt;none&gt;</div></pre></td></tr></table></figure>
+<p>可以看到<code>nginx-ingress-controller-6956498fcf-jkzbs</code> <code>POD</code> 调度到了打好标记的<code>k8s-node1</code>。</p>
+<h3 id="登录nginx-ingress-controller节点验证"><a href="#登录nginx-ingress-controller节点验证" class="headerlink" title="登录nginx-ingress-controller节点验证"></a>登录<code>nginx-ingress-controller</code>节点验证</h3><p>因为<code>k8s-node1</code>为<code>nginx-ingress-controller</code>节点，所有登录<code>k8s-node1</code>节点即可<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ssh k8s-node1</span></div><div class="line">[root@k8s-node1 ~]# netstat -lntp|grep 80</div><div class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      5901/nginx: master  </div><div class="line">tcp6       0      0 :::80                   :::*                    LISTEN      5901/nginx: master  </div><div class="line">[root@k8s-node1 ~]# netstat -lntp|grep 443</div><div class="line">tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      5901/nginx: master  </div><div class="line">tcp6       0      0 :::443                  :::*                    LISTEN      5901/nginx: master  </div><div class="line">[root@k8s-node1 ~]# exit</div><div class="line">logout</div><div class="line">Connection to k8s-node1 closed.</div></pre></td></tr></table></figure></p>
+<h3 id="部署应用"><a href="#部署应用" class="headerlink" title="部署应用"></a>部署应用</h3><p>部署测试应用<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat deploy-demon.yaml </span></div><div class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></div><div class="line"><span class="attr">kind:</span> <span class="string">Service</span></div><div class="line"><span class="attr">metadata:</span></div><div class="line"><span class="attr">  name:</span> <span class="string">myapp</span></div><div class="line"><span class="attr">  namespace:</span> <span class="string">default</span></div><div class="line"><span class="attr">spec:</span></div><div class="line"><span class="attr">  selector:</span></div><div class="line"><span class="attr">    app:</span> <span class="string">myapp</span></div><div class="line"><span class="attr">    release:</span> <span class="string">canary</span></div><div class="line"><span class="attr">  ports:</span></div><div class="line"><span class="attr">  - name:</span> <span class="string">http</span></div><div class="line"><span class="attr">    port:</span> <span class="number">80</span></div><div class="line"><span class="attr">    targetPort:</span> <span class="number">80</span></div><div class="line"><span class="meta">---</span></div><div class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></div><div class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></div><div class="line"><span class="attr">metadata:</span> </div><div class="line"><span class="attr">  name:</span> <span class="string">myapp-deploy</span></div><div class="line"><span class="attr">spec:</span></div><div class="line"><span class="attr">  replicas:</span> <span class="number">5</span></div><div class="line"><span class="attr">  selector:</span> </div><div class="line"><span class="attr">    matchLabels:</span></div><div class="line"><span class="attr">      app:</span> <span class="string">myapp</span></div><div class="line"><span class="attr">      release:</span> <span class="string">canary</span></div><div class="line"><span class="attr">  template:</span></div><div class="line"><span class="attr">    metadata:</span></div><div class="line"><span class="attr">      labels:</span></div><div class="line"><span class="attr">        app:</span> <span class="string">myapp</span></div><div class="line"><span class="attr">        release:</span> <span class="string">canary</span></div><div class="line"><span class="attr">    spec:</span></div><div class="line"><span class="attr">      containers:</span></div><div class="line"><span class="attr">      - name:</span> <span class="string">myapp</span></div><div class="line"><span class="attr">        image:</span> <span class="string">lijiawang/myapp:v2</span></div><div class="line"><span class="attr">        ports:</span></div><div class="line"><span class="attr">        - name:</span> <span class="string">httpd</span></div><div class="line"><span class="attr">          containerPort:</span> <span class="number">80</span></div><div class="line"><span class="comment"># kubectl  apply -f deploy-demon.yaml </span></div><div class="line"><span class="string">service/myapp</span> <span class="string">created</span></div><div class="line"><span class="string">deployment.apps/myapp-deploy</span> <span class="string">created</span></div><div class="line"><span class="comment"># kubectl get pod </span></div><div class="line"><span class="string">NAME</span>                           <span class="string">READY</span>   <span class="string">STATUS</span>    <span class="string">RESTARTS</span>   <span class="string">AGE</span></div><div class="line"><span class="string">curl-6bf6db5c4f-dqw9x</span>          <span class="number">1</span><span class="string">/1</span>     <span class="string">Running</span>   <span class="number">1</span>          <span class="number">16</span><span class="string">d</span></div><div class="line"><span class="string">myapp-deploy-c69757d67-9bv4w</span>   <span class="number">1</span><span class="string">/1</span>     <span class="string">Running</span>   <span class="number">0</span>          <span class="number">38</span><span class="string">s</span></div><div class="line"><span class="string">myapp-deploy-c69757d67-j2kxc</span>   <span class="number">1</span><span class="string">/1</span>     <span class="string">Running</span>   <span class="number">0</span>          <span class="number">38</span><span class="string">s</span></div><div class="line"><span class="string">myapp-deploy-c69757d67-jgm5v</span>   <span class="number">1</span><span class="string">/1</span>     <span class="string">Running</span>   <span class="number">0</span>          <span class="number">38</span><span class="string">s</span></div><div class="line"><span class="string">myapp-deploy-c69757d67-n5rxw</span>   <span class="number">1</span><span class="string">/1</span>     <span class="string">Running</span>   <span class="number">0</span>          <span class="number">38</span><span class="string">s</span></div><div class="line"><span class="string">myapp-deploy-c69757d67-t4nxr</span>   <span class="number">1</span><span class="string">/1</span>     <span class="string">Running</span>   <span class="number">0</span>          <span class="number">38</span><span class="string">s</span></div><div class="line"><span class="comment"># kubectl get svc</span></div><div class="line"><span class="string">NAME</span>         <span class="string">TYPE</span>        <span class="string">CLUSTER-IP</span>       <span class="string">EXTERNAL-IP</span>   <span class="string">PORT(S)</span>   <span class="string">AGE</span></div><div class="line"><span class="string">kubernetes</span>   <span class="string">ClusterIP</span>   <span class="number">10.96</span><span class="number">.0</span><span class="number">.1</span>        <span class="string">&lt;none&gt;</span>        <span class="number">443</span><span class="string">/TCP</span>   <span class="number">17</span><span class="string">d</span></div><div class="line"><span class="string">myapp</span>        <span class="string">ClusterIP</span>   <span class="number">10.104</span><span class="number">.246</span><span class="number">.234</span>   <span class="string">&lt;none&gt;</span>        <span class="number">80</span><span class="string">/TCP</span>    <span class="number">2</span><span class="string">m58s</span></div></pre></td></tr></table></figure></p>
+<h3 id="以ingress方式暴露应用"><a href="#以ingress方式暴露应用" class="headerlink" title="以ingress方式暴露应用"></a>以<code>ingress</code>方式暴露应用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> cat ingress-myapp.yaml </span></div><div class="line">apiVersion: extensions/v1beta1</div><div class="line">kind: Ingress</div><div class="line">metadata:</div><div class="line">  name: ingress-myapp</div><div class="line">  namespace: default</div><div class="line">  annotations: </div><div class="line">    kubernetes.io/ingress.class: "nginx"</div><div class="line">spec:</div><div class="line">  rules:</div><div class="line">  - host: myapp.lijw19.com   # 定义域名</div><div class="line">    http:</div><div class="line">      paths:</div><div class="line">      - path: </div><div class="line">        backend:</div><div class="line">          serviceName: myapp   # 跟你要爆了的服务的svc名字相同</div><div class="line">          servicePort: 80     # 要暴露的端口</div><div class="line"><span class="meta">#</span><span class="bash"> kubectl apply <span class="_">-f</span> ingress-myapp.yaml </span></div><div class="line">ingress.extensions/ingress-myapp created</div><div class="line"><span class="meta">#</span><span class="bash"> kubectl get ingresses.</span></div><div class="line">NAME            HOSTS              ADDRESS   PORTS   AGE</div><div class="line">ingress-myapp   myapp.lijw19.com             80      10s</div></pre></td></tr></table></figure>
+<p>本地<code>host</code>解析<br><code>windows</code>的<code>hosts</code>文件在<code>c:\windows\system32\drivers\etc</code>下<br>修改<code>host</code>文件，增加以下内容<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">10.122.17.204 myapp.lijw19.com</div></pre></td></tr></table></figure></p>
+<h3 id="访问应用"><a href="#访问应用" class="headerlink" title="访问应用"></a>访问应用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">for</span> i <span class="keyword">in</span> `seq 10`; <span class="keyword">do</span> curl http://myapp.lijw19.com; <span class="keyword">done</span></span></div><div class="line">Hello MyApp | Version: v2 | &lt;a href="hostname.html"&gt;Pod Name&lt;/a&gt;</div><div class="line">Hello MyApp | Version: v2 | &lt;a href="hostname.html"&gt;Pod Name&lt;/a&gt;</div><div class="line">Hello MyApp | Version: v2 | &lt;a href="hostname.html"&gt;Pod Name&lt;/a&gt;</div><div class="line">Hello MyApp | Version: v2 | &lt;a href="hostname.html"&gt;Pod Name&lt;/a&gt;</div><div class="line">Hello MyApp | Version: v2 | &lt;a href="hostname.html"&gt;Pod Name&lt;/a&gt;</div><div class="line">Hello MyApp | Version: v2 | &lt;a href="hostname.html"&gt;Pod Name&lt;/a&gt;</div><div class="line">Hello MyApp | Version: v2 | &lt;a href="hostname.html"&gt;Pod Name&lt;/a&gt;</div><div class="line">Hello MyApp | Version: v2 | &lt;a href="hostname.html"&gt;Pod Name&lt;/a&gt;</div><div class="line">Hello MyApp | Version: v2 | &lt;a href="hostname.html"&gt;Pod Name&lt;/a&gt;</div><div class="line">Hello MyApp | Version: v2 | &lt;a href="hostname.html"&gt;Pod Name&lt;/a&gt;</div></pre></td></tr></table></figure>
+<p>使用浏览器访问<code>http://myapp.lijw19.com</code><br><img src="https://ljw.howieli.cn/blog/2019-9-18/http0.png" alt=""></p>
+<p><img src="https://ljw.howieli.cn/blog/2019-9-18/http1.png" alt=""><br>这里我们是使用的http访问的，那如果要使用</p>
+<h3 id="使用https访问"><a href="#使用https访问" class="headerlink" title="使用https访问"></a>使用<code>https</code>访问</h3><p>创建证书<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"># openssl genrsa -out tls.key 2048</div><div class="line">Generating RSA private key, 2048 bit long modulus</div><div class="line">......................+++</div><div class="line">.....................................+++</div><div class="line">e is 65537 (0x10001)</div><div class="line"># ls -l tls.key </div><div class="line">-rw-r--r-- 1 root root 1675 Sep 16 08:43 tls.key</div><div class="line"># openssl req -new -x509 -key tls.key -out tls.crt</div><div class="line">You are about to be asked to enter information that will be incorporated</div><div class="line">into your certificate request.</div><div class="line">What you are about to enter is what is called a Distinguished Name or a DN.</div><div class="line">There are quite a few fields but you can leave some blank</div><div class="line">For some fields there will be a default value,</div><div class="line">If you enter &apos;.&apos;, the field will be left blank.</div><div class="line">-----</div><div class="line">Country Name (2 letter code) [XX]:CN     </div><div class="line">State or Province Name (full name) []:lijw19</div><div class="line">Locality Name (eg, city) [Default City]:lijw19</div><div class="line">Organization Name (eg, company) [Default Company Ltd]:test</div><div class="line">Organizational Unit Name (eg, section) []:test</div><div class="line">Common Name (eg, your name or your server&apos;s hostname) []:test.lijw19.com</div><div class="line">Email Address []:</div><div class="line">[root@k8s-master ~]# ls -l tls.*</div><div class="line">-rw-r--r-- 1 root root 1318 Sep 16 08:46 tls.crt</div><div class="line">-rw-r--r-- 1 root root 1675 Sep 16 08:43 tls.key</div></pre></td></tr></table></figure></p>
+<h3 id="证书转成secret"><a href="#证书转成secret" class="headerlink" title="证书转成secret"></a>证书转成<code>secret</code></h3><p>将创建好的证书转成<code>secret</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> kubectl create secret tls lijw-ingress-secret --cert=tls.crt --key=tls.key</span></div><div class="line">secret/lijw-ingress-secret created</div><div class="line"><span class="meta">#</span><span class="bash"> kubectl get secrets </span></div><div class="line">NAME                  TYPE                                  DATA   AGE</div><div class="line">default-token-vmfwt   kubernetes.io/service-account-token   3      17d</div><div class="line">lijw-ingress-secret   kubernetes.io/tls                     2      10s</div></pre></td></tr></table></figure></p>
+<h3 id="创建https-ingress"><a href="#创建https-ingress" class="headerlink" title="创建https ingress"></a>创建<code>https</code> <code>ingress</code></h3><p>修改下<code>ingress-myapp-https.yaml</code>加入刚刚添加的<code>secret</code>，修改后的文件如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"># cat ingress-myapp-https.yaml </div><div class="line">apiVersion: extensions/v1beta1</div><div class="line">kind: Ingress</div><div class="line">metadata:</div><div class="line">  name: ingress-myapp-https</div><div class="line">  namespace: default</div><div class="line">  annotations: </div><div class="line">    kubernetes.io/ingress.class: &quot;nginx&quot;</div><div class="line">spec:</div><div class="line">  tls:    # 添加了tls这一段</div><div class="line">  - hosts:</div><div class="line">    - test.lijw19.com</div><div class="line">    secretName: lijw-ingress-secret  # 到这结束</div><div class="line">  rules:</div><div class="line">  - host: test.lijw19.com</div><div class="line">    http:</div><div class="line">      paths:</div><div class="line">      - path: </div><div class="line">        backend:</div><div class="line">          serviceName: myapp</div><div class="line">          servicePort: 80</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"># kubectl apply -f ingress-myapp-https.yaml </div><div class="line">ingress.extensions/ingress-myapp-https created</div><div class="line"># kubectl get ingresses ingress-myapp-https </div><div class="line">NAME                  HOSTS             ADDRESS   PORTS     AGE</div><div class="line">ingress-myapp-https   test.lijw19.com             80, 443   13s</div></pre></td></tr></table></figure></p>
+<h3 id="本地host解析"><a href="#本地host解析" class="headerlink" title="本地host解析"></a>本地<code>host</code>解析</h3><p><code>windows</code>的<code>hosts</code>文件在<code>c:\windows\system32\drivers\etc</code>下<br>修改<code>host</code>文件，增加以下内容<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">10.122.17.204 myapp.lijw19.com  test.lijw19.com</div></pre></td></tr></table></figure></p>
+<p>在浏览器访问<code>https://test.lijw19.com</code><br><img src="https://ljw.howieli.cn/blog/2019-9-18/https0.png" alt=""></p>
+<p><img src="https://ljw.howieli.cn/blog/2019-9-18/https1.png" alt=""></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">shell</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ingress</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/shell//" class="article-tag-list-link color1">shell</a>
+        			<a href="/categories/Kubernetes//" class="article-tag-list-link color1">Kubernetes</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://www.lijiawang.org/posts/ingress-nginx部署.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/posts/kubeadm升级k8s集群(v1.15.3 to v1.16.0版).html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用kubeadm升级kubernetes集群</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -272,10 +383,10 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",

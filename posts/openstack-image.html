@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://www.lijiawang.org/posts/openstack-image.html">
 <meta property="og:site_name" content="李家旺">
 <meta property="og:description" content="openstack镜像格式转换与上传">
-<meta property="og:updated_time" content="2017-06-26T14:29:10.901Z">
+<meta property="og:updated_time" content="2017-06-26T14:29:10.902Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="openstack镜像格式转换与上传">
 <meta name="twitter:description" content="openstack镜像格式转换与上传">
@@ -210,16 +210,16 @@ var _hmt = _hmt || [];
 <h3 id="openstack常用镜像格式"><a href="#openstack常用镜像格式" class="headerlink" title="openstack常用镜像格式"></a><code>openstack</code>常用镜像格式</h3><p>今天我给大家介绍一下<code>openstack</code>常用的三种镜像格式，三种镜像格式分别是<code>qcow2</code>、<code>raw</code>、<code>vmdk</code>(所谓的<code>vmdk</code>就是<code>vmware</code>虚拟化的镜像格式，只有<code>openstack</code>纳管<code>vmware</code>才能用的到)。</p>
 <h3 id="惊险格式的转换"><a href="#惊险格式的转换" class="headerlink" title="惊险格式的转换"></a>惊险格式的转换</h3><ul>
 <li><p>将<code>raw</code>格式的镜像转化成<code>qcow2</code>格式（<code>image</code>代表镜像）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> qemu-img convert -f raw -O qcow2 image.img image.qcow2</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> qemu-img convert <span class="_">-f</span> raw -O qcow2 image.img image.qcow2</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>将<code>vmdk</code>格式的镜像转化成<code>raw</code>格式（<code>image</code>代表镜像）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> qemu-img convert -f vmdk -O raw image.vmdk image.img</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> qemu-img convert <span class="_">-f</span> vmdk -O raw image.vmdk image.img</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>将<code>vmdk</code>格式的镜像转化成<code>qcow2</code>格式（<code>image</code>代表镜像）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> qemu-img convert -f vmdk -O qcow2 image.vmdk image.qcow2</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> qemu-img convert <span class="_">-f</span> vmdk -O qcow2 image.vmdk image.qcow2</span></div></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="获取镜像查看镜像信息"><a href="#获取镜像查看镜像信息" class="headerlink" title="获取镜像查看镜像信息"></a>获取镜像查看镜像信息</h3><p>查看镜像的详细信息<code>qemu-img info image.qcow2</code><br>例如<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> qemu-img info CentOS-7-x86_64-GenericCloud.qcow2c </div><div class="line">image: CentOS-7-x86_64-GenericCloud.qcow2c</div><div class="line">file format: qcow2                                #格式为qcow2</div><div class="line">virtual size: 8.0G (8589934592 bytes)             #空间大小</div><div class="line">disk size: 410M</div><div class="line">cluster_size: 65536</div></pre></td></tr></table></figure></p>
+<h3 id="获取镜像查看镜像信息"><a href="#获取镜像查看镜像信息" class="headerlink" title="获取镜像查看镜像信息"></a>获取镜像查看镜像信息</h3><p>查看镜像的详细信息<code>qemu-img info image.qcow2</code><br>例如<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> qemu-img info CentOS-7-x86_64-GenericCloud.qcow2c </span></div><div class="line">image: CentOS-7-x86_64-GenericCloud.qcow2c</div><div class="line">file format: qcow2                                #格式为qcow2</div><div class="line">virtual size: 8.0G (8589934592 bytes)             #空间大小</div><div class="line">disk size: 410M</div><div class="line">cluster_size: 65536</div></pre></td></tr></table></figure></p>
 <h3 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h3><p>这里我只介绍在<code>linux</code>命令行上传三种格式的镜像</p>
 <ul>
 <li><p>上传<code>raw</code>格式的镜像</p>
@@ -463,15 +463,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tmux</a>
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -479,7 +475,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ceph</a>
+                <a href="javascript:void(0)" class="js-tag color5">tmux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -495,6 +491,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ceph</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">octavia</a>
               </li>
              
@@ -507,15 +507,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ceph cinder</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">shell</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack ceph</a>
+                <a href="javascript:void(0)" class="js-tag color2">ceph cinder</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -523,11 +519,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+                <a href="javascript:void(0)" class="js-tag color5">openstack ceph</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">使用kubeadm搭建kubernetes1.15</a>
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -536,6 +532,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">kubeadm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">使用kubeadm搭建kubernetes1.15</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ingress</a>
               </li>
             
             <div class="clearfix"></div>
