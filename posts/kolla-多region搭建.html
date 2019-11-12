@@ -206,12 +206,12 @@ var _hmt = _hmt || [];
       
         <h3 id="kolla部署openstack多region"><a href="#kolla部署openstack多region" class="headerlink" title="kolla部署openstack多region"></a>kolla部署openstack多region</h3><h3 id="openstack多region基础知识"><a href="#openstack多region基础知识" class="headerlink" title="openstack多region基础知识"></a>openstack多region基础知识</h3><p>我们都知道<code>Region</code>是<code>OpenStack</code>里面用于隔离资源的一个重要概念。简单来说，一个<code>Region</code>对应一套完整的<code>OpenStack</code>环境，而<code>Region</code>和<code>Region</code>之间可以是跨机房的集群，也可以是一个大规模物理机集群分割后的集群。<code>OpenStack</code>在设计之初就是支持多<code>Region</code>的情况，由于<code>Region</code>之间资源（<code>Mariadb</code>,<code>RabbitMQ</code>等）的独立的，所以他们之间并不存在资源交互开销的情况。<br>简单的讲所谓<code>openstack</code>多<code>region</code>，就是多套<code>openstack</code>共享一个<code>keystone</code>和<code>horizon</code>。每个区域一套<code>openstack</code>环境，可以分布在不同的地理位置，只要网络可达就行。个人认为目的就是为了提供环境隔离的功能，选择启虚拟机的时候可以根据自己所处的位置就近选择。<br><img src="https://ljw.howieli.cn/blog/2018-4-3/%E5%A4%9Aregion1.png" alt=""><br><a id="more"></a></p>
 <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>我这里有两台<code>kolla</code>环境的部署节点分别是<code>172.18.24.150</code>，<code>172.18.24.130</code>两个台虚拟机。<br>| column | column |<br>|——–|————|<br>|RegionOne|172.18.24.150|<br>|RegionTWO|172.18.24.130|<br><code>kolla</code>环境部署节点安装请参考<a href="https://www.lijiawang.org/posts/kolla%20queens%20on%20centos7.41.html">kolla搭建</a>，这次我用<code>kolla</code>部署<code>openstack</code>的<code>queens</code>版本。</p>
-<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><h4 id="用Keystone和Horizon部署第一个区域"><a href="#用Keystone和Horizon部署第一个区域" class="headerlink" title="用Keystone和Horizon部署第一个区域"></a>用<code>Keystone</code>和<code>Horizon</code>部署第一个区域</h4><p>我这这里把<code>keystone</code>,<code>horizon</code>这两个服务放到<code>RegionOne</code>虚拟机上。修改配置<code>/etc/kolla/globals.yml</code>文件<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> egrep <span class="string">"^[^#]"</span> /etc/kolla/globals.yml</span></div><div class="line">---</div><div class="line">kolla_base_distro: "centos"</div><div class="line">kolla_install_type: "source"</div><div class="line">openstack_release: "queens"</div><div class="line">kolla_internal_vip_address: "172.18.24.150"</div><div class="line">docker_namespace: "kolla"</div><div class="line">network_interface: "eth0"</div><div class="line">neutron_external_interface: "eth1"</div><div class="line">enable_haproxy: "no"</div><div class="line">enable_grafana: "yes"</div><div class="line">enable_horizon_ironic: "&#123;&#123; enable_ironic | bool &#125;&#125;"</div><div class="line">ironic_dnsmasq_dhcp_range:</div><div class="line">tempest_image_id:</div><div class="line">tempest_flavor_ref_id:</div><div class="line">tempest_public_network_id:</div><div class="line">tempest_floating_network_name:</div><div class="line">openstack_region_name: "RegionOne"</div><div class="line">multiple_regions_names:</div><div class="line">    - "&#123;&#123; openstack_region_name &#125;&#125;"</div><div class="line">    - "RegionTwo"</div></pre></td></tr></table></figure></p>
-<p>部署<code>RegionOne</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> kolla-ansible deploy</span></div></pre></td></tr></table></figure></p>
-<h4 id="部署其他区域"><a href="#部署其他区域" class="headerlink" title="部署其他区域"></a>部署其他区域</h4><p>修改<code>RegionTWO</code>的<code>/etc/kolla/globals.yml</code>文件<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> egrep <span class="string">"^[^#]"</span> /etc/kolla/globals.yml</span></div><div class="line">---</div><div class="line">kolla_base_distro: "centos"</div><div class="line">kolla_install_type: "source"</div><div class="line">openstack_release: "queens"</div><div class="line">kolla_internal_vip_address: "172.18.24.130"</div><div class="line">docker_namespace: "kolla"</div><div class="line">network_interface: "eth0"</div><div class="line">neutron_external_interface: "eth1"</div><div class="line">nova_console: "novnc"</div><div class="line">enable_keystone: "no"</div><div class="line">enable_haproxy: "no"</div><div class="line">enable_horizon: "no"</div><div class="line">nova_compute_virt_type: "qemu"</div><div class="line">tempest_image_id:</div><div class="line">tempest_flavor_ref_id:</div><div class="line">tempest_public_network_id:</div><div class="line">tempest_floating_network_name:</div><div class="line"><span class="meta">#</span><span class="bash"> kolla_internal_fqdn_r1是指RegionOne中kolla_internal_fqdn的值</span></div><div class="line">kolla_internal_fqdn_r1: 172.18.24.150</div><div class="line">keystone_admin_url: "&#123;&#123; admin_protocol &#125;&#125;://&#123;&#123; kolla_internal_fqdn_r1 &#125;&#125;:&#123;&#123; keystone_admin_port &#125;&#125;"</div><div class="line">keystone_internal_url: "&#123;&#123; internal_protocol &#125;&#125;://&#123;&#123; kolla_internal_fqdn_r1 &#125;&#125;:&#123;&#123; keystone_public_port &#125;&#125;"</div><div class="line">openstack_auth:</div><div class="line">    auth_url: "&#123;&#123; admin_protocol &#125;&#125;://&#123;&#123; kolla_internal_fqdn_r1 &#125;&#125;:&#123;&#123; keystone_admin_port &#125;&#125;"</div><div class="line">    username: "admin"</div><div class="line">    password: "&#123;&#123; keystone_admin_password &#125;&#125;"</div><div class="line">    project_name: "admin"</div><div class="line">    domain_name: "default"</div><div class="line">openstack_region_name: "RegionTwo"</div></pre></td></tr></table></figure></p>
-<h4 id="RegionTWO上的openstack组件连接RegionOne上的keystone"><a href="#RegionTWO上的openstack组件连接RegionOne上的keystone" class="headerlink" title="RegionTWO上的openstack组件连接RegionOne上的keystone"></a>RegionTWO上的openstack组件连接RegionOne上的keystone</h4><p>需要修改<code>cinder</code>，<code>nova</code>，<code>neutron</code>，<code>glance</code>等配置文件才能联系<code>RegionOne</code>的<code>Keystone</code>。在<code>RegionTWO</code>虚拟机上创建<code>/etc/kolla/config/</code>目录,然后穿件需要连接<code>Keystone</code>服务的配置文件。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> mkdir -p /etc/kolla/config/</span></div><div class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> /etc/kolla/config/</span></div><div class="line"><span class="meta">#</span><span class="bash"> tree</span></div><div class="line">.</div><div class="line">├── glance.conf</div><div class="line">├── heat.conf</div><div class="line">├── neutron.conf</div><div class="line">└── nova.conf</div></pre></td></tr></table></figure></p>
-<p>更新配置文件<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> cat glance.conf</span></div><div class="line">[keystone_authtoken]</div><div class="line">auth_uri = &#123;&#123; keystone_internal_url &#125;&#125;</div><div class="line">auth_url = &#123;&#123; keystone_admin_url &#125;&#125;</div><div class="line"><span class="meta">#</span><span class="bash"> cat nova.conf</span></div><div class="line">[keystone_authtoken]</div><div class="line">auth_uri = &#123;&#123; keystone_internal_url &#125;&#125;</div><div class="line">auth_url = &#123;&#123; keystone_admin_url &#125;&#125;</div><div class="line">[placement]</div><div class="line">auth_url = &#123;&#123; keystone_admin_url &#125;&#125;</div><div class="line"><span class="meta">#</span><span class="bash"> cat neutron.conf</span></div><div class="line">[keystone_authtoken]</div><div class="line">auth_uri = &#123;&#123; keystone_internal_url &#125;&#125;</div><div class="line">auth_url = &#123;&#123; keystone_admin_url &#125;&#125;</div><div class="line"><span class="meta">#</span><span class="bash"> cat heat.conf</span></div><div class="line">[keystone_authtoken]</div><div class="line">auth_uri = &#123;&#123; keystone_internal_url &#125;&#125;</div><div class="line">auth_url = &#123;&#123; keystone_admin_url &#125;&#125;</div><div class="line">[trustee]</div><div class="line">auth_uri = &#123;&#123; keystone_internal_url &#125;&#125;</div><div class="line">auth_url = &#123;&#123; keystone_internal_url &#125;&#125;</div><div class="line"></div><div class="line">[ec2authtoken]</div><div class="line">auth_uri = &#123;&#123; keystone_internal_url &#125;&#125;</div><div class="line"></div><div class="line">[clients_keystone]</div><div class="line">auth_uri = &#123;&#123; keystone_internal_url &#125;&#125;</div></pre></td></tr></table></figure></p>
-<p>部署<code>RegionTWO</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> kolla-ansible deploy</span></div></pre></td></tr></table></figure></p>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><h4 id="用Keystone和Horizon部署第一个区域"><a href="#用Keystone和Horizon部署第一个区域" class="headerlink" title="用Keystone和Horizon部署第一个区域"></a>用<code>Keystone</code>和<code>Horizon</code>部署第一个区域</h4><p>我这这里把<code>keystone</code>,<code>horizon</code>这两个服务放到<code>RegionOne</code>虚拟机上。修改配置<code>/etc/kolla/globals.yml</code>文件<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> egrep "^[^#]" /etc/kolla/globals.yml</div><div class="line">---</div><div class="line">kolla_base_distro: "centos"</div><div class="line">kolla_install_type: "source"</div><div class="line">openstack_release: "queens"</div><div class="line">kolla_internal_vip_address: "172.18.24.150"</div><div class="line">docker_namespace: "kolla"</div><div class="line">network_interface: "eth0"</div><div class="line">neutron_external_interface: "eth1"</div><div class="line">enable_haproxy: "no"</div><div class="line">enable_grafana: "yes"</div><div class="line">enable_horizon_ironic: "&#123;&#123; enable_ironic | bool &#125;&#125;"</div><div class="line">ironic_dnsmasq_dhcp_range:</div><div class="line">tempest_image_id:</div><div class="line">tempest_flavor_ref_id:</div><div class="line">tempest_public_network_id:</div><div class="line">tempest_floating_network_name:</div><div class="line">openstack_region_name: "RegionOne"</div><div class="line">multiple_regions_names:</div><div class="line">    - "&#123;&#123; openstack_region_name &#125;&#125;"</div><div class="line">    - "RegionTwo"</div></pre></td></tr></table></figure></p>
+<p>部署<code>RegionOne</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> kolla-ansible deploy</div></pre></td></tr></table></figure></p>
+<h4 id="部署其他区域"><a href="#部署其他区域" class="headerlink" title="部署其他区域"></a>部署其他区域</h4><p>修改<code>RegionTWO</code>的<code>/etc/kolla/globals.yml</code>文件<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> egrep "^[^#]" /etc/kolla/globals.yml</div><div class="line">---</div><div class="line">kolla_base_distro: "centos"</div><div class="line">kolla_install_type: "source"</div><div class="line">openstack_release: "queens"</div><div class="line">kolla_internal_vip_address: "172.18.24.130"</div><div class="line">docker_namespace: "kolla"</div><div class="line">network_interface: "eth0"</div><div class="line">neutron_external_interface: "eth1"</div><div class="line">nova_console: "novnc"</div><div class="line">enable_keystone: "no"</div><div class="line">enable_haproxy: "no"</div><div class="line">enable_horizon: "no"</div><div class="line">nova_compute_virt_type: "qemu"</div><div class="line">tempest_image_id:</div><div class="line">tempest_flavor_ref_id:</div><div class="line">tempest_public_network_id:</div><div class="line">tempest_floating_network_name:</div><div class="line"><span class="meta">#</span> kolla_internal_fqdn_r1是指RegionOne中kolla_internal_fqdn的值</div><div class="line">kolla_internal_fqdn_r1: 172.18.24.150</div><div class="line">keystone_admin_url: "&#123;&#123; admin_protocol &#125;&#125;://&#123;&#123; kolla_internal_fqdn_r1 &#125;&#125;:&#123;&#123; keystone_admin_port &#125;&#125;"</div><div class="line">keystone_internal_url: "&#123;&#123; internal_protocol &#125;&#125;://&#123;&#123; kolla_internal_fqdn_r1 &#125;&#125;:&#123;&#123; keystone_public_port &#125;&#125;"</div><div class="line">openstack_auth:</div><div class="line">    auth_url: "&#123;&#123; admin_protocol &#125;&#125;://&#123;&#123; kolla_internal_fqdn_r1 &#125;&#125;:&#123;&#123; keystone_admin_port &#125;&#125;"</div><div class="line">    username: "admin"</div><div class="line">    password: "&#123;&#123; keystone_admin_password &#125;&#125;"</div><div class="line">    project_name: "admin"</div><div class="line">    domain_name: "default"</div><div class="line">openstack_region_name: "RegionTwo"</div></pre></td></tr></table></figure></p>
+<h4 id="RegionTWO上的openstack组件连接RegionOne上的keystone"><a href="#RegionTWO上的openstack组件连接RegionOne上的keystone" class="headerlink" title="RegionTWO上的openstack组件连接RegionOne上的keystone"></a>RegionTWO上的openstack组件连接RegionOne上的keystone</h4><p>需要修改<code>cinder</code>，<code>nova</code>，<code>neutron</code>，<code>glance</code>等配置文件才能联系<code>RegionOne</code>的<code>Keystone</code>。在<code>RegionTWO</code>虚拟机上创建<code>/etc/kolla/config/</code>目录,然后穿件需要连接<code>Keystone</code>服务的配置文件。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> mkdir -p /etc/kolla/config/</div><div class="line"><span class="meta">#</span> cd /etc/kolla/config/</div><div class="line"><span class="meta">#</span> tree</div><div class="line">.</div><div class="line">├── glance.conf</div><div class="line">├── heat.conf</div><div class="line">├── neutron.conf</div><div class="line">└── nova.conf</div></pre></td></tr></table></figure></p>
+<p>更新配置文件<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> cat glance.conf</div><div class="line">[keystone_authtoken]</div><div class="line">auth_uri = &#123;&#123; keystone_internal_url &#125;&#125;</div><div class="line">auth_url = &#123;&#123; keystone_admin_url &#125;&#125;</div><div class="line"><span class="meta">#</span> cat nova.conf</div><div class="line">[keystone_authtoken]</div><div class="line">auth_uri = &#123;&#123; keystone_internal_url &#125;&#125;</div><div class="line">auth_url = &#123;&#123; keystone_admin_url &#125;&#125;</div><div class="line">[placement]</div><div class="line">auth_url = &#123;&#123; keystone_admin_url &#125;&#125;</div><div class="line"><span class="meta">#</span> cat neutron.conf</div><div class="line">[keystone_authtoken]</div><div class="line">auth_uri = &#123;&#123; keystone_internal_url &#125;&#125;</div><div class="line">auth_url = &#123;&#123; keystone_admin_url &#125;&#125;</div><div class="line"><span class="meta">#</span> cat heat.conf</div><div class="line">[keystone_authtoken]</div><div class="line">auth_uri = &#123;&#123; keystone_internal_url &#125;&#125;</div><div class="line">auth_url = &#123;&#123; keystone_admin_url &#125;&#125;</div><div class="line">[trustee]</div><div class="line">auth_uri = &#123;&#123; keystone_internal_url &#125;&#125;</div><div class="line">auth_url = &#123;&#123; keystone_internal_url &#125;&#125;</div><div class="line"></div><div class="line">[ec2authtoken]</div><div class="line">auth_uri = &#123;&#123; keystone_internal_url &#125;&#125;</div><div class="line"></div><div class="line">[clients_keystone]</div><div class="line">auth_uri = &#123;&#123; keystone_internal_url &#125;&#125;</div></pre></td></tr></table></figure></p>
+<p>部署<code>RegionTWO</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> kolla-ansible deploy</div></pre></td></tr></table></figure></p>
 <h3 id="Dashboard"><a href="#Dashboard" class="headerlink" title="Dashboard"></a>Dashboard</h3><p>如果以上过程顺利，恭喜你，你的<code>OpenStack</code>现在也支持多区域了。<br><img src="https://ljw.howieli.cn/blog/2018-4-3/%E5%A4%9Aregion.png" alt=""><br><img src="https://ljw.howieli.cn/blog/2018-4-3/%E5%A4%9Aregion2.png" alt=""></p>
 <h3 id="Ocata版本多region搭建"><a href="#Ocata版本多region搭建" class="headerlink" title="Ocata版本多region搭建"></a>Ocata版本多region搭建</h3><p>如果您用的是<code>openstack</code>的<code>Ocata</code>版本，需要打一下<code>patch</code>，在部署，<a href="https://review.openstack.org/#/q/project:openstack/kolla-ansible+region" target="_blank" rel="external">这里可以看到所有多region相关bug</a>，除了下面这个没放进去，都<code>merge</code>到<code>ocata</code>。需要把这个<code>patch</code>自己打进去即可。<br><a href="https://review.openstack.org/#/c/431658/" target="_blank" rel="external">https://review.openstack.org/#/c/431658/</a></p>
 
@@ -423,23 +423,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux bond</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">awk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tmux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+                <a href="javascript:void(0)" class="js-tag color1">Kubernetes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -447,35 +435,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">类</a>
+                <a href="javascript:void(0)" class="js-tag color3">kubeadm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tempest rally</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">kolla</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">octavia</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">swift</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ceph cinder</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -483,11 +447,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">kubeadm</a>
+                <a href="javascript:void(0)" class="js-tag color5">kubernets</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kubernets</a>
+                <a href="javascript:void(0)" class="js-tag color1">kolla</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -495,7 +463,43 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux bond</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tmux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">类</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">awk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tempest rally</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">octavia</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">shell</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">swift</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ceph cinder</a>
               </li>
             
             <div class="clearfix"></div>

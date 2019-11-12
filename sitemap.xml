@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/%E5%9F%BA%E4%BA%8E%20Kubernetes%20v1.16.2%20%E4%B9%8B%20metrics-server%20%E9%83%A8%E7%BD%B2.html</loc>
+    
+    <lastmod>2019-11-12T09:27:27.500Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/openstack%20instance%20vm_power_state%20%E7%8A%B6%E6%80%81%E7%BD%AE%E4%B8%BA%20NOSTATE.html</loc>
     
     <lastmod>2019-11-08T15:47:10.980Z</lastmod>

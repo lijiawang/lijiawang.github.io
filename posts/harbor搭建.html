@@ -211,7 +211,7 @@ var _hmt = _hmt || [];
 <h3 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 安装必要的一些系统工具</div><div class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</div><div class="line"># 添加软件源信息</div><div class="line">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</div><div class="line"># 更新并安装 Docker-CE</div><div class="line">yum makecache fast</div><div class="line">yum -y install docker-ce</div><div class="line"># 开启Docker服务</div><div class="line">systemctl enable docker</div><div class="line">systemctl restart docker</div><div class="line">docker version</div></pre></td></tr></table></figure>
 <h3 id="安装docker-compose"><a href="#安装docker-compose" class="headerlink" title="安装docker-compose"></a>安装docker-compose</h3><p>github上地址<a href="https://github.com/docker/compose" target="_blank" rel="external">https://github.com/docker/compose</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/docker/compose/releases/download/1.24.0/docker-compose-Linux-x86_64</div><div class="line">mv  docker-compose-Linux-x86_64 /usr/local/bin/docker-compose</div><div class="line">chmod +x /usr/local/bin/docker-compose</div><div class="line">/usr/local/bin/docker-compose version</div></pre></td></tr></table></figure></p>
 <h3 id="安装harbor"><a href="#安装harbor" class="headerlink" title="安装harbor"></a>安装harbor</h3><p>项目地址<a href="https://github.com/goharbor/harbor" target="_blank" rel="external">https://github.com/goharbor/harbor</a><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">wget https://storage.googleapis.com/harbor-releases/release-1.7.0/harbor-offline-installer-v1.7.5.tgz</div><div class="line">tar  xf harbor-offline-installer-v1.7.5.tgz -C /usr/share/</div><div class="line">[root@harbor ~]# ll /usr/share/harbor/</div><div class="line">total 572840</div><div class="line">drwxr-xr-x. 3 root root        23 May 14 16:08 common</div><div class="line">-rw-r--r--. 1 root root       939 Apr  1 12:07 docker-compose.chartmuseum.yml</div><div class="line">-rw-r--r--. 1 root root       975 Apr  1 12:07 docker-compose.clair.yml</div><div class="line">-rw-r--r--. 1 root root      1434 Apr  1 12:07 docker-compose.notary.yml</div><div class="line">-rw-r--r--. 1 root root      5608 Apr  1 12:07 docker-compose.yml</div><div class="line">-rw-r--r--. 1 root root      8033 Apr  1 12:07 harbor.cfg</div><div class="line">-rw-r--r--. 1 root root 585234819 Apr  1 12:08 harbor.v1.7.5.tar.gz</div><div class="line">-rwxr-xr-x. 1 root root      5739 Apr  1 12:07 install.sh</div><div class="line">-rw-r--r--. 1 root root     11347 Apr  1 12:07 LICENSE</div><div class="line">-rw-r--r--. 1 root root   1263409 Apr  1 12:07 open_source_license</div><div class="line">-rwxr-xr-x. 1 root root     36337 Apr  1 12:07 prepare</div></pre></td></tr></table></figure></p>
-<h3 id="修改harbor配置文件harbor-cfg"><a href="#修改harbor配置文件harbor-cfg" class="headerlink" title="修改harbor配置文件harbor.cfg"></a>修改harbor配置文件harbor.cfg</h3><p>在刚才解压完的目录下有harbor配置文件: harbor.cfg, 这里有几处必要配置需要修改:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> hostname设置访问地址，可以使用ip、域名，不可以设置为127.0.0.1或localhost</span></div><div class="line">hostname = 192.168.1.109</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 访问协议，默认是http，也可以设置https，如果设置https，则nginx ssl需要设置on</span></div><div class="line">ui_url_protocol = http</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> mysql数据库root用户默认密码root123，实际使用时修改下</span></div><div class="line">db_password = root123</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 启动Harbor后，管理员UI登录的密码，默认是Harbor12345</span></div><div class="line">harbor_admin_password = Harbor12345</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 是否开启自注册</span></div><div class="line">self_registration = on</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> Token有效时间，默认30分钟</span></div><div class="line">token_expiration = 30</div></pre></td></tr></table></figure></p>
+<h3 id="修改harbor配置文件harbor-cfg"><a href="#修改harbor配置文件harbor-cfg" class="headerlink" title="修改harbor配置文件harbor.cfg"></a>修改harbor配置文件harbor.cfg</h3><p>在刚才解压完的目录下有harbor配置文件: harbor.cfg, 这里有几处必要配置需要修改:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> hostname设置访问地址，可以使用ip、域名，不可以设置为127.0.0.1或localhost</div><div class="line">hostname = 192.168.1.109</div><div class="line"><span class="meta"></span></div><div class="line"># 访问协议，默认是http，也可以设置https，如果设置https，则nginx ssl需要设置on</div><div class="line">ui_url_protocol = http</div><div class="line"><span class="meta"></span></div><div class="line"># mysql数据库root用户默认密码root123，实际使用时修改下</div><div class="line">db_password = root123</div><div class="line"><span class="meta"></span></div><div class="line"># 启动Harbor后，管理员UI登录的密码，默认是Harbor12345</div><div class="line">harbor_admin_password = Harbor12345</div><div class="line"><span class="meta"></span></div><div class="line"># 是否开启自注册</div><div class="line">self_registration = on</div><div class="line"><span class="meta"></span></div><div class="line"># Token有效时间，默认30分钟</div><div class="line">token_expiration = 30</div></pre></td></tr></table></figure></p>
 <h3 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /usr/share/harbor/</div><div class="line">./install.sh</div></pre></td></tr></table></figure>
 <p><img src="https://ljw.howieli.cn/blog/2019-05-14/harborlogin.png" alt=""><br><img src="https://ljw.howieli.cn/blog/2019-05-14/harbor1.png" alt=""></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">cat /etc/docker/daemon.json </div><div class="line">&#123;</div><div class="line">  &quot;insecure-registries&quot;: [&quot;10.122.52.227&quot;]</div><div class="line">&#125;</div><div class="line"># 重启docker服务</div><div class="line">systemctl restart docker</div><div class="line">systemctl restart docker</div></pre></td></tr></table></figure>
@@ -448,23 +448,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux bond</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">awk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tmux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+                <a href="javascript:void(0)" class="js-tag color1">Kubernetes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -472,35 +460,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">类</a>
+                <a href="javascript:void(0)" class="js-tag color3">kubeadm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tempest rally</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">kolla</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">octavia</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">swift</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ceph cinder</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -508,11 +472,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">kubeadm</a>
+                <a href="javascript:void(0)" class="js-tag color5">kubernets</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kubernets</a>
+                <a href="javascript:void(0)" class="js-tag color1">kolla</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -520,7 +488,43 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux bond</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tmux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">类</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">awk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tempest rally</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">octavia</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">shell</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">swift</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ceph cinder</a>
               </li>
             
             <div class="clearfix"></div>
