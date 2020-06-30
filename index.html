@@ -181,68 +181,6 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-使用Rook快速搭建Ceph集群" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/posts/使用Rook快速搭建Ceph集群.html">使用Rook快速搭建Ceph集群</a>
-    </h1>
-  
-
-        
-        <a href="/posts/使用Rook快速搭建Ceph集群.html" class="archive-article-date">
-  	<time datetime="2019-11-13T06:33:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/rook/rook.git</span></div><div class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> /root/rook/cluster/examples/kubernetes/ceph</span></div><div class="line"><span class="meta">#</span><span class="bash"> kubectl apply <span class="_">-f</span> common.yaml</span></div><div class="line"><span class="meta">#</span><span class="bash"> kubectl apply <span class="_">-f</span> operator.yaml</span></div><div class="line"><span class="meta">#</span><span class="bash"> kubectl get crd|grep rook</span></div><div class="line">cephblockpools.ceph.rook.io                   2019-11-13T19:10:02Z</div><div class="line">cephclusters.ceph.rook.io                     2019-11-13T19:10:01Z</div><div class="line">cephfilesystems.ceph.rook.io                  2019-11-13T19:10:01Z</div><div class="line">cephnfses.ceph.rook.io                        2019-11-13T19:10:02Z</div><div class="line">cephobjectstores.ceph.rook.io                 2019-11-13T19:10:02Z</div><div class="line">cephobjectstoreusers.ceph.rook.io             2019-11-13T19:10:02Z</div><div class="line">volumes.rook.io                               2019-11-13T19:10:02Z</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> kubectl get pod -n rook-ceph </span></div><div class="line">NAME                                 READY   STATUS    RESTARTS   AGE</div><div class="line">rook-ceph-operator-fdfbcc5c5-xjb27   1/1     Running   0          2m59s</div><div class="line">rook-discover-d6dqv                  1/1     Running   0          91s</div><div class="line">rook-discover-lfh6q                  1/1     Running   0          91s</div><div class="line">rook-discover-p7xwv                  1/1     Running   0          91s</div><div class="line"></div><div class="line"><span class="meta"></span></div><div class="line"></div><div class="line"></div><div class="line">#<span class="bash"> kubectl get pod -n rook-ceph</span></div><div class="line">NAME                                                  READY   STATUS      RESTARTS   AGE</div><div class="line">csi-cephfsplugin-4tfth                                3/3     Running     0          18h</div><div class="line">csi-cephfsplugin-6bgfp                                3/3     Running     0          17h</div><div class="line">csi-cephfsplugin-7wb4r                                3/3     Running     0          18h</div><div class="line">csi-cephfsplugin-pd4wq                                3/3     Running     0          18h</div><div class="line">csi-cephfsplugin-provisioner-7c494c799-4s2cw          3/3     Running     0          18h</div><div class="line">csi-cephfsplugin-provisioner-7c494c799-9pbfq          3/3     Running     0          18h</div><div class="line">csi-rbdplugin-266kz                                   3/3     Running     0          18h</div><div class="line">csi-rbdplugin-8vtp7                                   3/3     Running     0          18h</div><div class="line">csi-rbdplugin-bt8zk                                   3/3     Running     0          17h</div><div class="line">csi-rbdplugin-provisioner-667b98cdf-h4v4w             4/4     Running     0          18h</div><div class="line">csi-rbdplugin-provisioner-667b98cdf-htdxg             4/4     Running     0          18h</div><div class="line">csi-rbdplugin-smzdw                                   3/3     Running     0          18h</div><div class="line">rook-ceph-crashcollector-k8s-node1-5c464b94cc-tcb9x   1/1     Running     0          18h</div><div class="line">rook-ceph-crashcollector-k8s-node2-86554fc76d-lxdfw   1/1     Running     0          18h</div><div class="line">rook-ceph-crashcollector-k8s-node3-84b74cbbcf-65p8s   1/1     Running     0          18h</div><div class="line">rook-ceph-crashcollector-k8s-node4-7f9cb985db-vlddm   1/1     Running     0          14h</div><div class="line">rook-ceph-mgr-a-5d4f49f57c-57848                      1/1     Running     0          18h</div><div class="line">rook-ceph-mon-a-67d4656d9-gs6kd                       1/1     Running     0          18h</div><div class="line">rook-ceph-mon-b-7fb78f4774-9hhs2                      1/1     Running     0          18h</div><div class="line">rook-ceph-mon-c-7df4cf9668-nx7q8                      1/1     Running     0          18h</div><div class="line">rook-ceph-operator-fdfbcc5c5-xjb27                    1/1     Running     159        18h</div><div class="line">rook-ceph-osd-0-84d864d99c-wcdmv                      1/1     Running     0          18h</div><div class="line">rook-ceph-osd-1-76cb57c7df-czhwv                      1/1     Running     0          18h</div><div class="line">rook-ceph-osd-2-6cc6fd579f-t8g7v                      1/1     Running     36         18h</div><div class="line">rook-ceph-osd-3-fcff9f6c9-4zf65                       1/1     Running     0          18h</div><div class="line">rook-ceph-osd-4-59df59fc97-9c4wl                      1/1     Running     0          18h</div><div class="line">rook-ceph-osd-5-5bf6bfc5cc-4cdq9                      1/1     Running     38         18h</div><div class="line">rook-ceph-osd-6-68dbd884fb-pwswr                      1/1     Running     0          14h</div><div class="line">rook-ceph-osd-prepare-k8s-node1-k79dx                 0/1     Completed   0          12h</div><div class="line">rook-ceph-osd-prepare-k8s-node2-rvwfn                 0/1     Completed   0          12h</div><div class="line">rook-ceph-osd-prepare-k8s-node3-v9rdb                 0/1     Completed   0          14h</div><div class="line">rook-ceph-osd-prepare-k8s-node4-55z2t                 0/1     Completed   0          14h</div><div class="line">rook-discover-89x72                                   1/1     Running     0          17h</div><div class="line">rook-discover-d6dqv                                   1/1     Running     0          18h</div><div class="line">rook-discover-lfh6q                                   1/1     Running     0          18h</div><div class="line">rook-discover-p7xwv                                   1/1     Running     0          18h</div><div class="line"><span class="meta"></span></div><div class="line"></div><div class="line">#<span class="bash"> kubectl apply <span class="_">-f</span> toolbox.yaml </span></div><div class="line">deployment.apps/rook-ceph-tools created</div><div class="line"></div><div class="line"><span class="meta"></span></div><div class="line"></div><div class="line"></div><div class="line">#<span class="bash"> yum install gdisk</span></div><div class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></div><div class="line">DISK="/dev/vdc"</div><div class="line"></div><div class="line">sgdisk --zap-all $DISK</div><div class="line"></div><div class="line">ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %</div><div class="line"><span class="meta">#</span><span class="bash"> ceph-volume setup can leave ceph-&lt;UUID&gt; directories <span class="keyword">in</span> /dev (unnecessary clutter)</span></div><div class="line">rm -rf /dev/ceph-*</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">[root@k8s-master ceph]# kubectl get ns</div><div class="line">NAME                   STATUS        AGE</div><div class="line">default                Active        3d</div><div class="line">kube-node-lease        Active        3d</div><div class="line">kube-public            Active        3d</div><div class="line">kube-system            Active        3d</div><div class="line">kubernetes-dashboard   Active        2d21h</div><div class="line">rook-ceph              Terminating   20h</div><div class="line"><span class="meta"></span></div><div class="line"></div><div class="line">#<span class="bash"> ETCDCTL_API=3 etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \</span></div><div class="line">--cert=/etc/kubernetes/pki/etcd/peer.crt \</div><div class="line">--key=/etc/kubernetes/pki/etcd/peer.key \</div><div class="line">--endpoints=https://10.122.17.200:2379  \</div><div class="line">del /registry/namespaces/rook-ceph</div><div class="line">1</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/posts/使用Rook快速搭建Ceph集群.html">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-openstack instance vm_power_state 状态置为 NOSTATE" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1044,6 +982,71 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/posts/openstack对接ceph存储.html">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-kolla-多region搭建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/kolla-多region搭建.html">kolla 多region搭建</a>
+    </h1>
+  
+
+        
+        <a href="/posts/kolla-多region搭建.html" class="archive-article-date">
+  	<time datetime="2018-04-10T01:44:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="kolla部署openstack多region"><a href="#kolla部署openstack多region" class="headerlink" title="kolla部署openstack多region"></a>kolla部署openstack多region</h3><h3 id="openstack多region基础知识"><a href="#openstack多region基础知识" class="headerlink" title="openstack多region基础知识"></a>openstack多region基础知识</h3><p>我们都知道<code>Region</code>是<code>OpenStack</code>里面用于隔离资源的一个重要概念。简单来说，一个<code>Region</code>对应一套完整的<code>OpenStack</code>环境，而<code>Region</code>和<code>Region</code>之间可以是跨机房的集群，也可以是一个大规模物理机集群分割后的集群。<code>OpenStack</code>在设计之初就是支持多<code>Region</code>的情况，由于<code>Region</code>之间资源（<code>Mariadb</code>,<code>RabbitMQ</code>等）的独立的，所以他们之间并不存在资源交互开销的情况。<br>简单的讲所谓<code>openstack</code>多<code>region</code>，就是多套<code>openstack</code>共享一个<code>keystone</code>和<code>horizon</code>。每个区域一套<code>openstack</code>环境，可以分布在不同的地理位置，只要网络可达就行。个人认为目的就是为了提供环境隔离的功能，选择启虚拟机的时候可以根据自己所处的位置就近选择。<br><img src="https://ljw.howieli.cn/blog/2018-4-3/%E5%A4%9Aregion1.png" alt=""><br>
+        
+          <a class="article-more-a" href="/posts/kolla-多region搭建.html#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/posts/kolla-多region搭建.html">展开全文 >></a>
         </p>
       
 
