@@ -6,18 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.lijiawang.org">
-  <title>Category: shell | 李家旺</title>
+  <title>使用Rook快速搭建Ceph集群 | 李家旺</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
+  <meta name="description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102#">
 <meta name="keywords" content="linux, python, shell, openstack">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李家旺">
-<meta property="og:url" content="https://www.lijiawang.org/categories/shell/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Rook快速搭建Ceph集群">
+<meta property="og:url" content="https://www.lijiawang.org/posts/使用Rook快速搭建Ceph集群.html">
 <meta property="og:site_name" content="李家旺">
-<meta property="og:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta property="og:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102#">
+<meta property="og:updated_time" content="2019-11-14T10:10:43.318Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李家旺">
-<meta name="twitter:description" content="不看官网不足以熟练，不懂源码不足以精通">
+<meta name="twitter:title" content="使用Rook快速搭建Ceph集群">
+<meta name="twitter:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102#">
   
     <link rel="alternative" href="/atom.xml" title="李家旺" type="application/atom+xml">
   
@@ -179,71 +180,134 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-使用Rook快速搭建Ceph集群" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/posts/简单shell实现局域网IP扫描.html" class="archive-article-date">
-  	<time datetime="2017-12-29T03:23:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-29</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/posts/简单shell实现局域网IP扫描.html">shell实现局域网IP扫描</a>
+    <h1 class="article-title" itemprop="name">
+      使用Rook快速搭建Ceph集群
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">shell</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        <a href="/posts/使用Rook快速搭建Ceph集群.html" class="archive-article-date">
+  	<time datetime="2019-11-13T06:33:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/rook/rook.git</span></div><div class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> /root/rook/cluster/examples/kubernetes/ceph</span></div><div class="line"><span class="meta">#</span><span class="bash"> kubectl apply <span class="_">-f</span> common.yaml</span></div><div class="line"><span class="meta">#</span><span class="bash"> kubectl apply <span class="_">-f</span> operator.yaml</span></div><div class="line"><span class="meta">#</span><span class="bash"> kubectl get crd|grep rook</span></div><div class="line">cephblockpools.ceph.rook.io                   2019-11-13T19:10:02Z</div><div class="line">cephclusters.ceph.rook.io                     2019-11-13T19:10:01Z</div><div class="line">cephfilesystems.ceph.rook.io                  2019-11-13T19:10:01Z</div><div class="line">cephnfses.ceph.rook.io                        2019-11-13T19:10:02Z</div><div class="line">cephobjectstores.ceph.rook.io                 2019-11-13T19:10:02Z</div><div class="line">cephobjectstoreusers.ceph.rook.io             2019-11-13T19:10:02Z</div><div class="line">volumes.rook.io                               2019-11-13T19:10:02Z</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> kubectl get pod -n rook-ceph </span></div><div class="line">NAME                                 READY   STATUS    RESTARTS   AGE</div><div class="line">rook-ceph-operator-fdfbcc5c5-xjb27   1/1     Running   0          2m59s</div><div class="line">rook-discover-d6dqv                  1/1     Running   0          91s</div><div class="line">rook-discover-lfh6q                  1/1     Running   0          91s</div><div class="line">rook-discover-p7xwv                  1/1     Running   0          91s</div><div class="line"></div><div class="line"><span class="meta"></span></div><div class="line"></div><div class="line"></div><div class="line">#<span class="bash"> kubectl get pod -n rook-ceph</span></div><div class="line">NAME                                                  READY   STATUS      RESTARTS   AGE</div><div class="line">csi-cephfsplugin-4tfth                                3/3     Running     0          18h</div><div class="line">csi-cephfsplugin-6bgfp                                3/3     Running     0          17h</div><div class="line">csi-cephfsplugin-7wb4r                                3/3     Running     0          18h</div><div class="line">csi-cephfsplugin-pd4wq                                3/3     Running     0          18h</div><div class="line">csi-cephfsplugin-provisioner-7c494c799-4s2cw          3/3     Running     0          18h</div><div class="line">csi-cephfsplugin-provisioner-7c494c799-9pbfq          3/3     Running     0          18h</div><div class="line">csi-rbdplugin-266kz                                   3/3     Running     0          18h</div><div class="line">csi-rbdplugin-8vtp7                                   3/3     Running     0          18h</div><div class="line">csi-rbdplugin-bt8zk                                   3/3     Running     0          17h</div><div class="line">csi-rbdplugin-provisioner-667b98cdf-h4v4w             4/4     Running     0          18h</div><div class="line">csi-rbdplugin-provisioner-667b98cdf-htdxg             4/4     Running     0          18h</div><div class="line">csi-rbdplugin-smzdw                                   3/3     Running     0          18h</div><div class="line">rook-ceph-crashcollector-k8s-node1-5c464b94cc-tcb9x   1/1     Running     0          18h</div><div class="line">rook-ceph-crashcollector-k8s-node2-86554fc76d-lxdfw   1/1     Running     0          18h</div><div class="line">rook-ceph-crashcollector-k8s-node3-84b74cbbcf-65p8s   1/1     Running     0          18h</div><div class="line">rook-ceph-crashcollector-k8s-node4-7f9cb985db-vlddm   1/1     Running     0          14h</div><div class="line">rook-ceph-mgr-a-5d4f49f57c-57848                      1/1     Running     0          18h</div><div class="line">rook-ceph-mon-a-67d4656d9-gs6kd                       1/1     Running     0          18h</div><div class="line">rook-ceph-mon-b-7fb78f4774-9hhs2                      1/1     Running     0          18h</div><div class="line">rook-ceph-mon-c-7df4cf9668-nx7q8                      1/1     Running     0          18h</div><div class="line">rook-ceph-operator-fdfbcc5c5-xjb27                    1/1     Running     159        18h</div><div class="line">rook-ceph-osd-0-84d864d99c-wcdmv                      1/1     Running     0          18h</div><div class="line">rook-ceph-osd-1-76cb57c7df-czhwv                      1/1     Running     0          18h</div><div class="line">rook-ceph-osd-2-6cc6fd579f-t8g7v                      1/1     Running     36         18h</div><div class="line">rook-ceph-osd-3-fcff9f6c9-4zf65                       1/1     Running     0          18h</div><div class="line">rook-ceph-osd-4-59df59fc97-9c4wl                      1/1     Running     0          18h</div><div class="line">rook-ceph-osd-5-5bf6bfc5cc-4cdq9                      1/1     Running     38         18h</div><div class="line">rook-ceph-osd-6-68dbd884fb-pwswr                      1/1     Running     0          14h</div><div class="line">rook-ceph-osd-prepare-k8s-node1-k79dx                 0/1     Completed   0          12h</div><div class="line">rook-ceph-osd-prepare-k8s-node2-rvwfn                 0/1     Completed   0          12h</div><div class="line">rook-ceph-osd-prepare-k8s-node3-v9rdb                 0/1     Completed   0          14h</div><div class="line">rook-ceph-osd-prepare-k8s-node4-55z2t                 0/1     Completed   0          14h</div><div class="line">rook-discover-89x72                                   1/1     Running     0          17h</div><div class="line">rook-discover-d6dqv                                   1/1     Running     0          18h</div><div class="line">rook-discover-lfh6q                                   1/1     Running     0          18h</div><div class="line">rook-discover-p7xwv                                   1/1     Running     0          18h</div><div class="line"><span class="meta"></span></div><div class="line"></div><div class="line">#<span class="bash"> kubectl apply <span class="_">-f</span> toolbox.yaml </span></div><div class="line">deployment.apps/rook-ceph-tools created</div><div class="line"></div><div class="line"><span class="meta"></span></div><div class="line"></div><div class="line"></div><div class="line">#<span class="bash"> yum install gdisk</span></div><div class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></div><div class="line">DISK="/dev/vdc"</div><div class="line"></div><div class="line">sgdisk --zap-all $DISK</div><div class="line"></div><div class="line">ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %</div><div class="line"><span class="meta">#</span><span class="bash"> ceph-volume setup can leave ceph-&lt;UUID&gt; directories <span class="keyword">in</span> /dev (unnecessary clutter)</span></div><div class="line">rm -rf /dev/ceph-*</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">[root@k8s-master ceph]# kubectl get ns</div><div class="line">NAME                   STATUS        AGE</div><div class="line">default                Active        3d</div><div class="line">kube-node-lease        Active        3d</div><div class="line">kube-public            Active        3d</div><div class="line">kube-system            Active        3d</div><div class="line">kubernetes-dashboard   Active        2d21h</div><div class="line">rook-ceph              Terminating   20h</div><div class="line"><span class="meta"></span></div><div class="line"></div><div class="line">#<span class="bash"> ETCDCTL_API=3 etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \</span></div><div class="line">--cert=/etc/kubernetes/pki/etcd/peer.crt \</div><div class="line">--key=/etc/kubernetes/pki/etcd/peer.key \</div><div class="line">--endpoints=https://10.122.17.200:2379  \</div><div class="line">del /registry/namespaces/rook-ceph</div><div class="line">1</div></pre></td></tr></table></figure>
+      
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/shell//" class="article-tag-list-link color1">shell</a>
-        		</li>
-      		
-		</ul>
-	</div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://www.lijiawang.org/posts/使用Rook快速搭建Ceph集群.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/posts/openstack instance vm_power_state 状态置为 NOSTATE.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">openstack instance vm_power_state 状态置为 NOSTATE</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -266,10 +330,10 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",
