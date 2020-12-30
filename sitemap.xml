@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/openstack%20instance%20vm_power_state%20%E7%8A%B6%E6%80%81%E7%BD%AE%E4%B8%BA%20NOSTATE.html</loc>
+    
+    <lastmod>2019-11-08</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kubeadm%E5%8D%87%E7%BA%A7k8s%E9%9B%86%E7%BE%A4(v1.15.3%20to%20v1.16.0%E7%89%88).html</loc>
+    
+    <lastmod>2019-11-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/%E5%9C%A8k8s%E4%B8%8A%E9%83%A8%E7%BD%B2ingress-nginx%E5%B9%B6%E4%BD%BF%E7%94%A8.html</loc>
+    
+    <lastmod>2019-09-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/%E4%BD%BF%E7%94%A8kubeadm%E6%90%AD%E5%BB%BAkubernetes1.15.html</loc>
+    
+    <lastmod>2019-09-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/harbor%E6%90%AD%E5%BB%BA.html</loc>
+    
+    <lastmod>2019-05-31</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/%E4%BD%BF%E7%94%A8Kubeadm%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88Kubernetes%201.12.html</loc>
+    
+    <lastmod>2018-10-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla%E9%83%A8%E7%BD%B2openstack%E5%AF%B9%E6%8E%A5%E5%8D%8E%E4%B8%BAsan%E5%AD%98%E5%82%A8.html</loc>
+    
+    <lastmod>2018-08-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/docker%E7%BD%91%E7%BB%9C.html</loc>
+    
+    <lastmod>2018-06-14</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla-octavia.html</loc>
+    
+    <lastmod>2018-05-16</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/openstack%E5%AF%B9%E6%8E%A5ceph%E5%AD%98%E5%82%A8.html</loc>
+    
+    <lastmod>2018-05-03</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla-%E5%A4%9Aregion%E6%90%AD%E5%BB%BA.html</loc>
+    
+    <lastmod>2018-04-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla%20queens%20on%20centos7.41.html</loc>
+    
+    <lastmod>2018-03-29</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/cinder%E5%88%A0%E9%99%A4lvm%E5%8D%B7%E5%BE%88%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98.html</loc>
+    
+    <lastmod>2018-03-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/ceph%E5%86%99%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90.html</loc>
+    
+    <lastmod>2018-02-09</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/%E6%89%8B%E5%8A%A8%E6%9E%84%E5%BB%BAOpenstack%E9%95%9C%E5%83%8F.html</loc>
+    
+    <lastmod>2018-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla-ironic.html</loc>
+    
+    <lastmod>2018-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/ironic-instruction.html</loc>
+    
+    <lastmod>2018-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/Openstack%20performance%20testing.html</loc>
+    
+    <lastmod>2018-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/openstack-glance.html</loc>
+    
+    <lastmod>2018-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla-pike-on-centos.html</loc>
+    
+    <lastmod>2018-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/%E5%9C%A8openstack%E4%B8%8A%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BB%91%E5%AE%9Avip.html</loc>
+    
+    <lastmod>2018-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/ceph%20(%20requests%20are%20blocked%20)%20%E5%BC%82%E5%B8%B8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95.html</loc>
+    
+    <lastmod>2018-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/%E7%AE%80%E5%8D%95shell%E5%AE%9E%E7%8E%B0%E5%B1%80%E5%9F%9F%E7%BD%91IP%E6%89%AB%E6%8F%8F.html</loc>
+    
+    <lastmod>2018-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/%E5%9C%A8kolla%E4%B8%AD%E9%85%8D%E7%BD%AEcinder%20ceph%E5%A4%9A%E5%90%8E%E7%AB%AF.html</loc>
+    
+    <lastmod>2018-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla%E9%83%A8%E7%BD%B2swift.html</loc>
+    
+    <lastmod>2018-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/python-class.html</loc>
+    
+    <lastmod>2017-08-18</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/intsall-ceph.html</loc>
+    
+    <lastmod>2017-07-18</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/openstack-nova.html</loc>
+    
+    <lastmod>2017-07-03</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/openstack-image.html</loc>
+    
+    <lastmod>2017-06-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/about/index.html</loc>
+    
+    <lastmod>2017-06-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/openstack.html</loc>
+    
+    <lastmod>2017-06-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/Openstack-DevStack-ocata.html</loc>
+    
+    <lastmod>2017-06-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla-openstack-ocata.html</loc>
+    
+    <lastmod>2017-06-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/Linux-awk.html</loc>
+    
+    <lastmod>2017-05-28</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/linux-bond.html</loc>
+    
+    <lastmod>2017-05-27</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/linux-tmux.html</loc>
+    
+    <lastmod>2017-05-27</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/openstack-blog.html</loc>
+    
+    <lastmod>2017-05-27</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/resume/index.html</loc>
+    
+    <lastmod>2017-05-24</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/python-blog.html</loc>
+    
+    <lastmod>2017-05-23</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/index.html</loc>
+    
+    <lastmod>2017-05-17</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/categories/index.html</loc>
+    
+    <lastmod>2017-05-17</lastmod>
+    
+  </url>
+  
+
+  <url>
+    <loc>https://www.lijiawang.org/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/openstack/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/awk/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/python/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/%E7%B1%BB/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/tmux/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/linux-bond/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/kolla/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/tempest-rally/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/octavia/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/swift/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/ceph-cinder/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/shell/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/ceph/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/docker/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/openstack-ceph/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/kubernetes/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/kubernets/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/%E4%BD%BF%E7%94%A8kubeadm%E6%90%AD%E5%BB%BAkubernetes1-15/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/tags/kubeadm/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  
+  <url>
+    <loc>https://www.lijiawang.org/categories/openstack/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/categories/Linux/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/categories/python/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/categories/shell/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/categories/ceph/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/categories/docker/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/categories/kubernetes/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/categories/kubernets/</loc>
+    <lastmod>2020-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+</urlset>
