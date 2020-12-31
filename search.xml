@@ -3,6 +3,14 @@
   
     
     <entry>
+      <title><![CDATA[2020年总结]]></title>
+      <url>//posts/2020%E5%B9%B4%E6%80%BB%E7%BB%93/</url>
+      <content type="html"></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[openstack instance vm_power_state 状态置为 NOSTATE]]></title>
       <url>//openstack%20instance%20vm_power_state%20%E7%8A%B6%E6%80%81%E7%BD%AE%E4%B8%BA%20NOSTATE</url>
       <content type="html"><![CDATA[<h3 id="openstack-上的instance运行正常，但是power-state状态为NOSTATE，导致instance热迁移失败"><a href="#openstack-上的instance运行正常，但是power-state状态为NOSTATE，导致instance热迁移失败" class="headerlink" title="openstack 上的instance运行正常，但是power_state状态为NOSTATE，导致instance热迁移失败"></a>openstack 上的instance运行正常，但是power_state状态为NOSTATE，导致instance热迁移失败</h3><h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>1、再一次热迁移时候发现迁移时候报以下错误</p>
@@ -605,7 +613,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[kolla 多region搭建]]></title>
-      <url>/posts/kolla-%E5%A4%9Aregion%E6%90%AD%E5%BB%BA/</url>
+      <url>//posts/kolla-%E5%A4%9Aregion%E6%90%AD%E5%BB%BA/</url>
       <content type="html"><![CDATA[<h3 id="kolla部署openstack多region"><a href="#kolla部署openstack多region" class="headerlink" title="kolla部署openstack多region"></a>kolla部署openstack多region</h3><h3 id="openstack多region基础知识"><a href="#openstack多region基础知识" class="headerlink" title="openstack多region基础知识"></a>openstack多region基础知识</h3><p>我们都知道<code>Region</code>是<code>OpenStack</code>里面用于隔离资源的一个重要概念。简单来说，一个<code>Region</code>对应一套完整的<code>OpenStack</code>环境，而<code>Region</code>和<code>Region</code>之间可以是跨机房的集群，也可以是一个大规模物理机集群分割后的集群。<code>OpenStack</code>在设计之初就是支持多<code>Region</code>的情况，由于<code>Region</code>之间资源（<code>Mariadb</code>,<code>RabbitMQ</code>等）的独立的，所以他们之间并不存在资源交互开销的情况。<br>简单的讲所谓<code>openstack</code>多<code>region</code>，就是多套<code>openstack</code>共享一个<code>keystone</code>和<code>horizon</code>。每个区域一套<code>openstack</code>环境，可以分布在不同的地理位置，只要网络可达就行。个人认为目的就是为了提供环境隔离的功能，选择启虚拟机的时候可以根据自己所处的位置就近选择。<br><img src="https://ljw.howieli.cn/blog/2018-4-3/%E5%A4%9Aregion1.png"></p>
 <a id="more"></a>
 
@@ -2015,7 +2023,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[python环境准备]]></title>
-      <url>/posts/python%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/</url>
+      <url>//posts/python%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/</url>
       <content type="html"><![CDATA[<h3 id="pyenv配置"><a href="#pyenv配置" class="headerlink" title="pyenv配置"></a>pyenv配置</h3><a id="more"></a>
 
 <ol>
