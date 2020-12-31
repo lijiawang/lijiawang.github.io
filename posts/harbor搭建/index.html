@@ -1,0 +1,464 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
+  <meta name="author" content="李家旺">
+  <meta name="keywords" content="linux, python, shell, openstack">
+  <title>harbor搭建 - 李家旺</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.lijiawang.org","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="李家旺" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>李家旺</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="harbor搭建">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-05-31 22:49" pubdate>
+        2019年5月31日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      776 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      12
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">harbor搭建</h1>
+            
+            <div class="markdown-body">
+              <h3 id="harbor介绍"><a href="#harbor介绍" class="headerlink" title="harbor介绍"></a>harbor介绍</h3><p>Harbor是一个用于存储和分发Docker镜像的企业级Registry服务器，通过添加一些企业必需的功能特性，例如安全、标识和管理等，扩展了开源Docker Distribution。作为一个企业级私有Registry服务器，Harbor提供了更好的性能和安全。提升用户使用Registry构建和运行环境传输镜像的效率。Harbor支持安装在多个Registry节点的镜像资源复制，镜像全部保存在私有Registry中， 确保数据和知识产权在公司内部网络中管控。另外，Harbor也提供了高级的安全特性，诸如用户管理，访问控制和活动审计等。</p>
+<a id="more"></a>
+<h3 id="配置网络yum源"><a href="#配置网络yum源" class="headerlink" title="配置网络yum源"></a>配置网络yum源</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">cd</span> /<span class="hljs-selector-tag">etc</span>/<span class="hljs-selector-tag">yum</span><span class="hljs-selector-class">.repos</span><span class="hljs-selector-class">.d</span><br><span class="hljs-selector-tag">rm</span> <span class="hljs-selector-tag">-rf</span> *<br><span class="hljs-selector-tag">cd</span><br><span class="hljs-selector-tag">curl</span> <span class="hljs-selector-tag">-o</span> /<span class="hljs-selector-tag">etc</span>/<span class="hljs-selector-tag">yum</span><span class="hljs-selector-class">.repos</span><span class="hljs-selector-class">.d</span>/<span class="hljs-selector-tag">CentOS-Base</span><span class="hljs-selector-class">.repo</span> <span class="hljs-selector-tag">http</span>://<span class="hljs-selector-tag">mirrors</span><span class="hljs-selector-class">.aliyun</span><span class="hljs-selector-class">.com</span>/<span class="hljs-selector-tag">repo</span>/<span class="hljs-selector-tag">Centos-7</span><span class="hljs-selector-class">.repo</span><br><span class="hljs-selector-tag">wget</span> <span class="hljs-selector-tag">-O</span> /<span class="hljs-selector-tag">etc</span>/<span class="hljs-selector-tag">yum</span><span class="hljs-selector-class">.repos</span><span class="hljs-selector-class">.d</span>/<span class="hljs-selector-tag">epel</span><span class="hljs-selector-class">.repo</span> <span class="hljs-selector-tag">http</span>://<span class="hljs-selector-tag">mirrors</span><span class="hljs-selector-class">.aliyun</span><span class="hljs-selector-class">.com</span>/<span class="hljs-selector-tag">repo</span>/<span class="hljs-selector-tag">epel-7</span><span class="hljs-selector-class">.repo</span><br></code></pre></td></tr></table></figure>
+<h3 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># 安装必要的一些系统工具</span><br>yum install -y yum-utils device-mapper-persistent-data lvm2<br><span class="hljs-comment"># 添加软件源信息</span><br>yum-config-manager --add-repo http:<span class="hljs-regexp">//mi</span>rrors.aliyun.com<span class="hljs-regexp">/docker-ce/</span>linux<span class="hljs-regexp">/centos/</span>docker-ce.repo<br><span class="hljs-comment"># 更新并安装 Docker-CE</span><br>yum makecache fast<br>yum -y install docker-ce<br><span class="hljs-comment"># 开启Docker服务</span><br>systemctl enable docker<br>systemctl restart docker<br>docker version<br></code></pre></td></tr></table></figure>
+<h3 id="安装docker-compose"><a href="#安装docker-compose" class="headerlink" title="安装docker-compose"></a>安装docker-compose</h3><p>github上地址<a target="_blank" rel="noopener" href="https://github.com/docker/compose">https://github.com/docker/compose</a></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">wget https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/docker/</span>compose<span class="hljs-regexp">/releases/</span>download<span class="hljs-regexp">/1.24.0/</span>docker-compose-Linux-x86_64<br>mv  docker-compose-Linux-x86_64 <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/bin/</span>docker-compose<br>chmod +x <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/bin/</span>docker-compose<br><span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/bin/</span>docker-compose version<br></code></pre></td></tr></table></figure>
+<h3 id="安装harbor"><a href="#安装harbor" class="headerlink" title="安装harbor"></a>安装harbor</h3><p>项目地址<a target="_blank" rel="noopener" href="https://github.com/goharbor/harbor">https://github.com/goharbor/harbor</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell">wget https://storage.googleapis.com/harbor-releases/release-1.7.0/harbor-offline-installer-v1.7.5.tgz<br>tar  xf harbor-offline-installer-v1.7.5.tgz -C /usr/share/<br>[root@harbor ~]# ll /usr/share/harbor/<br>total 572840<br>drwxr-xr-x. 3 root root        23 May 14 16:08 common<br>-rw-r--r--. 1 root root       939 Apr  1 12:07 docker-compose.chartmuseum.yml<br>-rw-r--r--. 1 root root       975 Apr  1 12:07 docker-compose.clair.yml<br>-rw-r--r--. 1 root root      1434 Apr  1 12:07 docker-compose.notary.yml<br>-rw-r--r--. 1 root root      5608 Apr  1 12:07 docker-compose.yml<br>-rw-r--r--. 1 root root      8033 Apr  1 12:07 harbor.cfg<br>-rw-r--r--. 1 root root 585234819 Apr  1 12:08 harbor.v1.7.5.tar.gz<br>-rwxr-xr-x. 1 root root      5739 Apr  1 12:07 install.sh<br>-rw-r--r--. 1 root root     11347 Apr  1 12:07 LICENSE<br>-rw-r--r--. 1 root root   1263409 Apr  1 12:07 open_source_license<br>-rwxr-xr-x. 1 root root     36337 Apr  1 12:07 prepare<br></code></pre></td></tr></table></figure>
+<h3 id="修改harbor配置文件harbor-cfg"><a href="#修改harbor配置文件harbor-cfg" class="headerlink" title="修改harbor配置文件harbor.cfg"></a>修改harbor配置文件harbor.cfg</h3><p>在刚才解压完的目录下有harbor配置文件: harbor.cfg, 这里有几处必要配置需要修改:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> hostname设置访问地址，可以使用ip、域名，不可以设置为127.0.0.1或localhost</span><br>hostname = 192.168.1.109<br><br><span class="hljs-meta">#</span><span class="bash"> 访问协议，默认是http，也可以设置https，如果设置https，则nginx ssl需要设置on</span><br>ui_url_protocol = http<br><br><span class="hljs-meta">#</span><span class="bash"> mysql数据库root用户默认密码root123，实际使用时修改下</span><br>db_password = root123<br><br><span class="hljs-meta">#</span><span class="bash"> 启动Harbor后，管理员UI登录的密码，默认是Harbor12345</span><br>harbor_admin_password = Harbor12345<br><br><span class="hljs-meta">#</span><span class="bash"> 是否开启自注册</span><br>self_registration = on<br><br><span class="hljs-meta">#</span><span class="bash"> Token有效时间，默认30分钟</span><br>token_expiration = 30<br></code></pre></td></tr></table></figure>
+<h3 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">cd <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/harbor/</span><br>./install.sh<br></code></pre></td></tr></table></figure>
+<p><img src="https://ljw.howieli.cn/blog/2019-05-14/harborlogin.png" srcset="/img/loading.gif"><br><img src="https://ljw.howieli.cn/blog/2019-05-14/harbor1.png" srcset="/img/loading.gif"></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs awk">cat <span class="hljs-regexp">/etc/</span>docker/daemon.json <br>&#123;<br>  <span class="hljs-string">&quot;insecure-registries&quot;</span>: [<span class="hljs-string">&quot;10.122.52.227&quot;</span>]<br>&#125;<br><span class="hljs-comment"># 重启docker服务</span><br>systemctl restart docker<br>systemctl restart docker<br></code></pre></td></tr></table></figure>
+<h3 id="将镜像push到Harbor"><a href="#将镜像push到Harbor" class="headerlink" title="将镜像push到Harbor"></a>将镜像push到Harbor</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">docker</span> images|grep centos<br><span class="hljs-attribute">centos</span>                          latest              <span class="hljs-number">9</span>f<span class="hljs-number">38484</span>d<span class="hljs-number">220</span>f        <span class="hljs-number">2</span> months ago        <span class="hljs-number">202</span>MB<br><br><span class="hljs-attribute">docker</span> tag centos:latest <span class="hljs-number">10.122.52.227</span>/library/centos:latest<br><br><span class="hljs-comment"># docker images|grep centos</span><br><span class="hljs-attribute">10</span>.<span class="hljs-number">122</span>.<span class="hljs-number">52</span>.<span class="hljs-number">227</span>/library/centos    latest              <span class="hljs-number">9</span>f<span class="hljs-number">38484</span>d<span class="hljs-number">220</span>f        <span class="hljs-number">2</span> months ago        <span class="hljs-number">202</span>MB<br><span class="hljs-attribute">centos</span>                          latest              <span class="hljs-number">9</span>f<span class="hljs-number">38484</span>d<span class="hljs-number">220</span>f        <span class="hljs-number">2</span> months ago        <span class="hljs-number">202</span>MB<br><br><span class="hljs-attribute">docker</span> push <span class="hljs-number">10.122.52.227</span>/library/centos:latest<br></code></pre></td></tr></table></figure>
+<p><img src="https://ljw.howieli.cn/blog/2019-05-14/login.png" srcset="/img/loading.gif"><br><img src="https://ljw.howieli.cn/blog/2019-05-14/harbor2.png" srcset="/img/loading.gif"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/docker/">docker</a>
+                    
+                      <a class="hover-with-bg" href="/categories/docker/harbor/">harbor</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/docker/">docker</a>
+                    
+                      <a class="hover-with-bg" href="/tags/harbor/">harbor</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/%E4%BD%BF%E7%94%A8kubeadm%E6%90%AD%E5%BB%BAkubernetes1.15/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">使用kubeadm搭建kubernetes1.15</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/%E4%BD%BF%E7%94%A8Kubeadm%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88Kubernetes-1-12/">
+                        <span class="hidden-mobile">使用Kubeadm安装最新版Kubernetes 1.12</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

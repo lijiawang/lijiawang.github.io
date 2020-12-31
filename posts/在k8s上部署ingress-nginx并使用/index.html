@@ -1,0 +1,477 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
+  <meta name="author" content="李家旺">
+  <meta name="keywords" content="linux, python, shell, openstack">
+  <title>在k8s上部署ingress-nginx并使用 - 李家旺</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.lijiawang.org","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="李家旺" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>李家旺</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="在k8s上部署ingress-nginx并使用">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-09-22 22:30" pubdate>
+        2019年9月22日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      25
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">在k8s上部署ingress-nginx并使用</h1>
+            
+            <div class="markdown-body">
+              <a id="more"></a>
+
+<p>[TOC]</p>
+<h3 id="部署nginx-ingress"><a href="#部署nginx-ingress" class="headerlink" title="部署nginx-ingress"></a>部署<code>nginx-ingress</code></h3><h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>准备一套<code>k8s</code>环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> kubectl get cs</span><br>NAME                 STATUS    MESSAGE             ERROR<br>controller-manager   Healthy   ok                  <br>scheduler            Healthy   ok                  <br>etcd-0               Healthy   &#123;&quot;health&quot;:&quot;true&quot;&#125;   <br><span class="hljs-meta">#</span><span class="bash"> kubectl cluster-info</span><br>Kubernetes master is running at https://10.122.17.200:6443<br>KubeDNS is running at https://10.122.17.200:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy<br><br>To further debug and diagnose cluster problems, use &#x27;kubectl cluster-info dump&#x27;.<br><span class="hljs-meta">#</span><span class="bash"> kubectl get nodes</span><br>NAME         STATUS   ROLES    AGE    VERSION<br>k8s-master   Ready    master   4d1h   v1.15.3<br>k8s-node1    Ready    &lt;none&gt;   4d1h   v1.15.3<br>k8s-node2    Ready    &lt;none&gt;   4d     v1.15.3<br>k8s-node3    Ready    &lt;none&gt;   4d     v1.15.3<br></code></pre></td></tr></table></figure>
+<h3 id="下载安装nginx-ingress的yaml文件"><a href="#下载安装nginx-ingress的yaml文件" class="headerlink" title="下载安装nginx-ingress的yaml文件"></a>下载安装<code>nginx-ingress</code>的<code>yaml</code>文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> wget https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml</span><br></code></pre></td></tr></table></figure>
+<h3 id="设置nginx-ingress-controller调度节点"><a href="#设置nginx-ingress-controller调度节点" class="headerlink" title="设置nginx-ingress-controller调度节点"></a>设置<code>nginx-ingress-controller</code>调度节点</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> kubectl label nodes k8s-node1 hosts=nginx-ingress-controller</span><br><span class="hljs-meta">#</span><span class="bash"> kubectl get node -l hosts=nginx-ingress-controller --show-labels</span> <br>NAME        STATUS   ROLES    AGE    VERSION   LABELS<br>k8s-node1   Ready    &lt;none&gt;   4d6h   v1.15.3   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,hosts=nginx-ingress-controller,kubernetes.io/arch=amd64,kubernetes.io/hostname=k8s-node1,kubernetes.io/os=linux<br></code></pre></td></tr></table></figure>
+<h3 id="修改mandatory-yaml文件"><a href="#修改mandatory-yaml文件" class="headerlink" title="修改mandatory.yaml文件"></a>修改<code>mandatory.yaml</code>文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> vim mandatory.yaml</span><br>......<br>apiVersion: apps/v1<br>kind: Deployment<br>......<br>spec:<br>  replicas: 1<br>  selector:<br>    matchLabels:<br>      app.kubernetes.io/name: ingress-nginx<br>      app.kubernetes.io/part-of: ingress-nginx<br>  template:<br>    ......<br>    spec:<br>      hostNetwork: true    # 使用hostNetwork 模式<br>      nodeSelector:        # 使用nodeSelector<br>        hosts: nginx-ingress-controller   # 选择标签为hosts=nginx-ingress-controller节点<br>      serviceAccountName: nginx-ingress-serviceaccount<br>      containers:<br>        - name: nginx-ingress-controller<br>          image: lijiawang/nginx-ingress-controller:0.25.1   # 更换镜像源<br>		  ......<br>......<br></code></pre></td></tr></table></figure>
+<h3 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> kubectl apply -f mandatory.yaml</span><br><span class="hljs-meta">#</span><span class="bash"> kubectl get pod -n ingress-nginx</span><br><span class="hljs-meta">#</span><span class="bash"> kubectl get pod -n ingress-nginx -o wide</span><br>NAME                                        READY   STATUS    RESTARTS   AGE   IP              NODE        NOMINATED NODE   READINESS GATES<br>nginx-ingress-controller-6956498fcf-jkzbs   1/1     Running   0          55s   10.122.17.204   k8s-node1   &lt;none&gt;           &lt;none&gt;<br></code></pre></td></tr></table></figure>
+<p>可以看到<code>nginx-ingress-controller-6956498fcf-jkzbs</code> <code>POD</code> 调度到了打好标记的<code>k8s-node1</code>。</p>
+<h3 id="登录nginx-ingress-controller节点验证"><a href="#登录nginx-ingress-controller节点验证" class="headerlink" title="登录nginx-ingress-controller节点验证"></a>登录<code>nginx-ingress-controller</code>节点验证</h3><p>因为<code>k8s-node1</code>为<code>nginx-ingress-controller</code>节点，所有登录<code>k8s-node1</code>节点即可</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> ssh k8s-node1</span><br>[root@k8s-node1 ~]# netstat -lntp|grep 80<br>tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      5901/nginx: master  <br>tcp6       0      0 :::80                   :::*                    LISTEN      5901/nginx: master  <br>[root@k8s-node1 ~]# netstat -lntp|grep 443<br>tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      5901/nginx: master  <br>tcp6       0      0 :::443                  :::*                    LISTEN      5901/nginx: master  <br>[root@k8s-node1 ~]# exit<br>logout<br>Connection to k8s-node1 closed.<br></code></pre></td></tr></table></figure>
+<h3 id="部署应用"><a href="#部署应用" class="headerlink" title="部署应用"></a>部署应用</h3><p>部署测试应用</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># cat deploy-demon.yaml </span><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Service</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">myapp</span><br>  <span class="hljs-attr">namespace:</span> <span class="hljs-string">default</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">selector:</span><br>    <span class="hljs-attr">app:</span> <span class="hljs-string">myapp</span><br>    <span class="hljs-attr">release:</span> <span class="hljs-string">canary</span><br>  <span class="hljs-attr">ports:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">http</span><br>    <span class="hljs-attr">port:</span> <span class="hljs-number">80</span><br>    <span class="hljs-attr">targetPort:</span> <span class="hljs-number">80</span><br><span class="hljs-meta">---</span><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">apps/v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Deployment</span><br><span class="hljs-attr">metadata:</span> <br>  <span class="hljs-attr">name:</span> <span class="hljs-string">myapp-deploy</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">replicas:</span> <span class="hljs-number">5</span><br>  <span class="hljs-attr">selector:</span> <br>    <span class="hljs-attr">matchLabels:</span><br>      <span class="hljs-attr">app:</span> <span class="hljs-string">myapp</span><br>      <span class="hljs-attr">release:</span> <span class="hljs-string">canary</span><br>  <span class="hljs-attr">template:</span><br>    <span class="hljs-attr">metadata:</span><br>      <span class="hljs-attr">labels:</span><br>        <span class="hljs-attr">app:</span> <span class="hljs-string">myapp</span><br>        <span class="hljs-attr">release:</span> <span class="hljs-string">canary</span><br>    <span class="hljs-attr">spec:</span><br>      <span class="hljs-attr">containers:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">myapp</span><br>        <span class="hljs-attr">image:</span> <span class="hljs-string">lijiawang/myapp:v2</span><br>        <span class="hljs-attr">ports:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">httpd</span><br>          <span class="hljs-attr">containerPort:</span> <span class="hljs-number">80</span><br><span class="hljs-comment"># kubectl  apply -f deploy-demon.yaml </span><br><span class="hljs-string">service/myapp</span> <span class="hljs-string">created</span><br><span class="hljs-string">deployment.apps/myapp-deploy</span> <span class="hljs-string">created</span><br><span class="hljs-comment"># kubectl get pod </span><br><span class="hljs-string">NAME</span>                           <span class="hljs-string">READY</span>   <span class="hljs-string">STATUS</span>    <span class="hljs-string">RESTARTS</span>   <span class="hljs-string">AGE</span><br><span class="hljs-string">curl-6bf6db5c4f-dqw9x</span>          <span class="hljs-number">1</span><span class="hljs-string">/1</span>     <span class="hljs-string">Running</span>   <span class="hljs-number">1</span>          <span class="hljs-string">16d</span><br><span class="hljs-string">myapp-deploy-c69757d67-9bv4w</span>   <span class="hljs-number">1</span><span class="hljs-string">/1</span>     <span class="hljs-string">Running</span>   <span class="hljs-number">0</span>          <span class="hljs-string">38s</span><br><span class="hljs-string">myapp-deploy-c69757d67-j2kxc</span>   <span class="hljs-number">1</span><span class="hljs-string">/1</span>     <span class="hljs-string">Running</span>   <span class="hljs-number">0</span>          <span class="hljs-string">38s</span><br><span class="hljs-string">myapp-deploy-c69757d67-jgm5v</span>   <span class="hljs-number">1</span><span class="hljs-string">/1</span>     <span class="hljs-string">Running</span>   <span class="hljs-number">0</span>          <span class="hljs-string">38s</span><br><span class="hljs-string">myapp-deploy-c69757d67-n5rxw</span>   <span class="hljs-number">1</span><span class="hljs-string">/1</span>     <span class="hljs-string">Running</span>   <span class="hljs-number">0</span>          <span class="hljs-string">38s</span><br><span class="hljs-string">myapp-deploy-c69757d67-t4nxr</span>   <span class="hljs-number">1</span><span class="hljs-string">/1</span>     <span class="hljs-string">Running</span>   <span class="hljs-number">0</span>          <span class="hljs-string">38s</span><br><span class="hljs-comment"># kubectl get svc</span><br><span class="hljs-string">NAME</span>         <span class="hljs-string">TYPE</span>        <span class="hljs-string">CLUSTER-IP</span>       <span class="hljs-string">EXTERNAL-IP</span>   <span class="hljs-string">PORT(S)</span>   <span class="hljs-string">AGE</span><br><span class="hljs-string">kubernetes</span>   <span class="hljs-string">ClusterIP</span>   <span class="hljs-number">10.96</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>        <span class="hljs-string">&lt;none&gt;</span>        <span class="hljs-number">443</span><span class="hljs-string">/TCP</span>   <span class="hljs-string">17d</span><br><span class="hljs-string">myapp</span>        <span class="hljs-string">ClusterIP</span>   <span class="hljs-number">10.104</span><span class="hljs-number">.246</span><span class="hljs-number">.234</span>   <span class="hljs-string">&lt;none&gt;</span>        <span class="hljs-number">80</span><span class="hljs-string">/TCP</span>    <span class="hljs-string">2m58s</span><br></code></pre></td></tr></table></figure>
+<h3 id="以ingress方式暴露应用"><a href="#以ingress方式暴露应用" class="headerlink" title="以ingress方式暴露应用"></a>以<code>ingress</code>方式暴露应用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> cat ingress-myapp.yaml</span> <br>apiVersion: extensions/v1beta1<br>kind: Ingress<br>metadata:<br>  name: ingress-myapp<br>  namespace: default<br>  annotations: <br>    kubernetes.io/ingress.class: &quot;nginx&quot;<br>spec:<br>  rules:<br>  - host: myapp.lijw19.com   # 定义域名<br>    http:<br>      paths:<br>      - path: <br>        backend:<br>          serviceName: myapp   # 跟你要爆了的服务的svc名字相同<br>          servicePort: 80     # 要暴露的端口<br><span class="hljs-meta">#</span><span class="bash"> kubectl apply -f ingress-myapp.yaml</span> <br>ingress.extensions/ingress-myapp created<br><span class="hljs-meta">#</span><span class="bash"> kubectl get ingresses.</span><br>NAME            HOSTS              ADDRESS   PORTS   AGE<br>ingress-myapp   myapp.lijw19.com             80      10s<br></code></pre></td></tr></table></figure>
+<p>本地<code>host</code>解析<br><code>windows</code>的<code>hosts</code>文件在<code>c:\windows\system32\drivers\etc</code>下<br>修改<code>host</code>文件，增加以下内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">10.122.17.204 myapp.lijw19.com <br></code></pre></td></tr></table></figure>
+<h3 id="访问应用"><a href="#访问应用" class="headerlink" title="访问应用"></a>访问应用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> `seq 10`; <span class="hljs-keyword">do</span> curl http://myapp.lijw19.com; <span class="hljs-keyword">done</span></span><br>Hello MyApp | Version: v2 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;<br>Hello MyApp | Version: v2 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;<br>Hello MyApp | Version: v2 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;<br>Hello MyApp | Version: v2 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;<br>Hello MyApp | Version: v2 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;<br>Hello MyApp | Version: v2 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;<br>Hello MyApp | Version: v2 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;<br>Hello MyApp | Version: v2 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;<br>Hello MyApp | Version: v2 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;<br>Hello MyApp | Version: v2 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;<br></code></pre></td></tr></table></figure>
+<p>使用浏览器访问<code>http://myapp.lijw19.com</code><br><img src="https://ljw.howieli.cn/blog/2019-9-18/http0.png" srcset="/img/loading.gif"></p>
+<p><img src="https://ljw.howieli.cn/blog/2019-9-18/http1.png" srcset="/img/loading.gif"><br>这里我们是使用的http访问的，那如果要使用</p>
+<h3 id="使用https访问"><a href="#使用https访问" class="headerlink" title="使用https访问"></a>使用<code>https</code>访问</h3><p>创建证书</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs vbnet"># openssl genrsa -out tls.<span class="hljs-keyword">key</span> <span class="hljs-number">2048</span><br>Generating RSA <span class="hljs-keyword">private</span> <span class="hljs-keyword">key</span>, <span class="hljs-number">2048</span> bit <span class="hljs-type">long</span> modulus<br>......................+++<br>.....................................+++<br>e <span class="hljs-built_in">is</span> <span class="hljs-number">65537</span> (<span class="hljs-number">0</span>x10001)<br># ls -l tls.<span class="hljs-keyword">key</span> <br>-rw-r--r-- <span class="hljs-number">1</span> root root <span class="hljs-number">1675</span> Sep <span class="hljs-number">16</span> <span class="hljs-number">08</span>:<span class="hljs-number">43</span> tls.<span class="hljs-keyword">key</span><br># openssl req -<span class="hljs-built_in">new</span> -x509 -<span class="hljs-keyword">key</span> tls.<span class="hljs-keyword">key</span> -out tls.crt<br>You are about <span class="hljs-keyword">to</span> be asked <span class="hljs-keyword">to</span> enter information that will be incorporated<br><span class="hljs-keyword">into</span> your certificate request.<br>What you are about <span class="hljs-keyword">to</span> enter <span class="hljs-built_in">is</span> what <span class="hljs-built_in">is</span> called a Distinguished Name <span class="hljs-built_in">or</span> a DN.<br>There are quite a few fields but you can leave some blank<br><span class="hljs-keyword">For</span> some fields there will be a <span class="hljs-keyword">default</span> value,<br><span class="hljs-keyword">If</span> you enter <span class="hljs-comment">&#x27;.&#x27;, the field will be left blank.</span><br>-----<br>Country Name (<span class="hljs-number">2</span> letter code) [XX]:CN     <br>State <span class="hljs-built_in">or</span> Province Name (full name) []:lijw19<br>Locality Name (eg, city) [<span class="hljs-keyword">Default</span> City]:lijw19<br>Organization Name (eg, company) [<span class="hljs-keyword">Default</span> Company Ltd]:test<br>Organizational Unit Name (eg, section) []:test<br>Common Name (eg, your name <span class="hljs-built_in">or</span> your server<span class="hljs-comment">&#x27;s hostname) []:test.lijw19.com</span><br>Email Address []:<br>[root@k8s-master ~]# ls -l tls.*<br>-rw-r--r-- <span class="hljs-number">1</span> root root <span class="hljs-number">1318</span> Sep <span class="hljs-number">16</span> <span class="hljs-number">08</span>:<span class="hljs-number">46</span> tls.crt<br>-rw-r--r-- <span class="hljs-number">1</span> root root <span class="hljs-number">1675</span> Sep <span class="hljs-number">16</span> <span class="hljs-number">08</span>:<span class="hljs-number">43</span> tls.<span class="hljs-keyword">key</span><br><br></code></pre></td></tr></table></figure>
+<h3 id="证书转成secret"><a href="#证书转成secret" class="headerlink" title="证书转成secret"></a>证书转成<code>secret</code></h3><p>将创建好的证书转成<code>secret</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> kubectl create secret tls lijw-ingress-secret --cert=tls.crt --key=tls.key</span><br>secret/lijw-ingress-secret created<br><span class="hljs-meta">#</span><span class="bash"> kubectl get secrets</span> <br>NAME                  TYPE                                  DATA   AGE<br>default-token-vmfwt   kubernetes.io/service-account-token   3      17d<br>lijw-ingress-secret   kubernetes.io/tls                     2      10s<br><br><br></code></pre></td></tr></table></figure>
+<h3 id="创建https-ingress"><a href="#创建https-ingress" class="headerlink" title="创建https ingress"></a>创建<code>https</code> <code>ingress</code></h3><p>修改下<code>ingress-myapp-https.yaml</code>加入刚刚添加的<code>secret</code>，修改后的文件如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># cat ingress-myapp-https.yaml </span><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">extensions/v1beta1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Ingress</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">ingress-myapp-https</span><br>  <span class="hljs-attr">namespace:</span> <span class="hljs-string">default</span><br>  <span class="hljs-attr">annotations:</span> <br>    <span class="hljs-attr">kubernetes.io/ingress.class:</span> <span class="hljs-string">&quot;nginx&quot;</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">tls:</span>    <span class="hljs-comment"># 添加了tls这一段</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">hosts:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">test.lijw19.com</span><br>    <span class="hljs-attr">secretName:</span> <span class="hljs-string">lijw-ingress-secret</span>  <span class="hljs-comment"># 到这结束</span><br>  <span class="hljs-attr">rules:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">host:</span> <span class="hljs-string">test.lijw19.com</span><br>    <span class="hljs-attr">http:</span><br>      <span class="hljs-attr">paths:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">path:</span> <br>        <span class="hljs-attr">backend:</span><br>          <span class="hljs-attr">serviceName:</span> <span class="hljs-string">myapp</span><br>          <span class="hljs-attr">servicePort:</span> <span class="hljs-number">80</span><br><br><br><br><br><span class="hljs-comment"># kubectl apply -f ingress-myapp-https.yaml </span><br><span class="hljs-string">ingress.extensions/ingress-myapp-https</span> <span class="hljs-string">created</span><br><span class="hljs-comment"># kubectl get ingresses ingress-myapp-https </span><br><span class="hljs-string">NAME</span>                  <span class="hljs-string">HOSTS</span>             <span class="hljs-string">ADDRESS</span>   <span class="hljs-string">PORTS</span>     <span class="hljs-string">AGE</span><br><span class="hljs-string">ingress-myapp-https</span>   <span class="hljs-string">test.lijw19.com</span>             <span class="hljs-number">80</span><span class="hljs-string">,</span> <span class="hljs-number">443</span>   <span class="hljs-string">13s</span><br></code></pre></td></tr></table></figure>
+<h3 id="本地host解析"><a href="#本地host解析" class="headerlink" title="本地host解析"></a>本地<code>host</code>解析</h3><p><code>windows</code>的<code>hosts</code>文件在<code>c:\windows\system32\drivers\etc</code>下<br>修改<code>host</code>文件，增加以下内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">10.122.17.204 myapp.lijw19.com  test.lijw19.com<br></code></pre></td></tr></table></figure>
+<p>在浏览器访问<code>https://test.lijw19.com</code><br><img src="https://ljw.howieli.cn/blog/2019-9-18/https0.png" srcset="/img/loading.gif"></p>
+<p><img src="https://ljw.howieli.cn/blog/2019-9-18/https1.png" srcset="/img/loading.gif"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/kubernets/">kubernets</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/kubernets/">kubernets</a>
+                    
+                      <a class="hover-with-bg" href="/tags/ingress/">ingress</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/%E4%BD%BF%E7%94%A8kubeadm%E5%8D%87%E7%BA%A7kubernetes%E9%9B%86%E7%BE%A4/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">使用kubeadm升级kubernetes集群</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/%E4%BD%BF%E7%94%A8kubeadm%E6%90%AD%E5%BB%BAkubernetes1.15/">
+                        <span class="hidden-mobile">使用kubeadm搭建kubernetes1.15</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

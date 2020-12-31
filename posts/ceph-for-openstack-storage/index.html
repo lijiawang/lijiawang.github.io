@@ -1,0 +1,548 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
+  <meta name="author" content="李家旺">
+  <meta name="keywords" content="linux, python, shell, openstack">
+  <title>ceph-for-openstack-storage - 李家旺</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.lijiawang.org","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="李家旺" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>李家旺</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="ceph-for-openstack-storage">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-05-03 14:08" pubdate>
+        2018年5月3日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      31
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ceph-for-openstack-storage</h1>
+            
+            <div class="markdown-body">
+              <h2 id="openstack对接ceph存储"><a href="#openstack对接ceph存储" class="headerlink" title="openstack对接ceph存储"></a><code>openstack</code>对接<code>ceph</code>存储</h2><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li>截至<code>2018</code>年<code>5</code>月<code>3</code>日，<code>OpenStack</code>也已经伴随着我们走过了<code>8</code>个年头了，并且成为了云计算领域中最火热的项目之一，逐渐成为<code>IaaS</code>的事实标准，私有云项目的部署首选；</li>
+<li><code>OpenStack</code>发展如此的迅速，以至于部署规模愈发的庞大，此时就该思量<code>OpenStack</code>集群的部署支持以及持续可扩展性；</li>
+<li><code>OpenStack</code>和<code>Ceph</code>的集成更让开源项目锦上添花，<code>Ceph</code>作为优秀的分布式存储系统，实现对<code>OpenStack</code>相关子项目进行集成或替代，目前在<code>OpenStack</code>中扮演者非常重要的角色；</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h2><ul>
+<li><code>Ceph</code>已经成为<code>OpenStack</code>后端存储标配，<code>OpenStack</code>作为<code>IaaS</code>系统，涉及到存储的部分主要是块存储服务模块、对象存储服务模块、镜像管理模块和计算服务模块，对应为其中的<code>Cinder</code>、<code>Swift</code>、<code>Glance</code>和<code>Nova</code>四个项目；</li>
+<li>配置前，请将<code>OpenStack</code>中已存在的<code>VM</code>、<code>Image</code>与<code>Vloume</code>清理掉；</li>
+</ul>
+<h3 id="创建相应的Pool"><a href="#创建相应的Pool" class="headerlink" title="创建相应的Pool"></a>创建相应的<code>Pool</code></h3><ul>
+<li>若少于<code>5</code>个<code>OSD</code>, 设置<code>pg_num</code>为<code>128</code>；</li>
+<li><code>5 ~ 10</code>个<code>OSD</code>，设置<code>pg_num</code>为<code>512</code>；</li>
+<li><code>10 ~ 50</code>个<code>OSD</code>，设置<code>pg_num</code>为<code>4096</code>；</li>
+<li>超过<code>50</code>个<code>OSD</code>, 根据(<code>PG数 = OSD数 * 100/ 副本数 / POOL数</code>)来计算；</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph osd pool create images 1024<br>$ ceph osd pool create volumes 1024<br>$ ceph osd pool create vms 1024<br>$ ceph osd pool create backups 1024<br><br>$ ceph osd pool create images.cache 1024<br>$ ceph osd pool create volumes.cache 1024<br>$ ceph osd pool create vms.cache 1024<br>$ ceph osd pool create backups.cache 1024<br></code></pre></td></tr></table></figure>
+<h3 id="删除相应的Pool-备用"><a href="#删除相应的Pool-备用" class="headerlink" title="删除相应的Pool(备用)"></a>删除相应的<code>Pool</code>(备用)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph osd pool delete images images --yes-i-really-really-mean-it<br>$ ceph osd pool delete volumes volumes --yes-i-really-really-mean-it<br>$ ceph osd pool delete vms vms --yes-i-really-really-mean-it<br>$ ceph osd pool delete backups backups --yes-i-really-really-mean-it<br><br>$ ceph osd pool delete images.cache images.cache --yes-i-really-really-mean-it<br>$ ceph osd pool delete volumes.cache volumes.cache --yes-i-really-really-mean-it<br>$ ceph osd pool delete vms.cache vms.cache --yes-i-really-really-mean-it<br>$ ceph osd pool delete backups.cache backups.cache --yes-i-really-really-mean-it<br></code></pre></td></tr></table></figure>
+<h3 id="更新相应Pool的属性值-备用"><a href="#更新相应Pool的属性值-备用" class="headerlink" title="更新相应Pool的属性值(备用)"></a>更新相应<code>Pool</code>的属性值(备用)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph osd pool <span class="hljs-built_in">set</span> images pg_num 512<br>$ ceph osd pool <span class="hljs-built_in">set</span> volumes pg_num 512<br>$ ceph osd pool <span class="hljs-built_in">set</span> vms pg_num 512<br>$ ceph osd pool <span class="hljs-built_in">set</span> backups pg_num 512<br><br>$ ceph osd pool <span class="hljs-built_in">set</span> images pgp_num 512<br>$ ceph osd pool <span class="hljs-built_in">set</span> volumes pgp_num 512<br>$ ceph osd pool <span class="hljs-built_in">set</span> vms pgp_num 512<br>$ ceph osd pool <span class="hljs-built_in">set</span> backups pgp_num 512<br></code></pre></td></tr></table></figure>
+<h3 id="将不同的Pool加入到对应的Crush-Map中"><a href="#将不同的Pool加入到对应的Crush-Map中" class="headerlink" title="将不同的Pool加入到对应的Crush Map中"></a>将不同的<code>Pool</code>加入到对应的<code>Crush Map</code>中</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 后备存储-SATA盘</span><br>$ ceph osd pool <span class="hljs-built_in">set</span> images crush_ruleset 0<br>$ ceph osd pool <span class="hljs-built_in">set</span> volumes crush_ruleset 0<br>$ ceph osd pool <span class="hljs-built_in">set</span> vms crush_ruleset 0<br>$ ceph osd pool <span class="hljs-built_in">set</span> backups crush_ruleset 0<br><br><span class="hljs-comment"># 缓存存储-SSD盘</span><br>$ ceph osd pool <span class="hljs-built_in">set</span> images.cache crush_ruleset 1<br>$ ceph osd pool <span class="hljs-built_in">set</span> volumes.cache crush_ruleset 1<br>$ ceph osd pool <span class="hljs-built_in">set</span> vms.cache crush_ruleset 1<br>$ ceph osd pool <span class="hljs-built_in">set</span> backups.cache crush_ruleset 1<br></code></pre></td></tr></table></figure>
+<h3 id="将缓存层与后备存储池相关联"><a href="#将缓存层与后备存储池相关联" class="headerlink" title="将缓存层与后备存储池相关联"></a>将缓存层与后备存储池相关联</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph osd tier add images images.cache<br>$ ceph osd tier add volumes volumes.cache<br>$ ceph osd tier add vms vms.cache<br>$ ceph osd tier add backups backups.cache<br></code></pre></td></tr></table></figure>
+<h3 id="设置缓存模式-热存储回写"><a href="#设置缓存模式-热存储回写" class="headerlink" title="设置缓存模式(热存储回写)"></a>设置缓存模式(热存储回写)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph osd tier cache-mode images.cache writeback<br>$ ceph osd tier cache-mode volumes.cache writeback<br>$ ceph osd tier cache-mode vms.cache writeback<br>$ ceph osd tier cache-mode backups.cache writeback<br></code></pre></td></tr></table></figure>
+<h3 id="高速缓存层覆盖后备存储池"><a href="#高速缓存层覆盖后备存储池" class="headerlink" title="高速缓存层覆盖后备存储池"></a>高速缓存层覆盖后备存储池</h3><ul>
+<li>直接将客户端流量引导到缓存池</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph osd tier set-overlay images images.cache<br>$ ceph osd tier set-overlay volumes volumes.cache<br>$ ceph osd tier set-overlay vms vms.cache<br>$ ceph osd tier set-overlay backups backups.cache<br></code></pre></td></tr></table></figure>
+<h3 id="启用缓存存储池的命中集跟踪"><a href="#启用缓存存储池的命中集跟踪" class="headerlink" title="启用缓存存储池的命中集跟踪"></a>启用缓存存储池的命中集跟踪</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph osd pool <span class="hljs-built_in">set</span> images.cache hit_set_type bloom<br>$ ceph osd pool <span class="hljs-built_in">set</span> volumes.cache hit_set_type bloom<br>$ ceph osd pool <span class="hljs-built_in">set</span> vms.cache hit_set_type bloom<br>$ ceph osd pool <span class="hljs-built_in">set</span> backups.cache hit_set_type bloom<br></code></pre></td></tr></table></figure>
+<h3 id="为缓存存储池的保留的命中集数量"><a href="#为缓存存储池的保留的命中集数量" class="headerlink" title="为缓存存储池的保留的命中集数量"></a>为缓存存储池的保留的命中集数量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph osd pool <span class="hljs-built_in">set</span> images.cache hit_set_count 10<br>$ ceph osd pool <span class="hljs-built_in">set</span> volumes.cache hit_set_count 10<br>$ ceph osd pool <span class="hljs-built_in">set</span> vms.cache hit_set_count 10<br>$ ceph osd pool <span class="hljs-built_in">set</span> backups.cache hit_set_count 10<br></code></pre></td></tr></table></figure>
+<h3 id="为缓存存储池保留的命中集有效期"><a href="#为缓存存储池保留的命中集有效期" class="headerlink" title="为缓存存储池保留的命中集有效期"></a>为缓存存储池保留的命中集有效期</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph osd pool <span class="hljs-built_in">set</span> images.cache hit_set_period 14400<br>$ ceph osd pool <span class="hljs-built_in">set</span> volumes.cache hit_set_period 14400<br>$ ceph osd pool <span class="hljs-built_in">set</span> vms.cache hit_set_period 14400<br>$ ceph osd pool <span class="hljs-built_in">set</span> backups.cache hit_set_period 14400<br></code></pre></td></tr></table></figure>
+<h3 id="缓存层回写数据"><a href="#缓存层回写数据" class="headerlink" title="缓存层回写数据"></a>缓存层回写数据</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 最大达到50G时，回写数据</span><br>$ ceph osd pool <span class="hljs-built_in">set</span> images.cache target_max_bytes 53687091200<br>$ ceph osd pool <span class="hljs-built_in">set</span> volumes.cache target_max_bytes 53687091200<br>$ ceph osd pool <span class="hljs-built_in">set</span> vms.cache target_max_bytes 53687091200<br>$ ceph osd pool <span class="hljs-built_in">set</span> backups.cache target_max_bytes 53687091200<br><br><span class="hljs-comment"># 最大达到100万时，回写数据</span><br>$ ceph osd pool <span class="hljs-built_in">set</span> images.cache target_max_objects 1000000<br>$ ceph osd pool <span class="hljs-built_in">set</span> volumes.cache target_max_objects 1000000<br>$ ceph osd pool <span class="hljs-built_in">set</span> vms.cache target_max_objects 1000000<br>$ ceph osd pool <span class="hljs-built_in">set</span> backups.cache target_max_objects 1000000<br></code></pre></td></tr></table></figure>
+<h3 id="保留访问记录"><a href="#保留访问记录" class="headerlink" title="保留访问记录"></a>保留访问记录</h3><ul>
+<li>取值越高，消耗的内存就越多；</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph osd pool <span class="hljs-built_in">set</span> images.cache min_read_recency_for_promote 2<br>$ ceph osd pool <span class="hljs-built_in">set</span> images.cache min_write_recency_for_promote 2<br>$ ceph osd pool <span class="hljs-built_in">set</span> volumes.cache min_read_recency_for_promote 2<br>$ ceph osd pool <span class="hljs-built_in">set</span> volumes.cache min_write_recency_for_promote 2<br>$ ceph osd pool <span class="hljs-built_in">set</span> vms.cache min_read_recency_for_promote 2<br>$ ceph osd pool <span class="hljs-built_in">set</span> vms.cache min_write_recency_for_promote 2<br>$ ceph osd pool <span class="hljs-built_in">set</span> backups.cache min_read_recency_for_promote 2<br>$ ceph osd pool <span class="hljs-built_in">set</span> backups.cache min_write_recency_for_promote 2<br></code></pre></td></tr></table></figure>
+<h2 id="认证配置"><a href="#认证配置" class="headerlink" title="认证配置"></a>认证配置</h2><h3 id="创建认证密钥"><a href="#创建认证密钥" class="headerlink" title="创建认证密钥"></a>创建认证密钥</h3><h4 id="Nova用户"><a href="#Nova用户" class="headerlink" title="Nova用户"></a>Nova用户</h4><ul>
+<li>允许访问<code>volumes</code>、<code>vms</code>、<code>images</code>池；</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph auth get-or-create client.nova mon <span class="hljs-string">&#x27;allow r&#x27;</span> osd <span class="hljs-string">&#x27;allow class-read object_prefix rbd_children, allow rwx pool=volumes, allow rwx pool=vms, allow rwx pool=images ,allow rwx pool=volumes.cache, allow rwx pool=vms.cache, allow rwx pool=images.cache&#x27;</span><br></code></pre></td></tr></table></figure>
+<h4 id="Cinder用户"><a href="#Cinder用户" class="headerlink" title="Cinder用户"></a>Cinder用户</h4><ul>
+<li>允许访问<code>volumes</code>、<code>backups</code>池；</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ceph auth get-or-create client.cinder mon <span class="hljs-string">&#x27;allow r&#x27;</span> osd <span class="hljs-string">&#x27;allow class-read object_prefix rbd_children, allow rwx pool=volumes, allow rwx pool=volumes.cache ,allow rwx pool=backups ,allow rwx pool=backups.cache&#x27;</span><br></code></pre></td></tr></table></figure>
+<h4 id="Glance用户"><a href="#Glance用户" class="headerlink" title="Glance用户"></a>Glance用户</h4><ul>
+<li>允许访问<code>images</code>池；</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph auth get-or-create client.glance mon <span class="hljs-string">&#x27;allow r&#x27;</span> osd <span class="hljs-string">&#x27;allow class-read object_prefix rbd_children, allow rwx pool=images, allow rwx pool=images.cache&#x27;</span><br></code></pre></td></tr></table></figure>
+<h3 id="获取认证密钥"><a href="#获取认证密钥" class="headerlink" title="获取认证密钥"></a>获取认证密钥</h3><h4 id="Controller节点"><a href="#Controller节点" class="headerlink" title="Controller节点"></a><code>Controller</code>节点</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph auth get-or-create client.nova | ssh root@controller tee /etc/ceph/ceph.client.nova.keyring<br>$ ssh root@controller chown nova:nova /etc/ceph/ceph.client.nova.keyring<br><br>$ ceph auth get-or-create client.cinder | ssh root@controller tee /etc/ceph/ceph.client.cinder.keyring<br>$ ssh root@controller chown cinder:cinder /etc/ceph/ceph.client.cinder.keyring<br><br>$ ceph auth get-or-create client.glance | ssh root@controller tee /etc/ceph/ceph.client.glance.keyring<br>$ ssh root@controller chown glance:glance /etc/ceph/ceph.client.glance.keyring<br></code></pre></td></tr></table></figure>
+<h4 id="Compute节点"><a href="#Compute节点" class="headerlink" title="Compute节点"></a><code>Compute</code>节点</h4><ul>
+<li>请使用<code>Compute</code>节点的主机名代替<code>&#123;ComputeNode&#125;</code>；</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph auth get-or-create client.nova | ssh root@&#123;ComputeNode&#125; tee /etc/ceph/ceph.client.nova.keyring<br>$ ssh root@&#123;ComputeNode&#125; chown nova:nova /etc/ceph/ceph.client.nova.keyring<br></code></pre></td></tr></table></figure>
+<h2 id="OpenStack配置"><a href="#OpenStack配置" class="headerlink" title="OpenStack配置"></a><code>OpenStack</code>配置</h2><h3 id="配置Nova服务"><a href="#配置Nova服务" class="headerlink" title="配置Nova服务"></a>配置<code>Nova</code>服务</h3><h4 id="配置libvirt认证"><a href="#配置libvirt认证" class="headerlink" title="配置libvirt认证"></a>配置<code>libvirt</code>认证</h4><h5 id="获取密钥"><a href="#获取密钥" class="headerlink" title="获取密钥"></a>获取密钥</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph auth get-key client.nova | tee ~/nova.key<br></code></pre></td></tr></table></figure>
+<h5 id="生成UUID，用于认证"><a href="#生成UUID，用于认证" class="headerlink" title="生成UUID，用于认证"></a>生成<code>UUID</code>，用于认证</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ UUID=$(cat /etc/ceph/ceph.conf | grep <span class="hljs-string">&quot;fsid&quot;</span> | awk -F <span class="hljs-string">&quot; = &quot;</span> <span class="hljs-string">&#x27;&#123;print $2&#125;&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<h5 id="生成secret-xml文件"><a href="#生成secret-xml文件" class="headerlink" title="生成secret.xml文件"></a>生成<code>secret.xml</code>文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ cat &gt; ~/secret.xml &lt;&lt;<span class="hljs-string">EOF</span><br><span class="hljs-string">&lt;secret ephemeral=&#x27;no&#x27; private=&#x27;no&#x27;&gt;</span><br><span class="hljs-string">  &lt;uuid&gt;$&#123;UUID&#125;&lt;/uuid&gt;</span><br><span class="hljs-string">  &lt;usage type=&#x27;ceph&#x27;&gt;</span><br><span class="hljs-string">        &lt;name&gt;client.nova secret&lt;/name&gt;</span><br><span class="hljs-string">  &lt;/usage&gt;</span><br><span class="hljs-string">&lt;/secret&gt;</span><br><span class="hljs-string">EOF</span><br></code></pre></td></tr></table></figure>
+<h5 id="定义secret-xml文件"><a href="#定义secret-xml文件" class="headerlink" title="定义secret.xml文件"></a>定义<code>secret.xml</code>文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ virsh secret-define --file ~/secret.xml<br></code></pre></td></tr></table></figure>
+<h5 id="列出已定义的项目"><a href="#列出已定义的项目" class="headerlink" title="列出已定义的项目"></a>列出已定义的项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ virsh secret-list<br></code></pre></td></tr></table></figure>
+<h5 id="取消定义-备用"><a href="#取消定义-备用" class="headerlink" title="取消定义(备用)"></a>取消定义(备用)</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ virsh secret-undefine <span class="hljs-variable">$&#123;UUID&#125;</span><br></code></pre></td></tr></table></figure>
+<h5 id="关联密钥与UUID"><a href="#关联密钥与UUID" class="headerlink" title="关联密钥与UUID"></a>关联密钥与<code>UUID</code></h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ virsh secret-set-value --secret <span class="hljs-variable">$&#123;UUID&#125;</span> --base64 $(cat ~/nova.key) &amp;&amp; rm -f ~/&#123;nova.key,secret.xml&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="配置Nova服务-1"><a href="#配置Nova服务-1" class="headerlink" title="配置Nova服务"></a>配置<code>Nova</code>服务</h4><h5 id="编辑配置文件"><a href="#编辑配置文件" class="headerlink" title="编辑配置文件"></a>编辑配置文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ vim /etc/nova/nova.conf<br></code></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs text">[libvirt]<br>images_type = rbd<br>images_rbd_pool = vms<br>images_rbd_ceph_conf = /etc/ceph/ceph.conf<br>rbd_user = nova<br>rbd_secret_uuid = UUID<br>disk_cachemodes = &quot;network=writeback&quot;<br>hw_disk_discard = unmap<br>inject_password = true<br>inject_key = true<br>inject_partition = -2<br>live_migration_flag = &quot;VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE,VIR_MIGRATE_PERSIST_DEST,VIR_MIGRATE_TUNNELLED&quot;<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sed -i <span class="hljs-string">&quot;s#UUID#<span class="hljs-variable">$&#123;UUID&#125;</span>#g&quot;</span> /etc/nova/nova.conf<br></code></pre></td></tr></table></figure>
+<h5 id="重启服务"><a href="#重启服务" class="headerlink" title="重启服务"></a>重启服务</h5><ul>
+<li><code>Ubuntu</code>系统：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ service nova-compute restart<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>CentOS</code>系统：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ systemctl restart libvirtd.service openstack-nova-compute.service<br></code></pre></td></tr></table></figure>
+<h3 id="配置Glance服务"><a href="#配置Glance服务" class="headerlink" title="配置Glance服务"></a>配置<code>Glance</code>服务</h3><h4 id="编辑配置文件-1"><a href="#编辑配置文件-1" class="headerlink" title="编辑配置文件"></a>编辑配置文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ vim /etc/glance/glance-api.conf<br></code></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs text">[DEFAULT]<br>show_image_direct_url = True<br><br>[glance_store]<br>stores = rbd<br>rbd_store_pool = images<br>rbd_store_user = glance<br>rbd_store_ceph_conf = /etc/ceph/ceph.conf<br>rbd_store_chunk_size = 8<br>default_store =rbd<br><br>[task]<br>task_executor = taskflow<br>work_dir=/tmp<br><br>[taskflow_executor]<br>engine_mode = serial<br>max_workers = 10<br>conversion_format=raw<br></code></pre></td></tr></table></figure>
+<h4 id="重启服务-1"><a href="#重启服务-1" class="headerlink" title="重启服务"></a>重启服务</h4><ul>
+<li><code>Ubuntu</code>系统：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ service glance-api restart<br>$ service glance-registry restart<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>CentOS</code>系统：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ systemctl restart openstack-glance-api.service openstack-glance-registry.service<br></code></pre></td></tr></table></figure>
+<h3 id="配置Cinder服务"><a href="#配置Cinder服务" class="headerlink" title="配置Cinder服务"></a>配置<code>Cinder</code>服务</h3><ul>
+<li>仅需在<code>Controller</code>节点安装<code>cinder</code>的所有的服务即可；</li>
+</ul>
+<h4 id="编辑配置文件-2"><a href="#编辑配置文件-2" class="headerlink" title="编辑配置文件"></a>编辑配置文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ vim /etc/cinder/cinder.conf<br></code></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs text">[DEFAULT]<br>enabled_backends = ceph<br>backup_driver = cinder.backup.drivers.ceph<br>backup_ceph_conf = /etc/ceph/ceph.conf<br>backup_ceph_user = cinder-backup<br>backup_ceph_chunk_size = 134217728<br>backup_ceph_pool = backups<br>backup_ceph_stripe_unit = 0<br>backup_ceph_stripe_count = 0<br>restore_discard_excess_bytes = true<br><br>[ceph]<br>volume_driver = cinder.volume.drivers.rbd.RBDDriver<br>rbd_pool = volumes<br>rbd_ceph_conf = /etc/ceph/ceph.conf<br>rbd_flatten_volume_from_snapshot = false<br>rbd_max_clone_depth = 5<br>rbd_store_chunk_size = 4<br>rados_connect_timeout = -1<br>glance_api_version = 2<br>rbd_user = cinder<br>rbd_secret_uuid = UUID<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sed -i <span class="hljs-string">&quot;s#UUID#<span class="hljs-variable">$&#123;UUID&#125;</span>#g&quot;</span> /etc/cinder/cinder.conf<br></code></pre></td></tr></table></figure>
+<h4 id="重启服务-2"><a href="#重启服务-2" class="headerlink" title="重启服务"></a>重启服务</h4><ul>
+<li><code>Ubuntu</code>系统：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ service cinder-api restart<br>$ service cinder-scheduler restart<br>$ service cinder-volume restart<br>$ service cinder-backup restart<br>$ service tgt restart<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>CentOS</code>系统：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ systemctl restart openstack-cinder-volume.service target.service<br></code></pre></td></tr></table></figure>
+<h2 id="测试操作"><a href="#测试操作" class="headerlink" title="测试操作"></a>测试操作</h2><h3 id="下载镜像"><a href="#下载镜像" class="headerlink" title="下载镜像"></a>下载镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ wget http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img<br></code></pre></td></tr></table></figure>
+<h3 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ openstack image create <span class="hljs-string">&quot;cirros&quot;</span> --file cirros-0.3.5-x86_64-disk.img --disk-format qcow2 --container-format bare --public<br></code></pre></td></tr></table></figure>
+<h3 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ openstack image list<br></code></pre></td></tr></table></figure>
+<h3 id="获取Ceph的存储使用率"><a href="#获取Ceph的存储使用率" class="headerlink" title="获取Ceph的存储使用率"></a>获取<code>Ceph</code>的存储使用率</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ceph df<br></code></pre></td></tr></table></figure>
+<hr>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/openstack/">openstack</a>
+                    
+                      <a class="hover-with-bg" href="/categories/openstack/ceph/">ceph</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/openstack/">openstack</a>
+                    
+                      <a class="hover-with-bg" href="/tags/ceph/">ceph</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/docker%E7%BD%91%E7%BB%9C/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">docker网络</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/kolla-%E5%A4%9Aregion%E6%90%AD%E5%BB%BA/">
+                        <span class="hidden-mobile">kolla 多region搭建</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

@@ -12,7 +12,7 @@
     
     <entry>
       <title><![CDATA[openstack instance vm_power_state 状态置为 NOSTATE]]></title>
-      <url>//openstack%20instance%20vm_power_state%20%E7%8A%B6%E6%80%81%E7%BD%AE%E4%B8%BA%20NOSTATE</url>
+      <url>//posts/openstack-instance-vm-power-state-%E7%8A%B6%E6%80%81%E7%BD%AE%E4%B8%BA-NOSTATE/</url>
       <content type="html"><![CDATA[<h3 id="openstack-上的instance运行正常，但是power-state状态为NOSTATE，导致instance热迁移失败"><a href="#openstack-上的instance运行正常，但是power-state状态为NOSTATE，导致instance热迁移失败" class="headerlink" title="openstack 上的instance运行正常，但是power_state状态为NOSTATE，导致instance热迁移失败"></a>openstack 上的instance运行正常，但是power_state状态为NOSTATE，导致instance热迁移失败</h3><h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>1、再一次热迁移时候发现迁移时候报以下错误</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment"># openstack server migrate --live node-53 86487ef4-cc12-4be6-995e-46f5ac093901</span><br><span class="hljs-attribute">Cannot</span> &#x27;os-migrateLive&#x27; instance <span class="hljs-number">86487</span>ef<span class="hljs-number">4</span>-cc<span class="hljs-number">12</span>-<span class="hljs-number">4</span>be<span class="hljs-number">6</span>-<span class="hljs-number">995</span>e-<span class="hljs-number">46</span>f<span class="hljs-number">5</span>ac<span class="hljs-number">093901</span> while it is in power_state <span class="hljs-number">0</span> (HTTP <span class="hljs-number">409</span>) (Request-ID: req-<span class="hljs-number">6</span>c<span class="hljs-number">14</span>e<span class="hljs-number">0</span>ee-c<span class="hljs-number">3</span>df-<span class="hljs-number">42</span>de-<span class="hljs-number">873</span>d-<span class="hljs-number">9</span>ecc<span class="hljs-number">8</span>ad<span class="hljs-number">215</span>cc)<br></code></pre></td></tr></table></figure>
 <p>2、查看实例，发现虚拟机运行正常，但是 power_state 为 NOSTATE</p>
@@ -49,7 +49,7 @@
     
     <entry>
       <title><![CDATA[使用kubeadm升级kubernetes集群]]></title>
-      <url>//kubeadm%E5%8D%87%E7%BA%A7k8s%E9%9B%86%E7%BE%A4(v1.15.3%20to%20v1.16.0%E7%89%88)</url>
+      <url>//posts/%E4%BD%BF%E7%94%A8kubeadm%E5%8D%87%E7%BA%A7kubernetes%E9%9B%86%E7%BE%A4/</url>
       <content type="html"><![CDATA[<h3 id="kubeadm升级k8s集群-v1-15-3-to-v1-16-0版"><a href="#kubeadm升级k8s集群-v1-15-3-to-v1-16-0版" class="headerlink" title="kubeadm升级k8s集群(v1.15.3 to v1.16.0版)"></a><code>kubeadm</code>升级<code>k8s</code>集群(<code>v1.15.3 to v1.16.0</code>版)</h3><blockquote>
 <p><code>Kubernetes</code>在2019年9月18日发布了年度的第三个版本<code>1.16</code>,本篇文章介绍使用<code>kubeadm</code>升级现在有的集群到<code>v1.16.0</code>。</p>
 </blockquote>
@@ -178,7 +178,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[在k8s上部署ingress-nginx并使用]]></title>
-      <url>//%E5%9C%A8k8s%E4%B8%8A%E9%83%A8%E7%BD%B2ingress-nginx%E5%B9%B6%E4%BD%BF%E7%94%A8</url>
+      <url>//posts/%E5%9C%A8k8s%E4%B8%8A%E9%83%A8%E7%BD%B2ingress-nginx%E5%B9%B6%E4%BD%BF%E7%94%A8/</url>
       <content type="html"><![CDATA[<a id="more"></a>
 
 <p>[TOC]</p>
@@ -222,13 +222,15 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <tag> kubernets </tag>
             
+            <tag> ingress </tag>
+            
         </tags>
         
     </entry>
     
     <entry>
       <title><![CDATA[使用kubeadm搭建kubernetes1.15]]></title>
-      <url>//%E4%BD%BF%E7%94%A8kubeadm%E6%90%AD%E5%BB%BAkubernetes1.15</url>
+      <url>//posts/%E4%BD%BF%E7%94%A8kubeadm%E6%90%AD%E5%BB%BAkubernetes1.15/</url>
       <content type="html"><![CDATA[<h3 id="使用kubeadm方式安装kubernetes"><a href="#使用kubeadm方式安装kubernetes" class="headerlink" title="使用kubeadm方式安装kubernetes"></a>使用<code>kubeadm</code>方式安装<code>kubernetes</code></h3><a id="more"></a>
 
 <p>[TOC]</p>
@@ -299,7 +301,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
         
         <tags>
             
-            <tag> 使用kubeadm搭建kubernetes1.15 </tag>
+            <tag> kubernetes </tag>
             
         </tags>
         
@@ -307,7 +309,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[harbor搭建]]></title>
-      <url>//harbor%E6%90%AD%E5%BB%BA</url>
+      <url>//posts/harbor%E6%90%AD%E5%BB%BA/</url>
       <content type="html"><![CDATA[<h3 id="harbor介绍"><a href="#harbor介绍" class="headerlink" title="harbor介绍"></a>harbor介绍</h3><p>Harbor是一个用于存储和分发Docker镜像的企业级Registry服务器，通过添加一些企业必需的功能特性，例如安全、标识和管理等，扩展了开源Docker Distribution。作为一个企业级私有Registry服务器，Harbor提供了更好的性能和安全。提升用户使用Registry构建和运行环境传输镜像的效率。Harbor支持安装在多个Registry节点的镜像资源复制，镜像全部保存在私有Registry中， 确保数据和知识产权在公司内部网络中管控。另外，Harbor也提供了高级的安全特性，诸如用户管理，访问控制和活动审计等。</p>
 <a id="more"></a>
 <h3 id="配置网络yum源"><a href="#配置网络yum源" class="headerlink" title="配置网络yum源"></a>配置网络yum源</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">cd</span> /<span class="hljs-selector-tag">etc</span>/<span class="hljs-selector-tag">yum</span><span class="hljs-selector-class">.repos</span><span class="hljs-selector-class">.d</span><br><span class="hljs-selector-tag">rm</span> <span class="hljs-selector-tag">-rf</span> *<br><span class="hljs-selector-tag">cd</span><br><span class="hljs-selector-tag">curl</span> <span class="hljs-selector-tag">-o</span> /<span class="hljs-selector-tag">etc</span>/<span class="hljs-selector-tag">yum</span><span class="hljs-selector-class">.repos</span><span class="hljs-selector-class">.d</span>/<span class="hljs-selector-tag">CentOS-Base</span><span class="hljs-selector-class">.repo</span> <span class="hljs-selector-tag">http</span>://<span class="hljs-selector-tag">mirrors</span><span class="hljs-selector-class">.aliyun</span><span class="hljs-selector-class">.com</span>/<span class="hljs-selector-tag">repo</span>/<span class="hljs-selector-tag">Centos-7</span><span class="hljs-selector-class">.repo</span><br><span class="hljs-selector-tag">wget</span> <span class="hljs-selector-tag">-O</span> /<span class="hljs-selector-tag">etc</span>/<span class="hljs-selector-tag">yum</span><span class="hljs-selector-class">.repos</span><span class="hljs-selector-class">.d</span>/<span class="hljs-selector-tag">epel</span><span class="hljs-selector-class">.repo</span> <span class="hljs-selector-tag">http</span>://<span class="hljs-selector-tag">mirrors</span><span class="hljs-selector-class">.aliyun</span><span class="hljs-selector-class">.com</span>/<span class="hljs-selector-tag">repo</span>/<span class="hljs-selector-tag">epel-7</span><span class="hljs-selector-class">.repo</span><br></code></pre></td></tr></table></figure>
@@ -329,6 +331,8 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <category> docker </category>
             
+            <category> harbor </category>
+            
         </categories>
         
         
@@ -336,13 +340,15 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <tag> docker </tag>
             
+            <tag> harbor </tag>
+            
         </tags>
         
     </entry>
     
     <entry>
       <title><![CDATA[使用Kubeadm安装最新版Kubernetes 1.12]]></title>
-      <url>//%E4%BD%BF%E7%94%A8Kubeadm%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88Kubernetes%201.12</url>
+      <url>//posts/%E4%BD%BF%E7%94%A8Kubeadm%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88Kubernetes-1-12/</url>
       <content type="html"><![CDATA[<h3 id="使用Kubeadm安装最新版Kubernetes-1-12"><a href="#使用Kubeadm安装最新版Kubernetes-1-12" class="headerlink" title="使用Kubeadm安装最新版Kubernetes 1.12"></a>使用Kubeadm安装最新版Kubernetes 1.12</h3><blockquote>
 <p>kubeadm是Kubernetes官方提供的用于快速安装Kubernetes集群的工具，伴随Kubernetes每个版本的发布都会同步更新，kubeadm会对集群配置方面的一些实践做调整，通过实验kubeadm可以学习到Kubernetes官方在集群配置上一些新的最佳实践。</p>
 </blockquote>
@@ -419,7 +425,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[kolla部署openstack对接华为san存储]]></title>
-      <url>//kolla%E9%83%A8%E7%BD%B2openstack%E5%AF%B9%E6%8E%A5%E5%8D%8E%E4%B8%BAsan%E5%AD%98%E5%82%A8</url>
+      <url>//posts/kolla%E9%83%A8%E7%BD%B2openstack%E5%AF%B9%E6%8E%A5%E5%8D%8E%E4%B8%BAsan%E5%AD%98%E5%82%A8/</url>
       <content type="html"><![CDATA[<h3 id="kolla部署openstack对接华为san存储"><a href="#kolla部署openstack对接华为san存储" class="headerlink" title="kolla部署openstack对接华为san存储"></a>kolla部署openstack对接华为san存储</h3><p>openstack O版对接华为SAN存储（kolla部署模式）</p>
 <a id="more"></a>
 
@@ -456,7 +462,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[docker网络]]></title>
-      <url>//docker%E7%BD%91%E7%BB%9C</url>
+      <url>//posts/docker%E7%BD%91%E7%BB%9C/</url>
       <content type="html"><![CDATA[<h3 id="docker四种单节点网络"><a href="#docker四种单节点网络" class="headerlink" title="docker四种单节点网络"></a>docker四种单节点网络</h3><p><code>Docker</code>在创建容器时有四种网络模式，<code>bridge</code>为默认不需要用<code>-–net</code>去指定，其他三种模式需要在创建容器时使用<code>–-net</code>去指定。<br>四种单节点网络模式如下：<br><code>none</code>模式，使用<code>–-net=none</code>指定；<br><code>host</code>模式，使用<code>–-net=host</code>指定；<br><code>bridge</code>模式，使用<code>–-net=bridge</code>指定，默认设置；<br><code>container</code>模式，使用<code>–-net=container</code>:容器名称或ID指定。<br>在<code>Docker</code>安装时会自动在<code>host</code>上创建三个网络,我们可以通过<code>docker network ls</code>查看：<br><img src="https://ljw.howieli.cn/blog/2018-06-12/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180612122600.png"></p>
 <a id="more"></a>
 
@@ -494,7 +500,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[ceph-for-openstack-storage]]></title>
-      <url>//openstack%E5%AF%B9%E6%8E%A5ceph%E5%AD%98%E5%82%A8</url>
+      <url>//posts/ceph-for-openstack-storage/</url>
       <content type="html"><![CDATA[<h2 id="openstack对接ceph存储"><a href="#openstack对接ceph存储" class="headerlink" title="openstack对接ceph存储"></a><code>openstack</code>对接<code>ceph</code>存储</h2><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
 <li>截至<code>2018</code>年<code>5</code>月<code>3</code>日，<code>OpenStack</code>也已经伴随着我们走过了<code>8</code>个年头了，并且成为了云计算领域中最火热的项目之一，逐渐成为<code>IaaS</code>的事实标准，私有云项目的部署首选；</li>
 <li><code>OpenStack</code>发展如此的迅速，以至于部署规模愈发的庞大，此时就该思量<code>OpenStack</code>集群的部署支持以及持续可扩展性；</li>
@@ -600,12 +606,16 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <category> openstack </category>
             
+            <category> ceph </category>
+            
         </categories>
         
         
         <tags>
             
-            <tag> openstack ceph </tag>
+            <tag> openstack </tag>
+            
+            <tag> ceph </tag>
             
         </tags>
         
@@ -634,12 +644,28 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
 <h3 id="Ocata版本多region搭建"><a href="#Ocata版本多region搭建" class="headerlink" title="Ocata版本多region搭建"></a>Ocata版本多region搭建</h3><p>如果您用的是<code>openstack</code>的<code>Ocata</code>版本，需要打一下<code>patch</code>，在部署，<a href="https://review.openstack.org/#/q/project:openstack/kolla-ansible+region">这里可以看到所有多region相关bug</a>，除了下面这个没放进去，都<code>merge</code>到<code>ocata</code>。需要把这个<code>patch</code>自己打进去即可。<br><a href="https://review.openstack.org/#/c/431658/">https://review.openstack.org/#/c/431658/</a></p>
 ]]></content>
       
+        <categories>
+            
+            <category> kolla </category>
+            
+            <category> openstack </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> openstack </tag>
+            
+            <tag> kolla </tag>
+            
+        </tags>
         
     </entry>
     
     <entry>
       <title><![CDATA[kolla queens on centos7.4]]></title>
-      <url>//kolla%20queens%20on%20centos7.41</url>
+      <url>//posts/kolla-queens-on-centos7-4/</url>
       <content type="html"><![CDATA[<h3 id="kolla-queens-on-centos7-4"><a href="#kolla-queens-on-centos7-4" class="headerlink" title="kolla queens on centos7.4"></a>kolla queens on centos7.4</h3><p><img src="https://ljw.howieli.cn/blog/2018-03-29/WX20180329-171345.png"></p>
 <a id="more"></a>
 
@@ -730,10 +756,14 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <category> openstack </category>
             
+            <category> kolla </category>
+            
         </categories>
         
         
         <tags>
+            
+            <tag> openstack </tag>
             
             <tag> kolla </tag>
             
@@ -743,7 +773,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[cinder删除lvm卷很慢的问题]]></title>
-      <url>//cinder%E5%88%A0%E9%99%A4lvm%E5%8D%B7%E5%BE%88%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98</url>
+      <url>//posts/cinder%E5%88%A0%E9%99%A4lvm%E5%8D%B7%E5%BE%88%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98/</url>
       <content type="html"><![CDATA[<h3 id="cinder删除lvm卷很慢的问题"><a href="#cinder删除lvm卷很慢的问题" class="headerlink" title="cinder删除lvm卷很慢的问题"></a>cinder删除lvm卷很慢的问题</h3><p>最近搞<code>kolla</code>部署<code>cinder</code>，使用<code>lvm</code>做后端，在<code>cinder-volume</code>服务删除数据卷，数据卷会删除的很慢，在删除这段时间发现宿主机的<code>load</code>飙高，但是检查虚拟机负载没有异常。</p>
 <a id="more"></a>
 
@@ -784,7 +814,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[ceph写流程分析]]></title>
-      <url>//ceph%E5%86%99%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90</url>
+      <url>//posts/ceph%E5%86%99%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90/</url>
       <content type="html"><![CDATA[<h3 id="ceph写流程分析"><a href="#ceph写流程分析" class="headerlink" title="ceph写流程分析"></a>ceph写流程分析</h3><blockquote>
 <p>最近年底了，工作也不太忙了，这几天看看ceph，这几天总结的ceph写流程分析笔记（基于jewel版本&gt;10.2.0），现分享出来，欢迎指点。</p>
 </blockquote>
@@ -872,7 +902,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[手动构建Openstack镜像]]></title>
-      <url>//%E6%89%8B%E5%8A%A8%E6%9E%84%E5%BB%BAOpenstack%E9%95%9C%E5%83%8F</url>
+      <url>//posts/%E6%89%8B%E5%8A%A8%E6%9E%84%E5%BB%BAOpenstack%E9%95%9C%E5%83%8F/</url>
       <content type="html"><![CDATA[<h3 id="手动构建Openstack镜像"><a href="#手动构建Openstack镜像" class="headerlink" title="手动构建Openstack镜像"></a>手动构建Openstack镜像</h3><p>本文以centos7镜像为例，详细介绍手动制作Openstack镜像的步骤，镜像支持一下几个功能：</p>
 <ul>
 <li>支持密码注入功能(nova boot时通过–admin-pass参数指定设置初始密码）</li>
@@ -952,7 +982,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[ceph ( requests are blocked ) 异常解决方法]]></title>
-      <url>//ceph%20(%20requests%20are%20blocked%20)%20%E5%BC%82%E5%B8%B8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95</url>
+      <url>//posts/ceph-requests-are-blocked-%E5%BC%82%E5%B8%B8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
       <content type="html"><![CDATA[<h3 id="ceph-requests-are-blocked-异常解决方法"><a href="#ceph-requests-are-blocked-异常解决方法" class="headerlink" title="ceph ( requests are blocked ) 异常解决方法"></a>ceph ( requests are blocked ) 异常解决方法</h3><p><img src="https://ljw.howieli.cn/blog/2018-1-8/%E4%BF%AE%E7%90%86%E5%B7%A5.png"></p>
 <a id="more"></a>
 <p>最近发现客户kolla平台的ceph环境遇到下面异常错误</p>
@@ -983,7 +1013,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[shell实现局域网IP扫描]]></title>
-      <url>//%E7%AE%80%E5%8D%95shell%E5%AE%9E%E7%8E%B0%E5%B1%80%E5%9F%9F%E7%BD%91IP%E6%89%AB%E6%8F%8F</url>
+      <url>//posts/shell%E5%AE%9E%E7%8E%B0%E5%B1%80%E5%9F%9F%E7%BD%91IP%E6%89%AB%E6%8F%8F/</url>
       <content type="html"><![CDATA[<h3 id="简单shell实现局域网IP扫描"><a href="#简单shell实现局域网IP扫描" class="headerlink" title="简单shell实现局域网IP扫描"></a>简单shell实现局域网IP扫描</h3><p>简单shell实现局域网IP扫描<br>局域网主机联通性的扫描</p>
 <a id="more"></a>
 <h3 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#简单shell实现局域网IP扫描</span><br><span class="hljs-comment">#Functions: 局域网主机联通性的扫描</span><br><span class="hljs-comment">#Author: ljw</span><br><br>network=<span class="hljs-variable">$1</span><br>time=$(date +%H%M%S)<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> $(seq <span class="hljs-variable">$2</span> <span class="hljs-variable">$3</span>)<br><span class="hljs-keyword">do</span><br>    ping -c 1 -w 2 <span class="hljs-variable">$network</span>.<span class="hljs-variable">$i</span> &gt; /dev/null<br>    <span class="hljs-keyword">if</span> [ $? -eq 0 ]; <span class="hljs-keyword">then</span><br>          arp <span class="hljs-variable">$network</span>.<span class="hljs-variable">$i</span> | grep <span class="hljs-string">&quot;:&quot;</span> | awk <span class="hljs-string">&#x27;&#123;print $1,$3&#125;&#x27;</span> &gt;&gt; <span class="hljs-variable">$time</span>.<span class="hljs-built_in">log</span><br>          <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;host <span class="hljs-variable">$network</span>.<span class="hljs-variable">$i</span> is up&quot;</span><br>   <span class="hljs-keyword">else</span><br>          <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;host <span class="hljs-variable">$network</span>.<span class="hljs-variable">$i</span> is down&quot;</span><br>   <span class="hljs-keyword">fi</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
@@ -995,6 +1025,8 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <category> shell </category>
             
+            <category> Linux </category>
+            
         </categories>
         
         
@@ -1002,13 +1034,15 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <tag> shell </tag>
             
+            <tag> Linux </tag>
+            
         </tags>
         
     </entry>
     
     <entry>
       <title><![CDATA[在kolla中配置cinder ceph多后端]]></title>
-      <url>//%E5%9C%A8kolla%E4%B8%AD%E9%85%8D%E7%BD%AEcinder%20ceph%E5%A4%9A%E5%90%8E%E7%AB%AF</url>
+      <url>//posts/%E5%9C%A8kolla%E4%B8%AD%E9%85%8D%E7%BD%AEcinder-ceph%E5%A4%9A%E5%90%8E%E7%AB%AF/</url>
       <content type="html"><![CDATA[<h3 id="利用kolla中配置cinder-ceph多后端"><a href="#利用kolla中配置cinder-ceph多后端" class="headerlink" title="利用kolla中配置cinder ceph多后端"></a>利用kolla中配置cinder ceph多后端</h3><p>我一台有2块硬盘，1块ssd（性能盘）和1块sata（容量盘），共有3台同样的服务器（控制计算存储融合）<br>/dev/sdb  ssd<br>/dev/sdc  sata<br><img src="https://ljw.howieli.cn/blog/2017-11-30/ceph.png"></p>
 <a id="more"></a>
 <h3 id="配置globals-yml-文件"><a href="#配置globals-yml-文件" class="headerlink" title="配置globals.yml 文件"></a>配置globals.yml 文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">ceph_enable_cache: &quot;yes&quot;<br>enable_ceph: &quot;yes&quot;<br>enable_cinder: &quot;yes&quot;<br>cinder_backend_ceph: &quot;&#123;&#123; enable_ceph &#125;&#125;&quot;<br></code></pre></td></tr></table></figure>
@@ -1031,6 +1065,8 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
       
         <categories>
             
+            <category> ceph </category>
+            
             <category> openstack </category>
             
         </categories>
@@ -1038,7 +1074,9 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
         
         <tags>
             
-            <tag> ceph cinder </tag>
+            <tag> ceph </tag>
+            
+            <tag> cinder </tag>
             
         </tags>
         
@@ -1046,7 +1084,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[kolla部署swift]]></title>
-      <url>//kolla%E9%83%A8%E7%BD%B2swift</url>
+      <url>//posts/kolla%E9%83%A8%E7%BD%B2swift/</url>
       <content type="html"><![CDATA[<h3 id="kolla部署swift"><a href="#kolla部署swift" class="headerlink" title="kolla部署swift"></a>kolla部署swift</h3><p>kolla实现对象存储方式有两种：</p>
 <ul>
 <li>利用ceph_rgw实现</li>
@@ -1072,6 +1110,8 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <category> openstack </category>
             
+            <category> kolla </category>
+            
         </categories>
         
         
@@ -1085,7 +1125,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[openstack虚拟机VIP配置步骤]]></title>
-      <url>//%E5%9C%A8openstack%E4%B8%8A%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BB%91%E5%AE%9Avip</url>
+      <url>//posts/openstack%E8%99%9A%E6%8B%9F%E6%9C%BAVIP%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4/</url>
       <content type="html"><![CDATA[<h3 id="在openstack上的虚拟机绑定vip"><a href="#在openstack上的虚拟机绑定vip" class="headerlink" title="在openstack上的虚拟机绑定vip"></a>在openstack上的虚拟机绑定vip</h3><p>有些情况下，客户想在openstack的虚拟机上配置vip搭建高可用集群，下面我就简单的说下在openstack上的虚拟机如何绑定vip</p>
 <a id="more"></a>
 <h3 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h3><p>1、导入环境变量</p>
@@ -1122,7 +1162,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[kolla Pike on CentOS 7.4]]></title>
-      <url>//kolla-pike-on-centos</url>
+      <url>//posts/kolla-Pike-on-CentOS-7-4/</url>
       <content type="html"><![CDATA[<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>我这里用workstation 创建了一个虚拟机，安装centos7.4系统，这台虚拟机上有两张网卡，一张做openstack管理网，一张做为虚拟机的业务网卡。</p>
 <a id="more"></a>
 <h3 id="确认环境信息"><a href="#确认环境信息" class="headerlink" title="确认环境信息"></a>确认环境信息</h3><p>1.确认系统版本</p>
@@ -1176,6 +1216,8 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <category> openstack </category>
             
+            <category> kolla </category>
+            
         </categories>
         
         
@@ -1189,7 +1231,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[opensyack glance学习]]></title>
-      <url>//openstack-glance</url>
+      <url>//posts/opensyack-glance%E5%AD%A6%E4%B9%A0/</url>
       <content type="html"><![CDATA[<h3 id="openstack-Glance介绍"><a href="#openstack-Glance介绍" class="headerlink" title="openstack Glance介绍"></a>openstack Glance介绍</h3><p>Glance项目提供虚拟机镜像的发现，注册，取得服务。<br>Glance提供restful API可以查询虚拟机镜像的metadata，并且可以获得镜像。<br>通过Glance，虚拟机镜像可以被存储到多种存储上，比如简单的文件存储或者对象存储（比如OpenStack中swiftx项目）。<br>Glance，像所有的OpenStack项目一样，遵循以下思想：<br>1.基于组件的架构      便于快速增加新特性<br>2.高可用性                  支持大负荷<br>3.容错性                      独立的进程避免串行错误<br>4.开放标准                  对社区驱动的API提供参考实现</p>
 <a id="more"></a>
 <h3 id="Glance架构"><a href="#Glance架构" class="headerlink" title="Glance架构"></a>Glance架构</h3><p><img src="https://ljw.howieli.cn/blog/2017-10-26/glance%E6%9E%B6%E6%9E%84%E5%9B%BE.png"><br>以上是glance架构图<br><a href="https://docs.openstack.org/glance/latest/">glance官网</a></p>
@@ -1245,7 +1287,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[openstack性能测试]]></title>
-      <url>//Openstack%20performance%20testing</url>
+      <url>//posts/openstack%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/</url>
       <content type="html"><![CDATA[<h3 id="文档说明"><a href="#文档说明" class="headerlink" title="文档说明"></a>文档说明</h3><p>本文档验证在openstack ocata环境上开展自动化测试，性能测试，压力测试。</p>
 <a id="more"></a>
 
@@ -1294,7 +1336,9 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
         
         <tags>
             
-            <tag> tempest rally </tag>
+            <tag> tempest </tag>
+            
+            <tag> rally </tag>
             
         </tags>
         
@@ -1302,7 +1346,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[kolla搭建octavia]]></title>
-      <url>//kolla-octavia</url>
+      <url>//posts/kolla%E6%90%AD%E5%BB%BAoctavia/</url>
       <content type="html"><![CDATA[<h3 id="octavia-介绍"><a href="#octavia-介绍" class="headerlink" title="octavia 介绍"></a>octavia 介绍</h3><p>openstack octavia 是 openstack Lbaas项目分出来的一个子项目，是提供虚拟机流量负载均衡，其实oactavia就是调用nova以及neutron的api生成两台安装好了haproxy和keepalived软件的虚拟机，并连接到目标网络。octavia共有4个组件housekeeping,worker,api,health-manager。详情请参考 <a href="https://docs.openstack.org/octavia/latest/reference/introduction.html">octavia介绍</a></p>
 <a id="more"></a>
 
@@ -1367,6 +1411,8 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <category> openstack </category>
             
+            <category> kolla </category>
+            
         </categories>
         
         
@@ -1380,7 +1426,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[ironic裸机服务使用说明]]></title>
-      <url>//ironic-instruction</url>
+      <url>//posts/ironic%E8%A3%B8%E6%9C%BA%E6%9C%8D%E5%8A%A1%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
       <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>“裸机功能使用说明”介绍了裸机配置中的一些技术细节，旨在帮助用户更好地了解和使用 ironic。</p>
 <a id="more"></a>
 
@@ -1431,12 +1477,14 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <category> openstack </category>
             
+            <category> kolla </category>
+            
         </categories>
         
         
         <tags>
             
-            <tag> kolla </tag>
+            <tag> ironic </tag>
             
         </tags>
         
@@ -1444,7 +1492,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[kolla搭建ironic裸机服务]]></title>
-      <url>//kolla-ironic</url>
+      <url>//posts/kolla%E6%90%AD%E5%BB%BAironic%E8%A3%B8%E6%9C%BA%E6%9C%8D%E5%8A%A1/</url>
       <content type="html"><![CDATA[<h3 id="内容说明"><a href="#内容说明" class="headerlink" title="内容说明"></a>内容说明</h3><p>  本文介绍在kolla 管理虚拟机配置流程，包括部署ironic和 裸机管理配置两部分，实现在flat 网络下管理裸机。</p>
 <a id="more"></a>
 
@@ -1490,12 +1538,14 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <category> openstack </category>
             
+            <category> kolla </category>
+            
         </categories>
         
         
         <tags>
             
-            <tag> kolla </tag>
+            <tag> ironic </tag>
             
         </tags>
         
@@ -1503,7 +1553,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[Python中类的定义与使用]]></title>
-      <url>//python-class</url>
+      <url>//posts/Python%E4%B8%AD%E7%B1%BB%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E4%BD%BF%E7%94%A8/</url>
       <content type="html"><![CDATA[<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>　　1.类的定义</p>
 <p>　　2.父类，子类定义，以及子类调用父类</p>
 <p>　　3.类的组合使用</p>
@@ -1573,7 +1623,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
         
         <tags>
             
-            <tag> 类 </tag>
+            <tag> python </tag>
             
         </tags>
         
@@ -1581,7 +1631,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[基于CentOS 7.3 安装Ceph Jewel 10.2.9]]></title>
-      <url>//intsall-ceph</url>
+      <url>//posts/%E5%9F%BA%E4%BA%8ECentOS-7-3-%E5%AE%89%E8%A3%85Ceph-Jewel-10-2-9/</url>
       <content type="html"><![CDATA[<h3 id="基于CentOS-7-3-安装Ceph-Jewel-10-2-9"><a href="#基于CentOS-7-3-安装Ceph-Jewel-10-2-9" class="headerlink" title="基于CentOS 7.3 安装Ceph Jewel 10.2.9"></a>基于<code>CentOS 7.3</code> 安装<code>Ceph Jewel 10.2.9</code></h3><a id="more"></a>
 <h3 id="网络架构图"><a href="#网络架构图" class="headerlink" title="网络架构图"></a>网络架构图</h3><p><img src="https://ljw.howieli.cn/blog/2017-7-18/ceph-top.png"></p>
 <h3 id="节点信息配置"><a href="#节点信息配置" class="headerlink" title="节点信息配置"></a>节点信息配置</h3><p><img src="https://ljw.howieli.cn/blog/2017-7-18/ceph-lab-configure.png"></p>
@@ -1674,7 +1724,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[openstack新建云主机流程介绍]]></title>
-      <url>//openstack-nova</url>
+      <url>//posts/openstack%E6%96%B0%E5%BB%BA%E4%BA%91%E4%B8%BB%E6%9C%BA%E6%B5%81%E7%A8%8B%E4%BB%8B%E7%BB%8D/</url>
       <content type="html"><![CDATA[<h3 id="openstack新建云主机流程介绍"><a href="#openstack新建云主机流程介绍" class="headerlink" title="openstack新建云主机流程介绍"></a><code>openstack</code>新建云主机流程介绍</h3><a id="more"></a>
 <p><code>openstack</code> 可以登录到你的<code>dashboard</code>上之后点击“项目-计算-实例-创建实例”按钮，然后选择一下相应的配置，只短短十几秒内就可以创建好一台云主机供我们使用了，然而这么牛逼的事情是怎么做到的呢？<br>新建一个云主机流程图<br><img src="https://ljw.howieli.cn/blog/2017-7-3/%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%B5%81%E7%A8%8B%E5%9B%BE.png"></p>
 <p>上图我们可以看出要想新建一台完整的云主机至少需要29步。</p>
@@ -1732,7 +1782,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[openstack镜像格式转换与上传]]></title>
-      <url>//openstack-image</url>
+      <url>//posts/openstack%E9%95%9C%E5%83%8F%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2%E4%B8%8E%E4%B8%8A%E4%BC%A0/</url>
       <content type="html"><![CDATA[<h3 id="openstack镜像格式转换与上传"><a href="#openstack镜像格式转换与上传" class="headerlink" title="openstack镜像格式转换与上传"></a><code>openstack</code>镜像格式转换与上传</h3><a id="more"></a>
 <h3 id="openstack常用镜像格式"><a href="#openstack常用镜像格式" class="headerlink" title="openstack常用镜像格式"></a><code>openstack</code>常用镜像格式</h3><p>今天我给大家介绍一下<code>openstack</code>常用的三种镜像格式，三种镜像格式分别是<code>qcow2</code>、<code>raw</code>、<code>vmdk</code>(所谓的<code>vmdk</code>就是<code>vmware</code>虚拟化的镜像格式，只有<code>openstack</code>纳管<code>vmware</code>才能用的到)。</p>
 <h3 id="惊险格式的转换"><a href="#惊险格式的转换" class="headerlink" title="惊险格式的转换"></a>惊险格式的转换</h3><ul>
@@ -1764,7 +1814,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[利用kolla快速搭建openstack-ocata单节点]]></title>
-      <url>//kolla-openstack-ocata</url>
+      <url>//posts/%E5%88%A9%E7%94%A8kolla%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAopenstack-ocata%E5%8D%95%E8%8A%82%E7%82%B9/</url>
       <content type="html"><![CDATA[<h3 id="利用kolla快速安装openstack-ocata单节点"><a href="#利用kolla快速安装openstack-ocata单节点" class="headerlink" title="利用kolla快速安装openstack-ocata单节点"></a>利用<code>kolla</code>快速安装<code>openstack-ocata</code>单节点</h3><a id="more"></a>
 <h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
 <li>我还是使用大家最常用的<code>vmware workstation 12.0</code>, <code>CentOS 7.3 </code>虚拟机来完成整个的验证过程<br>在虚拟机安装<code>centos7.3</code>我就不再这里多说了,选择最小化安装即可。<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> cat /etc/redhat-release</span> <br>CentOS Linux release 7.3.1611 (Core) <br></code></pre></td></tr></table></figure></li>
@@ -1833,7 +1883,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[DevStack]]></title>
-      <url>//Openstack-DevStack-ocata</url>
+      <url>//posts/DevStack/</url>
       <content type="html"><![CDATA[<h3 id="DevStack安装openstack"><a href="#DevStack安装openstack" class="headerlink" title="DevStack安装openstack"></a><code>DevStack</code>安装<code>openstack</code></h3><a id="more"></a>
 <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><h4 id="关闭iptables防火墙或firewalld防火墙"><a href="#关闭iptables防火墙或firewalld防火墙" class="headerlink" title="关闭iptables防火墙或firewalld防火墙"></a>关闭<code>iptables</code>防火墙或<code>firewalld</code>防火墙</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> systemctl stop iptables</span><br><span class="hljs-meta">#</span><span class="bash"> systemctl <span class="hljs-built_in">disable</span> iptables</span><br><span class="hljs-meta">#</span><span class="bash"> systemctl stop firewalld</span><br><span class="hljs-meta">#</span><span class="bash"> systemctl <span class="hljs-built_in">disable</span> firewalld</span><br></code></pre></td></tr></table></figure>
 <h4 id="关闭SElinux"><a href="#关闭SElinux" class="headerlink" title="关闭SElinux"></a>关闭<code>SElinux</code></h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> sed -i <span class="hljs-string">&#x27;SELINUX=enforcing/SELINUX=disable/&#x27;</span> /etc/selinux/config</span><br><span class="hljs-meta">#</span><span class="bash"> reboot</span><br></code></pre></td></tr></table></figure>
@@ -1875,7 +1925,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[虚拟机手动迁移]]></title>
-      <url>//openstack</url>
+      <url>//posts/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%89%8B%E5%8A%A8%E8%BF%81%E7%A7%BB/</url>
       <content type="html"><![CDATA[<h3 id="openstack虚拟机手动迁移"><a href="#openstack虚拟机手动迁移" class="headerlink" title="openstack虚拟机手动迁移"></a>openstack虚拟机手动迁移</h3><a id="more"></a>
 <h3 id="openstack迁移计算节点的实例"><a href="#openstack迁移计算节点的实例" class="headerlink" title="openstack迁移计算节点的实例"></a>openstack迁移计算节点的实例</h3><p>您的云平台必须使用的是共享存储</p>
 <h3 id="查看可以迁移到的计算节点"><a href="#查看可以迁移到的计算节点" class="headerlink" title="查看可以迁移到的计算节点"></a>查看可以迁移到的计算节点</h3><p><code># openstack compute service list</code></p>
@@ -1906,7 +1956,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[在linux系统下使用awk工具详解]]></title>
-      <url>//Linux-awk</url>
+      <url>//posts/%E5%9C%A8linux%E7%B3%BB%E7%BB%9F%E4%B8%8B%E4%BD%BF%E7%94%A8awk%E5%B7%A5%E5%85%B7%E8%AF%A6%E8%A7%A3/</url>
       <content type="html"><![CDATA[<h3 id="在linux系统下使用awk工具详解"><a href="#在linux系统下使用awk工具详解" class="headerlink" title="在linux系统下使用awk工具详解"></a>在linux系统下使用awk工具详解</h3><a id="more"></a>
 <h3 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h3><p>awk 是一个强大的文本分析工具。它不仅是 Linux 中，也是任何环境中现有的功能最强大的数据处理引擎之一。相对于 grep 的查找，sed的编辑，awk在其对数据分析并生成报告时，显得尤为强大。<br>当你第一次拿起双手在电脑上使用 awk 命令处理一个或者多个文件的时候，它会依次读取文件的每一行内容, 然后对其进行处理，awk 命令默认从 stdio 标准输入获取文件内容, awk 使用一对单引号来表示 一些可执行的脚本代码，在可执行脚本代码里面，使用一对花括号来表示一段可执行代码块，可以同时存在多个代码块。 awk 的每个花括号内同时又可以有多个指令，每一个指令用分号分隔，awk 其实就是一个脚本编程语言。说了这么多，你肯定还是一脸的懵逼。</p>
 <h3 id="awk-命令的基本格式"><a href="#awk-命令的基本格式" class="headerlink" title="awk 命令的基本格式"></a>awk 命令的基本格式</h3><p><code>awk [options] &#39;program&#39; file</code><br>options 这个表示一些可选的参数选项，反正就是你爱用不用，不用可以拉到。。。<br>program 这个表示 awk 的可执行脚本代码，这个是必须要有的。 file 这个表示 awk 需要处理的文件，注意是纯文本文件，不是你的 mp3，也不是 mp4 啥的。。</p>
@@ -1923,13 +1973,15 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <tag> awk </tag>
             
+            <tag> Linux </tag>
+            
         </tags>
         
     </entry>
     
     <entry>
       <title><![CDATA[网卡Bond介绍]]></title>
-      <url>//linux-bond</url>
+      <url>//posts/%E7%BD%91%E5%8D%A1Bond%E4%BB%8B%E7%BB%8D/</url>
       <content type="html"><![CDATA[<h3 id="网卡Bond介绍"><a href="#网卡Bond介绍" class="headerlink" title="网卡Bond介绍"></a>网卡Bond介绍</h3><a id="more"></a>
 <h3 id="总括"><a href="#总括" class="headerlink" title="总括"></a>总括</h3><p>  Bond技术即bonding，它是一个Linux内核的一个模块，能将多块物理网卡绑定到一张虚拟网卡上的技术，并通过修改Linux的网口驱动让多块网卡看起来是一个单独的以太网接口设备并具有相同的 IP 地址。Bond技术一般用于解决网卡的单点故障或用于网卡负载较高的场景。</p>
 <p>  Bond 的网卡运行在混杂模式(Promisc)下。在正常情况下，网卡只接收目的硬件地址(MAC Address)是自身MAC的以太网帧，过滤其他数据帧，以减轻驱动程序的负担。但是网卡也支持另外一种被称为混杂的模式，运行在此模式下的网卡可以接收网络上所有的数据帧。bonding就运行在这种模式下，而且修改了驱动程序中的MAC地址，将两张或多张网卡的MAC地址改成同一MAC地址。</p>
@@ -1970,7 +2022,11 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
         
         <tags>
             
-            <tag> linux bond </tag>
+            <tag> linux </tag>
+            
+            <tag> bond </tag>
+            
+            <tag> centos </tag>
             
         </tags>
         
@@ -1978,7 +2034,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[Tmux Linux 分屏工具]]></title>
-      <url>//linux-tmux</url>
+      <url>//posts/Tmux-Linux-%E5%88%86%E5%B1%8F%E5%B7%A5%E5%85%B7/</url>
       <content type="html"><![CDATA[<h3 id="tmux介绍"><a href="#tmux介绍" class="headerlink" title="tmux介绍"></a>tmux介绍</h3><a id="more"></a>
 <p>tmux是指通过一个终端登录远程主机并运行后，在其中可以开启多个控制台的终端复用软件。<br>有一本关于Tmux的书tmux：<a href="https://www.amazon.com/tmux-Productive-Development-Brian-Hogan/dp/1934356964">Productive Mouse-Free Development</a><br>自己在centos7.2系统上简单的使用了一下</p>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> yum install tmux -y</span><br></code></pre></td></tr></table></figure>
@@ -2001,7 +2057,7 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
     
     <entry>
       <title><![CDATA[openstack实例启动流程]]></title>
-      <url>//openstack-blog</url>
+      <url>//posts/openstack%E5%AE%9E%E4%BE%8B%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/</url>
       <content type="html"><![CDATA[<h3 id="openstack实例启动流程"><a href="#openstack实例启动流程" class="headerlink" title="openstack实例启动流程"></a>openstack实例启动流程</h3><a id="more"></a>
 <p><img src="https://ljw.howieli.cn/blog/2017-5-26/openstack.png"><br>1.客户端使用自己的用户名密码请求认证。<br>2.keystone通过查询在keystone的数据库user表中保存了user的相关信息，包括password加密后的hash值，并返回一个token_id（令牌），和serviceCatalog(一些服务的endpoint地址，cinder、glance-api后面下载镜像和创建块存储时会用到)。<br>3.客户端带上keystone返回的token_id和创建虚机的相关参数，Post请求nova-api创建虚拟机<br>4.nova-api接收到请求后，首先使用请求携带的token_id来访问该api，以验证请求是否有效。<br>5.keystone验证通过后返回更新后的认证信息。<br>6.nova api检查创建虚拟机参数是否有效与合法。<br>检查虚拟机name是否符合命名规范，flavor_id是否在数据库中存在，image_uuid是否是正确的uuid格式<br>检查instance、vcpu、ram的数量是否超过配额。<br>7.当且仅当所有传参都有效合法时，更新nova数据库，新建一条instance记录，vm_states设为BUILDING，task_state设为SCHEDULING.<br>8.nova api 远程调用传递请求、参数给nova scheduler，把消息“请给我创建一台虚拟机”丢到消息队列，然后定期查询虚机的状态。<br>9.nova scheduler从queue中获取到这条消息<br>10.nova scheduler访问nova 数据库，通过调度算法，过滤出一些合适的计算节点，然后进行排序。<br>11.更新虚机节点信息，返回一个最优节点id给nova scheduler。<br>12.nova scheduler选定host之后，通过rpc调用nova-compute服务，把“创建虚机请求”消息丢个mq。<br>13.nova compute收到创建虚拟机请求的消息<br>nova-compute有个定时任务，定期从数据库中查找到运行在该节点上的所有虚拟机信息，统计得到空闲内存大小和空闲磁盘大小。然后更新数据库compute_node信息，以保证调度的准确性。<br>14.nova compute通过rpc查询nova数据库中虚机的信息例如主机模板和id<br>15.nova conductor从消息队列中拿到请求查询数据库<br>16.nova conductor查询nova数据库<br>17.数据库返回虚机信息<br>18.nova compute从消息队列中获取信息。<br>19.nova compute 请求glance 的rest api，下载所需要的镜像，一般是qcow2的。<br>20.glance api 也会去验证请求的token的有效性。<br>21.glance api 返回镜像信息给nova-compute。<br>22.同理，nova compute请求neutron api配置网络，例如获取虚机ip地址<br>23.验证token的有效性<br>24.neutron返回网络信息<br>25-27 同glance、neutron验证token返回块设备信息<br>28.据上面配置的虚拟机信息，生成xml，写入libvirt,xml文件，然后调用libvirt driver去使用libvirt.xml文件启动虚拟机。</p>
 ]]></content>

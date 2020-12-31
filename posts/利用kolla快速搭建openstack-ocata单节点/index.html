@@ -1,0 +1,494 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
+  <meta name="author" content="李家旺">
+  <meta name="keywords" content="linux, python, shell, openstack">
+  <title>利用kolla快速搭建openstack-ocata单节点 - 李家旺</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.lijiawang.org","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="李家旺" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>李家旺</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="利用kolla快速搭建openstack-ocata单节点">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-06-25 08:09" pubdate>
+        2017年6月25日 早上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      24
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">利用kolla快速搭建openstack-ocata单节点</h1>
+            
+            <div class="markdown-body">
+              <h3 id="利用kolla快速安装openstack-ocata单节点"><a href="#利用kolla快速安装openstack-ocata单节点" class="headerlink" title="利用kolla快速安装openstack-ocata单节点"></a>利用<code>kolla</code>快速安装<code>openstack-ocata</code>单节点</h3><a id="more"></a>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
+<li>我还是使用大家最常用的<code>vmware workstation 12.0</code>, <code>CentOS 7.3 </code>虚拟机来完成整个的验证过程<br>在虚拟机安装<code>centos7.3</code>我就不再这里多说了,选择最小化安装即可。<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> cat /etc/redhat-release</span> <br>CentOS Linux release 7.3.1611 (Core) <br></code></pre></td></tr></table></figure></li>
+<li>kolla的安装，要求目标机器是两块网卡，所以我虚拟机也是分配两块网卡<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> ip a|grep eno</span><br>2: eno16777736: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000<br>    inet 192.168.18.131/24 brd 192.168.18.255 scope global dynamic eno16777736<br>3: eno33554960: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast master ovs-system state UP qlen 1000<br>    inet 192.168.18.30/24 brd 192.168.18.255 scope global eno33554960<br></code></pre></td></tr></table></figure>
+<code>eno16777736</code>:设置的IP是：<code>192.168.18.131</code>，日后<code>Horizon</code>访问就是通过这个<code>IP</code>地址<br><code>eno33554960</code>:设置的IP是：<code>192.168.18.30</code>，这个是让<code>neutron</code>的<code>br-ex</code>绑定使用，虚拟机是通过这块网卡访问外网。</li>
+<li>修改主机名<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> hostname</span><br>localhost.localdomain<br><span class="hljs-meta">#</span><span class="bash"> hostnamectl set-hostname kolla</span><br></code></pre></td></tr></table></figure></li>
+<li>关闭<code>firewalld</code>和<code>iptables</code><br><code>centos7</code>以上系统默认防火墙是<code>firewalld</code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> systemctl <span class="hljs-built_in">disable</span> firewalld</span><br><span class="hljs-meta">#</span><span class="bash"> systemctl stop firewalld</span><br><span class="hljs-meta">#</span><span class="bash"> systemctl status firewalld</span><br></code></pre></td></tr></table></figure></li>
+<li>关闭<code>selinux</code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> sed -i <span class="hljs-string">&quot;s/SELINUX=enforcing/SELINUX=disabled/&quot;</span> /etc/selinux/config</span><br></code></pre></td></tr></table></figure></li>
+<li>查看虚拟机是开启了虚拟<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> egrep <span class="hljs-string">&quot;vmx|svm&quot;</span> /proc/cpuinfo</span><br></code></pre></td></tr></table></figure>
+如果没有开启虚拟化请开启虚拟化说</li>
+<li>重启系统<code>reboot</code>生效<h3 id="安装基础包"><a href="#安装基础包" class="headerlink" title="安装基础包"></a>安装基础包</h3></li>
+<li>一定要先启用<code>EPEL</code>的<code>repo</code>源<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> yum install epel-release -y</span><br></code></pre></td></tr></table></figure></li>
+<li>安装基础软件包<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> yum install vim net-tools tmux python-devel libffi-devel gcc openssl-devel git python-pip -y</span><br></code></pre></td></tr></table></figure>
+<h3 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装<code>docker</code></h3></li>
+<li>设置<code>repo</code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> tee /etc/yum.repos.d/docker.repo &lt;&lt; <span class="hljs-string">&#x27;EOF&#x27;</span></span><br>[dockerrepo]<br>name=Docker Repository<br>baseurl=https://yum.dockerproject.org/repo/main/centos/$releasever/<br>enabled=1<br>gpgcheck=1<br>gpgkey=https://yum.dockerproject.org/gpg<br>EOF<br></code></pre></td></tr></table></figure></li>
+<li>安装<code>Docker 1.12.5</code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> yum install docker-engine-1.12.5 docker-engine-selinux-1.12.5 -y</span><br></code></pre></td></tr></table></figure></li>
+<li>设置<code>docker</code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> mkdir /etc/systemd/system/docker.service.d</span><br><span class="hljs-meta">#</span><span class="bash"> tee /etc/systemd/system/docker.service.d/kolla.conf &lt;&lt; <span class="hljs-string">&#x27;EOF&#x27;</span></span><br>[Service]<br>MountFlags=shared<br>EOF<br></code></pre></td></tr></table></figure></li>
+<li>重启先关服务<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> systemctl daemon-reload</span><br><span class="hljs-meta">#</span><span class="bash"> systemctl <span class="hljs-built_in">enable</span> docker</span><br><span class="hljs-meta">#</span><span class="bash"> systemctl restart docker</span><br><span class="hljs-meta">#</span><span class="bash"> systemctl status docker</span><br></code></pre></td></tr></table></figure></li>
+<li>访问私有的<code>Docker</code>仓库<br>查看网卡的<code>ip</code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> ip a|grep eno16777736 |grep inet|awk <span class="hljs-string">&#x27;&#123;print $2&#125;&#x27;</span>|cut -d/ -f1</span><br></code></pre></td></tr></table></figure>
+编辑<code>/usr/lib/systemd/system/docker.service</code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> ExecStart=/usr/bin/dockerd</span><br>ExecStart=/usr/bin/dockerd --insecure-registry 192.168.18.131:4000<br></code></pre></td></tr></table></figure></li>
+<li>重启服务<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> systemctl daemon-reload</span><br><span class="hljs-meta">#</span><span class="bash"> systemctl restart docker</span><br></code></pre></td></tr></table></figure>
+<h3 id="安装Ansible"><a href="#安装Ansible" class="headerlink" title="安装Ansible"></a>安装<code>Ansible</code></h3><code>Kolla</code>项目的<code>Mitaka</code>版本要求<code>ansible</code>版本低于<code>2.0</code>，<code>Newton</code>版本以后的就只支持<code>2.x</code>以上的版本。<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> yum -y install ansible</span><br></code></pre></td></tr></table></figure>
+<h3 id="搭建Registry服务器"><a href="#搭建Registry服务器" class="headerlink" title="搭建Registry服务器"></a>搭建<code>Registry</code>服务器</h3>默认<code>docker</code>的<code>registry</code>是使用<code>5000</code>端口，对于<code>OpenStack</code>来说，有端口冲突，所以我将端口改成了<code>4000</code>。<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> docker run -d -v /opt/registry:/var/lib/registry -p 4000:5000 \</span><br><span class="bash">--restart=always --name registry registry:2</span><br></code></pre></td></tr></table></figure>
+<h3 id="下载kolla官方提供的ocata镜像"><a href="#下载kolla官方提供的ocata镜像" class="headerlink" title="下载kolla官方提供的ocata镜像"></a>下载<code>kolla</code>官方提供的<code>ocata</code>镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> wget http://tarballs.openstack.org/kolla/images/centos-source-registry-ocata.tar.gz</span><br><span class="hljs-meta">#</span><span class="bash"> du -sh centos-source-registry-ocata.tar.gz</span> <br>3.0G	centos-source-registry-ocata.tar.gz<br><span class="hljs-meta">#</span><span class="bash"> tar zxf centos-source-registry-ocata.tar.gz -C /opt/registry/</span><br></code></pre></td></tr></table></figure>
+<code>centos-source-registry-ocata</code>大约有3G。<h3 id="kolla-ansible"><a href="#kolla-ansible" class="headerlink" title="kolla-ansible"></a><code>kolla-ansible</code></h3></li>
+<li>下载<code>kolla-ansible</code>的代码<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> <span class="hljs-built_in">cd</span></span><br><span class="hljs-meta">#</span><span class="bash"> git <span class="hljs-built_in">clone</span> http://git.trystack.cn/openstack/kolla-ansible -b stable/ocata</span><br></code></pre></td></tr></table></figure></li>
+<li>安装<code>kolla-ansible</code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> <span class="hljs-built_in">cd</span> kolla-ansible/</span><br><span class="hljs-meta">#</span><span class="bash"> pip install . -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br></code></pre></td></tr></table></figure>
+如果<code>pip</code>速度很慢，后面可以加上参数<code>-i https://pypi.tuna.tsinghua.edu.cn/simple</code>，指定国内的<code>pip</code>源</li>
+<li>复制相关文件<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> cp -r etc/kolla /etc/kolla/</span><br><span class="hljs-meta">#</span><span class="bash"> <span class="hljs-built_in">cd</span></span><br></code></pre></td></tr></table></figure></li>
+<li>如果是在虚拟机里装<code>kolla</code>，希望可以启动再启动虚拟机，那么你需要把<code>virt_type=qemu</code>，默认是<code>kvm</code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">mkdir -p /etc/kolla/config/nova<br>cat &lt;&lt; EOF &gt; /etc/kolla/config/nova/nova-compute.conf<br>[libvirt]<br>virt_type=qemu<br>cpu_mode = none<br>EOF<br></code></pre></td></tr></table></figure>
+<h3 id="安装kolla"><a href="#安装kolla" class="headerlink" title="安装kolla"></a>安装<code>kolla</code></h3></li>
+<li>生成密码文件<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> kolla-genpwd</span><br></code></pre></td></tr></table></figure></li>
+<li>编辑 <code>/etc/kolla/passwords.yml</code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> vim /etc/kolla/passwords.yml</span><br>keystone_admin_password: admin<br></code></pre></td></tr></table></figure>
+这是登录<code>Dashboard</code>，<code>admin</code>使用的密码，你可以根据自己需要进行修改</li>
+<li>编辑<code>/etc/kolla/globals.yml</code>文件<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> vim /etc/kolla/globals.yml</span><br>kolla_base_distro: &quot;centos&quot;<br>kolla_install_type: &quot;source&quot;<br>openstack_release: &quot;4.0.3&quot;<br>kolla_internal_vip_address: &quot;192.168.18.100&quot;<br>docker_registry: &quot;192.168.18.131:4000&quot;<br>docker_namespace: &quot;lokolla&quot;<br>network_interface: &quot;eno16777736&quot;<br>neutron_external_interface: &quot;eno33554960&quot;<br></code></pre></td></tr></table></figure>
+如果不知道<code>openstack_release</code>和<code>docker_namespace</code>请查看<br><code># cd /opt/registry/docker/registry/v2/repositories/lokolla/centos-source-keepalived/_manifests/tags/4.0.3/</code><br>就可以知道<code>openstack_release</code>为<code>4.0.3</code>和<code>docker_namespace</code>为<code>lokolla</code>了。<h3 id="验证部署"><a href="#验证部署" class="headerlink" title="验证部署"></a>验证部署</h3></li>
+<li>验证<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> kolla-ansible prechecks -i kolla-ansible/ansible/inventory/all-in-one</span> <br></code></pre></td></tr></table></figure></li>
+<li><code>pull</code>镜像<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> kolla-ansible pull -i kolla-ansible/ansible/inventory/all-in-one</span><br></code></pre></td></tr></table></figure></li>
+<li>部署<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> kolla-ansible deploy -i kolla-ansible/ansible/inventory/all-in-one</span><br></code></pre></td></tr></table></figure>
+大约半个小时基本上就部署完成了<h3 id="验证部署-1"><a href="#验证部署-1" class="headerlink" title="验证部署"></a>验证部署</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> kolla-ansible post-deploy</span><br></code></pre></td></tr></table></figure>
+这样就创建 <code>/etc/kolla/admin-openrc.sh </code>文件<h3 id="安装安装OpenStack-client端"><a href="#安装安装OpenStack-client端" class="headerlink" title="安装安装OpenStack client端"></a>安装安装<code>OpenStack client</code>端</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> pip install python-openstackclient</span><br></code></pre></td></tr></table></figure>
+<h3 id="安装成功"><a href="#安装成功" class="headerlink" title="安装成功"></a>安装成功</h3><img src="https://ljw.howieli.cn/blog/2017-6-23/dashboard.jpg" srcset="/img/loading.gif"><br>账号：<code>admin</code><br>密码：<code>admin</code><h3 id="创建网络"><a href="#创建网络" class="headerlink" title="创建网络"></a>创建网络</h3></li>
+<li>编辑 <code>/usr/share/kolla-ansible/init-runonce</code><br>网络需要根据实际情况修改,我都是用的<code>nat</code>模式<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">EXT_NET_CIDR=&#x27;192.168.18.0/24&#x27;<br>EXT_NET_RANGE=&#x27;start=192.168.18.10,end=192.168.18.20&#x27;<br>EXT_NET_GATEWAY=&#x27;192.168.18.2&#x27;<br></code></pre></td></tr></table></figure></li>
+<li>运行脚本创建<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">source /etc/kolla/admin-openrc.sh<br>bash /usr/share/kolla-ansible/init-runonce<br></code></pre></td></tr></table></figure>
+<h3 id="最后进入dashboard创建虚拟机，绑定浮动ip"><a href="#最后进入dashboard创建虚拟机，绑定浮动ip" class="headerlink" title="最后进入dashboard创建虚拟机，绑定浮动ip"></a>最后进入<code>dashboard</code>创建虚拟机，绑定浮动<code>ip</code></h3>这里我就不多说了，进入<code>dashboard</code>创建与主机即可，网络选择<code>demo-net</code>网络，创建完成后标定浮动<code>ip</code>即可。<h3 id="检查虚拟网络"><a href="#检查虚拟网络" class="headerlink" title="检查虚拟网络"></a>检查虚拟网络</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> openstack server list</span><br>+--------------------------------------+------+--------+----------------------------------+------------+<br>| ID                                   | Name | Status | Networks                         | Image Name |<br>+--------------------------------------+------+--------+----------------------------------+------------+<br>| 0267025b-8193-42ee-8551-67b7625482ab | tets | ACTIVE | demo-net=10.0.0.6, 192.168.18.12 | cirros     |<br>+--------------------------------------+------+--------+----------------------------------+------------+<br><span class="hljs-meta">#</span><span class="bash"> ping 192.168.18.12 -c 3</span><br>PING 192.168.18.12 (192.168.18.12) 56(84) bytes of data.<br>64 bytes from 192.168.18.12: icmp_seq=1 ttl=63 time=1.85 ms<br>64 bytes from 192.168.18.12: icmp_seq=2 ttl=63 time=1.46 ms<br>64 bytes from 192.168.18.12: icmp_seq=3 ttl=63 time=5.94 ms<br>--- 192.168.18.12 ping statistics ---<br>3 packets transmitted, 3 received, 0% packet loss, time 2005ms<br>rtt min/avg/max/mdev = 1.466/3.087/5.942/2.025 ms<br></code></pre></td></tr></table></figure>
+<h3 id="检查虚拟机是能能通外网"><a href="#检查虚拟机是能能通外网" class="headerlink" title="检查虚拟机是能能通外网"></a>检查虚拟机是能能通外网</h3><code>cirros</code>用户密码默认为<code>cubswin:)</code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> ssh cirros@192.168.18.12</span><br>cirros@192.168.18.12&#x27;s password: <br><span class="hljs-meta">$</span><span class="bash"> ip a</span><br>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue <br>    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00<br>    inet 127.0.0.1/8 scope host lo<br>    inet6 ::1/128 scope host <br>       valid_lft forever preferred_lft forever<br>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc pfifo_fast qlen 1000<br>    link/ether fa:16:3e:82:4e:f8 brd ff:ff:ff:ff:ff:ff<br>    inet 10.0.0.6/24 brd 10.0.0.255 scope global eth0<br>    inet6 fe80::f816:3eff:fe82:4ef8/64 scope link <br>       valid_lft forever preferred_lft forever<br><span class="hljs-meta">$</span><span class="bash"> ping 8.8.8.8 -c 2</span><br>PING 8.8.8.8 (8.8.8.8): 56 data bytes<br>64 bytes from 8.8.8.8: seq=0 ttl=127 time=171.481 ms<br>64 bytes from 8.8.8.8: seq=1 ttl=127 time=171.464 ms<br>--- 8.8.8.8 ping statistics ---<br>2 packets transmitted, 2 packets received, 0% packet loss<br>round-trip min/avg/max = 171.464/171.472/171.481 ms<br></code></pre></td></tr></table></figure>
+
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/openstack/">openstack</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/openstack/">openstack</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/openstack%E9%95%9C%E5%83%8F%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2%E4%B8%8E%E4%B8%8A%E4%BC%A0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">openstack镜像格式转换与上传</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/DevStack/">
+                        <span class="hidden-mobile">DevStack</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

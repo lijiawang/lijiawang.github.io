@@ -1,0 +1,505 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
+  <meta name="author" content="李家旺">
+  <meta name="keywords" content="linux, python, shell, openstack">
+  <title>手动构建Openstack镜像 - 李家旺</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.lijiawang.org","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="李家旺" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>李家旺</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="手动构建Openstack镜像">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-01-12 14:29" pubdate>
+        2018年1月12日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      32
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">手动构建Openstack镜像</h1>
+            
+            <div class="markdown-body">
+              <h3 id="手动构建Openstack镜像"><a href="#手动构建Openstack镜像" class="headerlink" title="手动构建Openstack镜像"></a>手动构建Openstack镜像</h3><p>本文以centos7镜像为例，详细介绍手动制作Openstack镜像的步骤，镜像支持一下几个功能：</p>
+<ul>
+<li>支持密码注入功能(nova boot时通过–admin-pass参数指定设置初始密码）</li>
+<li>支持根分区自动调整(根分区自动调整为flavor disk大小，而不是原始镜像分区大小)</li>
+<li>支持动态修改密码(使用nova set-password命令可以修改管理员密码)</li>
+</ul>
+<p>镜像的宿主机操作系统为CentOs7.4，开启了VT功能(使用kvm-ok命令验证)并安装了libvirt系列工具，包括virsh、virt-manager、libguestfs-tools等。</p>
+<a id="more"></a>
+
+<h3 id="下载iso镜像"><a href="#下载iso镜像" class="headerlink" title="下载iso镜像"></a>下载iso镜像</h3><p>下载centos7.4.iso镜像，可以选择中国镜像源，相对国外镜像源下载速度会快很多，这里我已经下载好了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> qemu-img info CentOS-7-x86_64-DVD-1708.iso</span> <br>image: CentOS-7-x86_64-DVD-1708.iso<br>file format: raw<br>virtual size: 4.2G (4521459712 bytes)<br>disk size: 4.2G<br></code></pre></td></tr></table></figure>
+<h3 id="创建虚拟机"><a href="#创建虚拟机" class="headerlink" title="创建虚拟机"></a>创建虚拟机</h3><p>首先创建一个qcow2格式镜像文件，用于虚拟机的根磁盘，大小10G就够了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> qemu-img create -f qcow2 centos.qcow2 10G</span><br>Formatting &#x27;centos.qcow2&#x27;, fmt=qcow2 size=10737418240 encryption=off cluster_size=65536 lazy_refcounts=off <br></code></pre></td></tr></table></figure>
+<p>使用以下脚本创建并启动虚拟机：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-attribute">NAME</span>=centos<br><span class="hljs-attribute">ROOT_DISK</span>=centos.qcow2<br><span class="hljs-attribute">CDROM</span>=`pwd`/CentOS-7-x86_64-DVD-1708.iso<br>virt-install --virt-type kvm --name <span class="hljs-variable">$NAME</span> --ram 1024 \<br>--disk <span class="hljs-variable">$ROOT_DISK</span>,<span class="hljs-attribute">format</span>=qcow2 \<br>--network <span class="hljs-attribute">network</span>=default \<br>--graphics vnc,<span class="hljs-attribute">listen</span>=0.0.0.0 --noautoconsole \<br><span class="hljs-attribute">--os-type</span>=linux <span class="hljs-attribute">--os-variant</span>=rhel7 \<br><span class="hljs-attribute">--cdrom</span>=<span class="hljs-variable">$CDROM</span><br></code></pre></td></tr></table></figure>
+<p>启动完成后，使用vnc client连接或者使用virt-manager、virt-viewer连接,这里我直接用virt-manager。</p>
+<h3 id="安装OS"><a href="#安装OS" class="headerlink" title="安装OS"></a>安装OS</h3><p>进入虚拟机控制台可以看到CentOS的启动菜单，选择Install Centos 7，继续选择语言后将进入INSTALLION SUMMARY，其中大多数配置默认即可，SOFTWARE SELECTION选择Minimal Install，INSTALLATION DESTINATION需要选择手动配置分区，我们只需要一个根分区即可，不需要swap分区，文件系统选择ext4或者xfs，存储驱动选择Virtio Block Device，如图：<br><img src="https://ljw.howieli.cn/blog/2018-1-12/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180112113728.png" srcset="/img/loading.gif"></p>
+<p>配置完成后就可以开始安装了，在CONFIGURATION中设置root临时密码，只需要暂时记住这个临时密码，制作完后cloud-init会重新设置root初始密码。</p>
+<p>大约几分钟后，即可自动完成安装配置工作，最后点击右下角的reboot重启退出虚拟机。</p>
+<h3 id="配置OS"><a href="#配置OS" class="headerlink" title="配置OS"></a>配置OS</h3><p>安装好操作系统后，需要进行配置才能作为glance镜像使用，启动虚拟机</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> virsh list --all</span><br> Id    名称                         状态<br>----------------------------------------------------<br> -     centos                         关闭<br><span class="hljs-meta">#</span><span class="bash"> virsh start centos</span><br></code></pre></td></tr></table></figure>
+<p>如果云主机不需要支持root ssh远程登录，需要关闭root远程ssh登录功能，修改配置文件/etc/ssh/sshd_config并修改PermitRootLogin值为no，默认是开启的（这里我不做更改，如果更改需要重启ssh服务生效）。</p>
+<p>为了加快安装速度，可以配置为本地软件源仓库，若没有本地镜像仓库，则选择国内的软件源，相对官网的速度下载要快。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> yum -y install wget</span><br><span class="hljs-meta">#</span><span class="bash"> <span class="hljs-built_in">cd</span> /etc/yum.repos.d/ &amp;&amp; rm -rf * &amp;&amp; <span class="hljs-built_in">cd</span></span><br><span class="hljs-meta">#</span><span class="bash"> wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo</span><br><span class="hljs-meta">#</span><span class="bash"> wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br></code></pre></td></tr></table></figure>
+<h3 id="acpid"><a href="#acpid" class="headerlink" title="acpid"></a>acpid</h3><p><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Acpid">acpid</a>是一个用户空间的服务进程, 用来处理电源相关事件,比如将kernel中的电源事件转发给应用程序，告诉应用程序安全的退出，防止应用程序异常退出导致数据损坏。libvirt可以通过向guest虚拟机发送acpid事件触发电源操作，使虚拟机安全关机、重启等操作，相对于强制执行关闭电源操作更安全。通过acpid事件发送开关机信号即我们经常所说的软重启或者软关机。<br>为了支持软操作，虚拟机需要安装acpid服务，并设置开机自启动：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> yum -y install acpid</span><br><span class="hljs-meta">#</span><span class="bash"> systemctl <span class="hljs-built_in">enable</span> acpid</span><br></code></pre></td></tr></table></figure>
+<p>提示：</p>
+<ul>
+<li>用户执行重启或者关机操作时，OpenStack会首先尝试调用libvirt的shutdown方法，即软关机。</li>
+<li>当软关机执行失败或者超时(默认120秒)，则会调动libvirt的destroy方法，即强制关机，因此如果虚拟机关机或者重启很慢，很可能是acpid没有正常运行。</li>
+<li>为了使虚拟机进程安全退出，减少数据损坏风险，尽量使用软操作，硬操作可能导致程序崩溃或者数据丢失。</li>
+</ul>
+<h3 id="console-log"><a href="#console-log" class="headerlink" title="console log"></a>console log</h3><p>当操作系统内核崩溃时会报出内核系统crash出错信息，通常启动的时候一闪而过, 而此时系统还没有起来，不能通过远程工具(比如ssh)进入系统查看，我们可以通过配置grub，把这些日志重定向到Serial Console中，这样我们就可以通过Serial console来访问错误信息，以供分析和排错使用。<br>修改配置文件/etc/default/grub，设置GRUB_CMDLINE_LINUX，：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">GRUB_CMDLINE_LINUX=&quot;crashkernel=auto console=tty0 console=ttyS0,115200n8&quot;<br></code></pre></td></tr></table></figure>
+<p>通过这个配置，内核信息会以115200的波特率同时发送到tty0和ttyS0串行端口设备。libvirt可以通过一个普通文件模拟这个串行端口：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">serial</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;file&#x27;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&#x27;/var/lib/nova/instances/99579ce1-f4c4-4031-a56c-68e85a3d037a/console.log&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">target</span> <span class="hljs-attr">port</span>=<span class="hljs-string">&#x27;0&#x27;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">serial</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>这样内核产生的日志发到ttyS0，实际上写到console.log文件中。</p>
+<p>OpenStack通过nova console-log命令可以获取该文件内容，查看错误日志。</p>
+<h3 id="qemu-guest-agent"><a href="#qemu-guest-agent" class="headerlink" title="qemu-guest-agent"></a>qemu-guest-agent</h3><p>qemu-guest-agent是运行在虚拟机内部的一个服务，libvirt会在本地创建一个unix socket，模拟为虚拟机内部的一个串口设备，从而实现了宿主机与虚拟机通信，这种方式不依赖于TCP/IP网络，实现方式简单方便。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">channel</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;unix&#x27;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&#x27;bind&#x27;</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&#x27;/var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-00003c2c.sock&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">target</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;virtio&#x27;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;org.qemu.guest_agent.0&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">address</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;virtio-serial&#x27;</span> <span class="hljs-attr">controller</span>=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-attr">port</span>=<span class="hljs-string">&#x27;1&#x27;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">channel</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>如上宿主机的socket文件为org.qemu.guest_agent.0.instance-00003c2c.sock，在虚拟机内部为/dev/virtio-ports/org.qemu.guest_agent.0。</p>
+<p>通过这种方式，宿主机可以发送指令写到socket文件中，虚拟机内部的qemu-guest-agent会轮询查看这个串行设备是否有指令，一旦接收到指令就可以执行对应的脚本，从而实现了宿主机控制虚拟机执行命令的功能，其中最常用的指令就是通过libvirt修改虚拟机密码。更多关于qemu-guest-agent请参考<a href="http://link.zhihu.com/?target=http://wiki.qemu.org/Features/QAPI/GuestAgent">官方文档</a>。</p>
+<p>为了支持OpenStack平台动态修改虚拟机密码功能，我们需要手动安装qemu-guest-agent：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> yum install -y qemu-guest-agent</span><br></code></pre></td></tr></table></figure>
+<p>修改/etc/sysconfig/qemu-ga配置文件:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">virsh qemu-agent-command instance-000028d5 &#x27;&#123;&quot;execute&quot;:&quot;guest-info&quot;&#125;&#x27; | python -m json.tool | grep &#x27;name&#x27; | cut -d &#x27;:&#x27; -f 2 | tr -d &#x27;&quot;,&#x27;<br> ...<br> guest-set-user-password<br> guest-get-fsinfo<br> guest-set-vcpus<br> guest-get-vcpus<br> ...<br></code></pre></td></tr></table></figure>
+<p>确认包含guest-set-user-password指令，支持修改管理员密码。</p>
+<h3 id="zeroconf"><a href="#zeroconf" class="headerlink" title="zeroconf"></a>zeroconf</h3><p>zeroconf启动时会自动创建一条路由169.254.0.0/16，而虚拟机访问metadata服务的地址正好是169.254.169.254，如果启动了zeroconf服务，由于路由冲突，虚拟机不能通过169.254.169.254路由到网络节点的metadata服务了。OpenStack虚拟机通常都是通过DHCP获取IP的，因此我们并不需要zeroconf服务。为了虚拟机能够访问metadata服务，我们必须禁止zeroconf服务，关于该问题的更详细讨论可参考<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/30385809">bug#983611</a>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;NOZEROCONF=yes&quot;</span> &gt;&gt; /etc/sysconfig/network</span><br></code></pre></td></tr></table></figure>
+<h3 id="cloud-init"><a href="#cloud-init" class="headerlink" title="cloud-init"></a>cloud-init</h3><p>接下来安装cloud-init，cloud-init是虚拟机第一次启动时执行的脚本，主要负责从metadata服务中拉取配置信息，完成虚拟机的初始化工作，比如设置主机名、初始化密码以及注入密钥等。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> yum install -y cloud-init</span><br></code></pre></td></tr></table></figure>
+<h3 id="growpart"><a href="#growpart" class="headerlink" title="growpart"></a>growpart</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> yum update -y</span><br><span class="hljs-meta">#</span><span class="bash"> yum install -y epel-release</span><br><span class="hljs-meta">#</span><span class="bash"> yum install -y cloud-utils-growpart.x86.64</span><br><span class="hljs-meta">#</span><span class="bash"> rpm -qa kernel | sed <span class="hljs-string">&#x27;s/^kernel-//&#x27;</span>  | xargs -I &#123;&#125; dracut -f /boot/initramfs-&#123;&#125;.img &#123;&#125;</span><br></code></pre></td></tr></table></figure>
+<p>完成以上工作后，我们的镜像配置基本结束，删除一些无用文件，清理history命令后执行关机：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> shutdown -h now</span><br></code></pre></td></tr></table></figure>
+<h3 id="移除本地信息"><a href="#移除本地信息" class="headerlink" title="移除本地信息"></a>移除本地信息</h3><p>在宿主机上运行以下命名，移除宿主机信息，比如mac地址等。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> virt-sysprep -d centos</span><br>[   0.0] Examining the guest ...<br>[  41.1] Performing &quot;abrt-data&quot; ...<br>[  42.4] Performing &quot;backup-files&quot; ...<br>[  44.4] Performing &quot;bash-history&quot; ...<br>[  44.4] Performing &quot;blkid-tab&quot; ...<br>[  44.5] Performing &quot;crash-data&quot; ...<br>[  44.5] Performing &quot;cron-spool&quot; ...<br>[  44.5] Performing &quot;dhcp-client-state&quot; ...<br>[  44.5] Performing &quot;dhcp-server-state&quot; ...<br>[  44.5] Performing &quot;dovecot-data&quot; ...<br>[  44.5] Performing &quot;logfiles&quot; ...<br>[  44.7] Performing &quot;machine-id&quot; ...<br>[  44.7] Performing &quot;mail-spool&quot; ...<br>[  44.7] Performing &quot;net-hostname&quot; ...<br>[  44.8] Performing &quot;net-hwaddr&quot; ...<br>[  44.8] Performing &quot;pacct-log&quot; ...<br>[  44.8] Performing &quot;package-manager-cache&quot; ...<br>[  44.8] Performing &quot;pam-data&quot; ...<br>[  44.8] Performing &quot;passwd-backups&quot; ...<br>[  44.8] Performing &quot;puppet-data-log&quot; ...<br>[  44.8] Performing &quot;rh-subscription-manager&quot; ...<br>[  44.8] Performing &quot;rhn-systemid&quot; ...<br>[  44.8] Performing &quot;rpm-db&quot; ...<br>[  44.8] Performing &quot;samba-db-log&quot; ...<br>[  44.8] Performing &quot;script&quot; ...<br>[  44.8] Performing &quot;smolt-uuid&quot; ...<br>[  44.8] Performing &quot;ssh-hostkeys&quot; ...<br>[  44.8] Performing &quot;ssh-userdir&quot; ...<br>[  44.8] Performing &quot;sssd-db-log&quot; ...<br>[  44.9] Performing &quot;tmp-files&quot; ...<br>[  44.9] Performing &quot;udev-persistent-net&quot; ...<br>[  44.9] Performing &quot;utmp&quot; ...<br>[  44.9] Performing &quot;yum-uuid&quot; ...<br>[  44.9] Performing &quot;customize&quot; ...<br>[  44.9] Setting a random seed<br>[  45.4] Performing &quot;lvm-uuids&quot; ...<br></code></pre></td></tr></table></figure>
+<p>删除虚拟机，镜像制作完成。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> virsh list --all</span><br> Id    名称                         状态<br>----------------------------------------------------<br> -     centos                         关闭<br><br><span class="hljs-meta">#</span><span class="bash"> virsh undefine centos</span><br>域 centos 已经被取消定义<br><br><span class="hljs-meta">#</span><span class="bash"> virsh list --all</span><br> Id    名称                         状态<br>----------------------------------------------------<br><br></code></pre></td></tr></table></figure>
+<h3 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h3><p>镜像制作完成，上传centos.qcow2到glance服务中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> glance image-create --file ./centos.qcow2 --disk-format qcow2 \</span><br><span class="bash">    --container-format bare --name CentOS-7.2 --progress</span><br></code></pre></td></tr></table></figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/openstack/">openstack</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/openstack/">openstack</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/ceph%E5%86%99%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ceph写流程分析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/ceph-requests-are-blocked-%E5%BC%82%E5%B8%B8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">
+                        <span class="hidden-mobile">ceph ( requests are blocked ) 异常解决方法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

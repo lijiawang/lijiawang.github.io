@@ -1,0 +1,483 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
+  <meta name="author" content="李家旺">
+  <meta name="keywords" content="linux, python, shell, openstack">
+  <title>openstack新建云主机流程介绍 - 李家旺</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.lijiawang.org","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="李家旺" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>李家旺</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="openstack新建云主机流程介绍">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-07-03 20:28" pubdate>
+        2017年7月3日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      18
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">openstack新建云主机流程介绍</h1>
+            
+            <div class="markdown-body">
+              <h3 id="openstack新建云主机流程介绍"><a href="#openstack新建云主机流程介绍" class="headerlink" title="openstack新建云主机流程介绍"></a><code>openstack</code>新建云主机流程介绍</h3><a id="more"></a>
+<p><code>openstack</code> 可以登录到你的<code>dashboard</code>上之后点击“项目-计算-实例-创建实例”按钮，然后选择一下相应的配置，只短短十几秒内就可以创建好一台云主机供我们使用了，然而这么牛逼的事情是怎么做到的呢？<br>新建一个云主机流程图<br><img src="https://ljw.howieli.cn/blog/2017-7-3/%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%B5%81%E7%A8%8B%E5%9B%BE.png" srcset="/img/loading.gif"></p>
+<p>上图我们可以看出要想新建一台完整的云主机至少需要29步。</p>
+<h3 id="流程图分析"><a href="#流程图分析" class="headerlink" title="流程图分析"></a>流程图分析</h3><h4 id="流程-1"><a href="#流程-1" class="headerlink" title="流程-1"></a>流程-1</h4><p>首先我们访问<code>dashboard</code>之后，浏览器会显示一个登陆界面（如下图所示），<code>horizon</code>会让我们登陆用户名和密码，然后<code>horizon</code>会把用户名和密码交给<code>keystone</code>来确认我们的身份，<code>keystone</code>确认成功后，才会允许我们登陆进去。（在<code>openstack</code>里<code>keystone</code>就相当于<code>openstack</code>这些组件共同的老大哥）<br><img src="https://ljw.howieli.cn/blog/2017-7-3/%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2.png" srcset="/img/loading.gif"><br>在原来我一直以为这里登陆的时候只不过是一个简单的<code>django</code>框架使用<code>pymysql</code>直接查询数据库，而实际上这里的表单信息是提交到了<code>keystone</code>，然后通过<code>keystone</code>查询数据库进行验证的</p>
+<h4 id="流程-2"><a href="#流程-2" class="headerlink" title="流程-2"></a>流程-2</h4><p><code>keystone</code>接受到<code>horizon</code>前端表单传过来的用户、密码信息以后，会去查询数据库来确认身份，确认了身份后会将一个<code>token</code>（就相当于办理了一个身份证~~~~）返回到该用户，让这个用户在进行操作的时候不在需要提供用户名和密码了，而是直接拿出<code>token</code>来。</p>
+<h4 id="流程-3"><a href="#流程-3" class="headerlink" title="流程-3"></a>流程-3</h4><p><code>horizon</code>拿到<code>token</code>之后，实际上这里在<code>web</code>页面上的显示就是登陆成功了，接下来就是找到“项目-计算-实例-创建实例”按钮，点击创建实例，然后根据我们的需求填写云主机相关的配置信息。<br>填写完配置信息后，点击启动实例之后，<code>horizon</code>就会带着三个东西去找<code>nova-api</code>了。</p>
+<ul>
+<li>创建云主机的请求</li>
+<li>云主机相关配置信息</li>
+<li>刚刚<code>keystone</code>返回给的<code>token</code></li>
+</ul>
+<h4 id="流程-4"><a href="#流程-4" class="headerlink" title="流程-4"></a>流程-4</h4><p><code>nova-api</code>会拿着<code>horizon</code>给的<code>token</code>去找老大哥<code>keystone</code>验证去。</p>
+<h4 id="流程-5"><a href="#流程-5" class="headerlink" title="流程-5"></a>流程-5</h4><p><code>keystone</code>看到<code>nova-api</code>拿来的<code>token</code>，查询一下数据库确认，然后告诉给<code>nova-api</code>，这兄弟信得过，可以照他的安排去做。</p>
+<h4 id="流程-6"><a href="#流程-6" class="headerlink" title="流程-6"></a>流程-6</h4><p><code>nova-api</code>从大哥那回来，接收了<code>horizon</code>提供的两样东西，一是云主机配置信息，二是创建请求，这<code>nova-api</code>手底下也有一帮小兄弟，这帮人之间沟通可不太方便都得通过一块小黑板（<code>mq</code>消息队列），把自己的需求写在小黑板上，能做的了这事的人自然就去做了。但配置信息现在还不能写在小黑板上，得找到确定去干活的人之后才行啊，所以<code>nova-api</code>就把配置信息放到数据库里。</p>
+<h4 id="流程-7"><a href="#流程-7" class="headerlink" title="流程-7"></a>流程-7</h4><p>数据库把配置信息收好之后，对<code>nova-api</code>说了声，我放好了。</p>
+<h4 id="流程-8"><a href="#流程-8" class="headerlink" title="流程-8"></a>流程-8</h4><p>放好配置信息后<code>nova-api</code>就在小黑板上写“现在要创建一台云主机，配置信息我已经放到数据库了，然后让<code>nova-schedular</code>给安排。</p>
+<h4 id="流程-9"><a href="#流程-9" class="headerlink" title="流程-9"></a>流程-9</h4><p><code>nova-schedular</code>他就像是<code>nova-api</code>的秘书，<code>nova-api</code>的有事都是通过它交代给其他人的，这一步就是他从小黑板上看到了<code>nova-api</code>的信息。</p>
+<h4 id="流程-10"><a href="#流程-10" class="headerlink" title="流程-10"></a>流程-10</h4><p><code>nova-schedular</code>现在知道了要创建云主机，但它要看一看云主机都要什么配置，才好决定该把这事交给谁去做（这里是指多个<code>nova-compute</code>的情况，各个计算节点的资源使用情况都在<code>nova-schedular</code>这里），所以他让数据库把云主机配置信息发给他看看。</p>
+<h4 id="流程-11"><a href="#流程-11" class="headerlink" title="流程-11"></a>流程-11</h4><p>数据库收到请求之后，把云主机配置信息发给<code>nova-schedular</code>。</p>
+<h4 id="流程-12"><a href="#流程-12" class="headerlink" title="流程-12"></a>流程-12</h4><p><code>nova-schedular</code>拿到配置信息后，使用调度算法决定了要让<code>nova-compute</code>去干这个事，就在小黑板上写“<code>nova-compute</code>你给创建个云主机，配置都在数据库里了”。</p>
+<h4 id="流程-13"><a href="#流程-13" class="headerlink" title="流程-13"></a>流程-13</h4><p><code>nova-compute</code>看到小黑板上的东西之后，本应该直接去数据库拿取配置信息，但因为<code>nova-compute</code>的特殊身份，<code>nova-compute</code>所在计算节点上全是云主机，万一有一台云主机被黑客入侵从而控制计算节点，直接拖库是很危险的。所以不能让<code>nova-compute</code>知道数据库在什么地方。</p>
+<h4 id="流程-14"><a href="#流程-14" class="headerlink" title="流程-14"></a>流程-14</h4><p><code>nova-compute</code>没办法去数据库取东西难道就不工作了吗？那可不行啊，他不知道去哪取，但他哥们知道啊，于是他在小黑板上写“<code>nova-conductor</code>，你帮我去数据库取一下配置信息”。</p>
+<h4 id="流程-15"><a href="#流程-15" class="headerlink" title="流程-15"></a>流程-15</h4><p><code>nova-conductor</code>从小黑板上看到了<code>nova-compute</code>的请求。</p>
+<h4 id="流程-16"><a href="#流程-16" class="headerlink" title="流程-16"></a>流程-16</h4><p><code>nova-conductor</code>告诉数据库我要查看某某云主机的配置信息。</p>
+<h4 id="流程-17"><a href="#流程-17" class="headerlink" title="流程-17"></a>流程-17</h4><p>数据库把云主机配置信息发送给<code>nova-conductor</code>。</p>
+<h4 id="流程-18"><a href="#流程-18" class="headerlink" title="流程-18"></a>流程-18</h4><p><code>nova-conductor</code>把配置信息写在小黑板上。</p>
+<h4 id="流程-19"><a href="#流程-19" class="headerlink" title="流程-19"></a>流程-19</h4><p><code>nova-compute</code>从小黑板上读取云主机的配置信息。</p>
+<h4 id="流程-20"><a href="#流程-20" class="headerlink" title="流程-20"></a>流程-20</h4><p><code>nova-compute</code>拿到了云主机配置信息一看，人家可是专业的，立马就知道该怎么做了，先去找<code>glance-api</code>拿镜像吧，刚才讲了那么多，可都是在<code>nova</code>组件内部的，这次去找别的组件可不是写在小黑板上了，它得带着自己的身份证去，告诉<code>glance-api</code>，我要<code>xxx</code>镜像。</p>
+<h4 id="流程-21"><a href="#流程-21" class="headerlink" title="流程-21"></a>流程-21</h4><p><code>glance-api</code>看<code>nova-compute</code>过来，他可不认识<code>nova-compute</code>，让<code>nova-compute</code>拿出身份证，拿着人家身份证找到自己的老大哥<code>keystone</code>看看这人靠不靠谱，<code>keystone</code>一看，没问题，按他说的做吧（在<code>nova</code>验证<code>horizon</code>被当做两步，这里化做一步，是为了简化重复的流程）。</p>
+<h4 id="流程-22"><a href="#流程-22" class="headerlink" title="流程-22"></a>流程-22</h4><p><code>glance-api</code>把镜像资源信息返回给<code>nova-compute</code>（这里主要说创建云主机的过程，除<code>nova</code>外其他组件内部先不提）。</p>
+<h4 id="流程-23"><a href="#流程-23" class="headerlink" title="流程-23"></a>流程-23</h4><p>接着<code>nova-compute</code>找到<code>neutron-server</code>（图里画错了，因为是偷别人的图，自己的图画了半天画不好。。。），告诉他我要<code>xxx</code>网络资源。</p>
+<h4 id="流程-24"><a href="#流程-24" class="headerlink" title="流程-24"></a>流程-24</h4><p><code>neutron-server</code>也不认识他，拿着他的身份证找<code>keystone</code>确认了一下身份。</p>
+<h4 id="流程-25"><a href="#流程-25" class="headerlink" title="流程-25"></a>流程-25</h4><p><code>nuetron-server</code>把网络资源信息返回给<code>nova-compute</code>。</p>
+<h4 id="流程-26"><a href="#流程-26" class="headerlink" title="流程-26"></a>流程-26</h4><p><code>nova-compute</code>找到<code>cinder-api</code>要存储资源，云主机得有硬盘啊，得存东西啊（同样，这里图中也有错误）。</p>
+<h4 id="流程-27"><a href="#流程-27" class="headerlink" title="流程-27"></a>流程-27</h4><p><code>cinder-api</code>也不认识他，拿着他的身份证找<code>keystone</code>确认了一下身份。</p>
+<h4 id="流程-28"><a href="#流程-28" class="headerlink" title="流程-28"></a>流程-28</h4><p><code>cinder-api</code>把存储资源信息返回给<code>nova-compute</code>。</p>
+<h4 id="流程-29"><a href="#流程-29" class="headerlink" title="流程-29"></a>流程-29</h4><p><code>nova-compute</code>拿到了所有资源之后，他其实也只是个收集信息的，他把工作全都交给了真正创建虚拟机的<code>Hypervisor</code>（<code>kvm</code>，<code>xen</code>等虚拟化技术）。</p>
+<p>到此为止，你已经拥有了一台云主机了，流程看似复杂实际上在几十秒就完成了。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/openstack/">openstack</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/openstack/">openstack</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/%E5%9F%BA%E4%BA%8ECentOS-7-3-%E5%AE%89%E8%A3%85Ceph-Jewel-10-2-9/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">基于CentOS 7.3 安装Ceph Jewel 10.2.9</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/openstack%E9%95%9C%E5%83%8F%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2%E4%B8%8E%E4%B8%8A%E4%BC%A0/">
+                        <span class="hidden-mobile">openstack镜像格式转换与上传</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
