@@ -2,6 +2,83 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/%E5%9C%A8kolla%E4%B8%AD%E9%85%8D%E7%BD%AEcinder-ceph%E5%A4%9A%E5%90%8E%E7%AB%AF/</loc>
+    
+    <lastmod>2021-01-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla%E6%90%AD%E5%BB%BAironic%E8%A3%B8%E6%9C%BA%E6%9C%8D%E5%8A%A1/</loc>
+    
+    <lastmod>2021-01-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla%E9%83%A8%E7%BD%B2swift/</loc>
+    
+    <lastmod>2021-01-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla-Pike-on-CentOS-7-4/</loc>
+    
+    <lastmod>2021-01-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla%E6%90%AD%E5%BB%BAoctavia/</loc>
+    
+    <lastmod>2021-01-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/ironic%E8%A3%B8%E6%9C%BA%E6%9C%8D%E5%8A%A1%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</loc>
+    
+    <lastmod>2021-01-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/ceph-for-openstack-storage/</loc>
+    
+    <lastmod>2021-01-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla-queens-on-centos7-4/</loc>
+    
+    <lastmod>2021-01-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/kolla-%E5%A4%9Aregion%E6%90%AD%E5%BB%BA/</loc>
+    
+    <lastmod>2021-01-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/shell%E5%AE%9E%E7%8E%B0%E5%B1%80%E5%9F%9F%E7%BD%91IP%E6%89%AB%E6%8F%8F/</loc>
+    
+    <lastmod>2021-01-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lijiawang.org/posts/harbor%E6%90%AD%E5%BB%BA/</loc>
+    
+    <lastmod>2021-01-04</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/openstack-instance-vm-power-state-%E7%8A%B6%E6%80%81%E7%BD%AE%E4%B8%BA-NOSTATE/</loc>
     
     <lastmod>2020-12-31</lastmod>
@@ -30,13 +107,6 @@
   </url>
   
   <url>
-    <loc>https://www.lijiawang.org/posts/harbor%E6%90%AD%E5%BB%BA/</loc>
-    
-    <lastmod>2020-12-31</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.lijiawang.org/posts/%E4%BD%BF%E7%94%A8Kubeadm%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88Kubernetes-1-12/</loc>
     
     <lastmod>2020-12-31</lastmod>
@@ -52,27 +122,6 @@
   
   <url>
     <loc>https://www.lijiawang.org/posts/docker%E7%BD%91%E7%BB%9C/</loc>
-    
-    <lastmod>2020-12-31</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/ceph-for-openstack-storage/</loc>
-    
-    <lastmod>2020-12-31</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/kolla-%E5%A4%9Aregion%E6%90%AD%E5%BB%BA/</loc>
-    
-    <lastmod>2020-12-31</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/kolla-queens-on-centos7-4/</loc>
     
     <lastmod>2020-12-31</lastmod>
     
@@ -107,35 +156,7 @@
   </url>
   
   <url>
-    <loc>https://www.lijiawang.org/posts/shell%E5%AE%9E%E7%8E%B0%E5%B1%80%E5%9F%9F%E7%BD%91IP%E6%89%AB%E6%8F%8F/</loc>
-    
-    <lastmod>2020-12-31</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/%E5%9C%A8kolla%E4%B8%AD%E9%85%8D%E7%BD%AEcinder-ceph%E5%A4%9A%E5%90%8E%E7%AB%AF/</loc>
-    
-    <lastmod>2020-12-31</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/kolla%E9%83%A8%E7%BD%B2swift/</loc>
-    
-    <lastmod>2020-12-31</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.lijiawang.org/posts/openstack%E8%99%9A%E6%8B%9F%E6%9C%BAVIP%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4/</loc>
-    
-    <lastmod>2020-12-31</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/kolla-Pike-on-CentOS-7-4/</loc>
     
     <lastmod>2020-12-31</lastmod>
     
@@ -150,27 +171,6 @@
   
   <url>
     <loc>https://www.lijiawang.org/posts/openstack%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/</loc>
-    
-    <lastmod>2020-12-31</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/kolla%E6%90%AD%E5%BB%BAoctavia/</loc>
-    
-    <lastmod>2020-12-31</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/ironic%E8%A3%B8%E6%9C%BA%E6%9C%8D%E5%8A%A1%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</loc>
-    
-    <lastmod>2020-12-31</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/kolla%E6%90%AD%E5%BB%BAironic%E8%A3%B8%E6%9C%BA%E6%9C%8D%E5%8A%A1/</loc>
     
     <lastmod>2020-12-31</lastmod>
     
@@ -525,55 +525,6 @@
   
   <url>
     <loc>https://www.lijiawang.org/categories/kubernets/</loc>
-    <lastmod>2021-01-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/categories/openstack/kolla/</loc>
-    <lastmod>2021-01-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/categories/ceph/openstack/</loc>
-    <lastmod>2021-01-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/categories/shell/Linux/</loc>
-    <lastmod>2021-01-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/categories/kolla/</loc>
-    <lastmod>2021-01-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/categories/kolla/openstack/</loc>
-    <lastmod>2021-01-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/categories/docker/harbor/</loc>
-    <lastmod>2021-01-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/categories/openstack/ceph/</loc>
     <lastmod>2021-01-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

@@ -130,8 +130,6 @@
       
       <category>docker</category>
       
-      <category>harbor</category>
-      
     </categories>
     
     
@@ -234,8 +232,6 @@
       
       <category>openstack</category>
       
-      <category>ceph</category>
-      
     </categories>
     
     
@@ -260,8 +256,6 @@
     
     
     <categories>
-      
-      <category>kolla</category>
       
       <category>openstack</category>
       
@@ -291,8 +285,6 @@
     <categories>
       
       <category>openstack</category>
-      
-      <category>kolla</category>
       
     </categories>
     
@@ -421,8 +413,6 @@
       
       <category>shell</category>
       
-      <category>Linux</category>
-      
     </categories>
     
     
@@ -447,8 +437,6 @@
     
     
     <categories>
-      
-      <category>ceph</category>
       
       <category>openstack</category>
       
@@ -478,8 +466,6 @@
     <categories>
       
       <category>openstack</category>
-      
-      <category>kolla</category>
       
     </categories>
     
@@ -530,8 +516,6 @@
     <categories>
       
       <category>openstack</category>
-      
-      <category>kolla</category>
       
     </categories>
     
@@ -610,8 +594,6 @@
       
       <category>openstack</category>
       
-      <category>kolla</category>
-      
     </categories>
     
     
@@ -637,8 +619,6 @@
       
       <category>openstack</category>
       
-      <category>kolla</category>
-      
     </categories>
     
     
@@ -663,8 +643,6 @@
     <categories>
       
       <category>openstack</category>
-      
-      <category>kolla</category>
       
     </categories>
     

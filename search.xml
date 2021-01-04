@@ -331,8 +331,6 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <category> docker </category>
             
-            <category> harbor </category>
-            
         </categories>
         
         
@@ -606,8 +604,6 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <category> openstack </category>
             
-            <category> ceph </category>
-            
         </categories>
         
         
@@ -645,8 +641,6 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
 ]]></content>
       
         <categories>
-            
-            <category> kolla </category>
             
             <category> openstack </category>
             
@@ -755,8 +749,6 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
         <categories>
             
             <category> openstack </category>
-            
-            <category> kolla </category>
             
         </categories>
         
@@ -1025,8 +1017,6 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <category> shell </category>
             
-            <category> Linux </category>
-            
         </categories>
         
         
@@ -1064,8 +1054,6 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
 <h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> cinder create --volume_type SSD --display_name vol-ssd 1</span><br>+--------------------------------+--------------------------------------+<br>| Property                       | Value                                |<br>+--------------------------------+--------------------------------------+<br>| attachments                    | []                                   |<br>| availability_zone              | nova                                 |<br>| bootable                       | false                                |<br>| consistencygroup_id            | None                                 |<br>| created_at                     | 2017-11-30T02:58:17.000000           |<br>| description                    | None                                 |<br>| encrypted                      | False                                |<br>| id                             | e2df2b47-13ec-4503-a78b-2ab60cb5a34b |<br>| metadata                       | &#123;&#125;                                   |<br>| migration_status               | None                                 |<br>| multiattach                    | False                                |<br>| name                           | vol-ssd                              |<br>| os-vol-host-attr:host          | control@ssd#ssd                      |<br>| os-vol-mig-status-attr:migstat | None                                 |<br>| os-vol-mig-status-attr:name_id | None                                 |<br>| os-vol-tenant-attr:tenant_id   | 21c161dda51147fb9ff527aadfe1d81a     |<br>| replication_status             | None                                 |<br>| size                           | 1                                    |<br>| snapshot_id                    | None                                 |<br>| source_volid                   | None                                 |<br>| status                         | creating                             |<br>| updated_at                     | 2017-11-30T02:58:18.000000           |<br>| user_id                        | 68601348f1264a4cb69f8f8f162e3f2a     |<br>| volume_type                    | SSD                                  |<br>+--------------------------------+--------------------------------------+<br><span class="hljs-meta">#</span><span class="bash"> cinder create --volume_type SATA --display_name vol-sata 1</span><br>+--------------------------------+--------------------------------------+<br>| Property                       | Value                                |<br>+--------------------------------+--------------------------------------+<br>| attachments                    | []                                   |<br>| availability_zone              | nova                                 |<br>| bootable                       | false                                |<br>| consistencygroup_id            | None                                 |<br>| created_at                     | 2017-11-30T02:59:07.000000           |<br>| description                    | None                                 |<br>| encrypted                      | False                                |<br>| id                             | f3f53733-348d-4ff9-a472-445aed77c111 |<br>| metadata                       | &#123;&#125;                                   |<br>| migration_status               | None                                 |<br>| multiattach                    | False                                |<br>| name                           | vol-sata                             |<br>| os-vol-host-attr:host          | None                                 |<br>| os-vol-mig-status-attr:migstat | None                                 |<br>| os-vol-mig-status-attr:name_id | None                                 |<br>| os-vol-tenant-attr:tenant_id   | 21c161dda51147fb9ff527aadfe1d81a     |<br>| replication_status             | None                                 |<br>| size                           | 1                                    |<br>| snapshot_id                    | None                                 |<br>| source_volid                   | None                                 |<br>| status                         | creating                             |<br>| updated_at                     | None                                 |<br>| user_id                        | 68601348f1264a4cb69f8f8f162e3f2a     |<br>| volume_type                    | SATA                                 |<br>+--------------------------------+--------------------------------------+<br><br><span class="hljs-meta">#</span><span class="bash"> rbd -p volumes-cache ls|grep e2df2b47-13ec-4503-a78b-2ab60cb5a34b</span><br>volume-e2df2b47-13ec-4503-a78b-2ab60cb5a34b<br><span class="hljs-meta">#</span><span class="bash"> rbd -p volumes ls|grep f3f53733-348d-4ff9-a472-445aed77c111</span><br>volume-f3f53733-348d-4ff9-a472-445aed77c111<br></code></pre></td></tr></table></figure>]]></content>
       
         <categories>
-            
-            <category> ceph </category>
             
             <category> openstack </category>
             
@@ -1109,8 +1097,6 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
         <categories>
             
             <category> openstack </category>
-            
-            <category> kolla </category>
             
         </categories>
         
@@ -1215,8 +1201,6 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
         <categories>
             
             <category> openstack </category>
-            
-            <category> kolla </category>
             
         </categories>
         
@@ -1411,8 +1395,6 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <category> openstack </category>
             
-            <category> kolla </category>
-            
         </categories>
         
         
@@ -1477,8 +1459,6 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
             
             <category> openstack </category>
             
-            <category> kolla </category>
-            
         </categories>
         
         
@@ -1537,8 +1517,6 @@ Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;16&quot;, Git
         <categories>
             
             <category> openstack </category>
-            
-            <category> kolla </category>
             
         </categories>
         
