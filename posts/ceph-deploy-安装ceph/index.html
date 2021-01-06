@@ -1,0 +1,516 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/ljw.jpeg">
+  <link rel="icon" type="image/png" href="/img/ljw.jpeg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
+  <meta name="author" content="李家旺">
+  <meta name="keywords" content="linux, python, shell, openstack">
+  <title>ceph-deploy 安装ceph - 李家旺</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.lijiawang.org","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":"6d475ee62d5e28c190b6d9e65318f37f","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="李家旺" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>李家旺.Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/ljw.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="ceph-deploy 安装ceph">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-06 13:14" pubdate>
+        2021年1月6日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      25
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ceph-deploy 安装ceph</h1>
+            
+            <div class="markdown-body">
+              <h1 id="ceph-安装"><a href="#ceph-安装" class="headerlink" title="ceph 安装"></a>ceph 安装</h1><p>使用ceph-deploy 安装ceph，ceph-deploy现在只能安装nautilus或者之前的版本，octopus和octopus以后的版本不在使用ceph-deploy，而是建议使用cephadm来安装，后期我会写一个cephadm安装配置ceph集群。</p>
+<h1 id="准备机器"><a href="#准备机器" class="headerlink" title="准备机器"></a>准备机器</h1><p>下面的机器是我用kvm虚化出来3台，每个机器上有一个数据盘vdb</p>
+<table>
+<thead>
+<tr>
+<th>主机</th>
+<th>应用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ceph–1</td>
+<td>ceph-deploy ceph-mon ceph-mgr ceph-raw ceph-mds ceph-osd</td>
+</tr>
+<tr>
+<td>ceph–2</td>
+<td>ceph-mon ceph-mgr ceph-raw ceph-mds ceph-osd</td>
+</tr>
+<tr>
+<td>ceph–3</td>
+<td>ceph-mon ceph-mgr ceph-raw ceph-mds ceph-osd</td>
+</tr>
+</tbody></table>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 所有机器配置hosts主机名解析</span><br><span class="hljs-meta">#</span><span class="bash"> cat /etc/hosts</span><br>127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4<br>::1         localhost localhost.localdomain localhost6 localhost6.localdomain6<br>10.140.11.8  ceph--1<br>10.140.11.6  ceph--2<br>10.140.11.24 ceph--3<br><span class="hljs-meta">#</span><span class="bash"> lsblk</span> <br>NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT<br>sr0     11:0    1  478K  0 rom<br>vda    253:0    0  100G  0 disk<br>└─vda1 253:1    0  100G  0 part /<br>vdb    253:16   0   50G  0 disk<br></code></pre></td></tr></table></figure>
+<h1 id="deploy节点到ceph主机配置免密登录"><a href="#deploy节点到ceph主机配置免密登录" class="headerlink" title="deploy节点到ceph主机配置免密登录"></a>deploy节点到ceph主机配置免密登录</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@ceph--1 ~]# ssh-keygen <br>Generating public/private rsa key pair.<br>Enter file in which to save the key (/root/.ssh/id_rsa): <br>Enter passphrase (empty for no passphrase): <br>Enter same passphrase again:<br>Your identification has been saved in /root/.ssh/id_rsa.<br>Your public key has been saved in /root/.ssh/id_rsa.pub.<br>The key fingerprint is:<br>SHA256:g981QUE32gwwVNoVB2aSzyTDEUmg2CQdSTgi05eYUWM root@ceph--1.localdomain<br>The key&#x27;s randomart image is:<br>+---[RSA 2048]----+<br>|   ..=E=++=B@*Oo.|<br>|  o =.=*o. =*@.o |<br>|   o o..o . +*o  |<br>|       .     .o  |<br>|      . S   o    |<br>|       . o . .   |<br>|        . .      |<br>|                 |<br>|                 |<br>+----[SHA256]-----+<br><br>[root@ceph--1 ~]# ssh-copy-id ceph--1<br>[root@ceph--1 ~]# ssh-copy-id ceph--2<br>[root@ceph--1 ~]# ssh-copy-id ceph--3<br></code></pre></td></tr></table></figure>
+<h1 id="所有节点配置国内ceph源"><a href="#所有节点配置国内ceph源" class="headerlink" title="所有节点配置国内ceph源"></a>所有节点配置国内ceph源</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> cat /etc/yum.repos.d/ceph.repo</span><br>[norch]<br>name=norch<br>baseurl=https://mirrors.aliyun.com/ceph/rpm-nautilus/el7/noarch/<br>enabled=1<br>gpgcheck=0<br><br>[x86_64]<br>name=x86_64<br>baseurl=https://mirrors.aliyun.com/ceph/rpm-nautilus/el7/x86_64/<br>enabled=1<br>gpgcheck=0<br></code></pre></td></tr></table></figure>
+<h1 id="在ceph–1节点配置安装并配置ceph-deploy节点"><a href="#在ceph–1节点配置安装并配置ceph-deploy节点" class="headerlink" title="在ceph–1节点配置安装并配置ceph-deploy节点"></a>在ceph–1节点配置安装并配置ceph-deploy节点</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@ceph--1 ~]# mkdir ceph-deploy<br>[root@ceph--1 ~]# yum -y install python-setuptools ceph-deploy<br>[root@ceph--1 ceph-deploy]# ceph-deploy new ceph--1<br>[ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf<br>[ceph_deploy.cli][INFO  ] Invoked (2.0.1): /bin/ceph-deploy new ceph--1<br>[ceph_deploy.cli][INFO  ] ceph-deploy options:<br>[ceph_deploy.cli][INFO  ]  username                      : None<br>[ceph_deploy.cli][INFO  ]  func                          : &lt;function new at 0x7f4162516de8&gt;<br>[ceph_deploy.cli][INFO  ]  verbose                       : False<br>[ceph_deploy.cli][INFO  ]  overwrite_conf                : False<br>[ceph_deploy.cli][INFO  ]  quiet                         : False<br>[ceph_deploy.cli][INFO  ]  cd_conf                       : &lt;ceph_deploy.conf.cephdeploy.Conf instance at 0x7f4161c98e18&gt;<br>[ceph_deploy.cli][INFO  ]  cluster                       : ceph<br>[ceph_deploy.cli][INFO  ]  ssh_copykey                   : True<br>[ceph_deploy.cli][INFO  ]  mon                           : [&#x27;ceph--1&#x27;]<br>[ceph_deploy.cli][INFO  ]  public_network                : None<br>[ceph_deploy.cli][INFO  ]  ceph_conf                     : None<br>[ceph_deploy.cli][INFO  ]  cluster_network               : None<br>[ceph_deploy.cli][INFO  ]  default_release               : False<br>[ceph_deploy.cli][INFO  ]  fsid                          : None<br>[ceph_deploy.new][DEBUG ] Creating new cluster named ceph<br>[ceph_deploy.new][INFO  ] making sure passwordless SSH succeeds<br>[ceph--1][DEBUG ] connected to host: ceph--1 <br>[ceph--1][DEBUG ] detect platform information from remote host<br>[ceph--1][DEBUG ] detect machine type<br>[ceph--1][DEBUG ] find the location of an executable<br>[ceph--1][INFO  ] Running command: /usr/sbin/ip link show<br>[ceph--1][INFO  ] Running command: /usr/sbin/ip addr show<br>[ceph--1][DEBUG ] IP addresses found: [u&#x27;10.140.11.8&#x27;]<br>[ceph_deploy.new][DEBUG ] Resolving host ceph--1<br>[ceph_deploy.new][DEBUG ] Monitor ceph--1 at 10.140.11.8<br>[ceph_deploy.new][DEBUG ] Monitor initial members are [&#x27;ceph--1&#x27;]<br>[ceph_deploy.new][DEBUG ] Monitor addrs are [&#x27;10.140.11.8&#x27;]<br>[ceph_deploy.new][DEBUG ] Creating a random mon key...<br>[ceph_deploy.new][DEBUG ] Writing monitor keyring to ceph.mon.keyring...<br>[ceph_deploy.new][DEBUG ] Writing initial config to ceph.conf...<br></code></pre></td></tr></table></figure>
+<h1 id="所有节点安装ceph基础软件包"><a href="#所有节点安装ceph基础软件包" class="headerlink" title="所有节点安装ceph基础软件包"></a>所有节点安装ceph基础软件包</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> yum -y install ceph ceph-mon ceph-mgr ceph-radosgw ceph-mds ceph-mgr-dashboard</span><br></code></pre></td></tr></table></figure>
+<h1 id="使用ceph-deploy创建mon节点"><a href="#使用ceph-deploy创建mon节点" class="headerlink" title="使用ceph-deploy创建mon节点"></a>使用ceph-deploy创建mon节点</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs yaml">[<span class="hljs-string">root@ceph--1</span> <span class="hljs-string">ceph-deploy</span>]<span class="hljs-comment"># ceph-deploy mon create-initial</span><br>[<span class="hljs-string">root@ceph--1</span> <span class="hljs-string">ceph-deploy</span>]<span class="hljs-comment"># ceph-deploy mon add ceph--2 # 添加mon 节点</span><br>[<span class="hljs-string">root@ceph--1</span> <span class="hljs-string">ceph-deploy</span>]<span class="hljs-comment"># ceph-deploy mon add ceph--3</span><br>[<span class="hljs-string">root@ceph--1</span> <span class="hljs-string">ceph-deploy</span>]<span class="hljs-comment"># ceph-deploy admin ceph--1 ceph--2 ceph--3  # 同步配置文件</span><br>[<span class="hljs-string">root@ceph--1</span> <span class="hljs-string">ceph-deploy</span>]<span class="hljs-comment"># ceph -s</span><br>  <span class="hljs-attr">cluster:</span><br>    <span class="hljs-attr">id:</span>     <span class="hljs-string">faa2e2c4-98bc-47c4-a5b4-a478721b7ea2</span><br>    <span class="hljs-attr">health:</span> <span class="hljs-string">HEALTH_OK</span><br><br>  <span class="hljs-attr">services:</span><br>    <span class="hljs-attr">mon:</span> <span class="hljs-number">3</span> <span class="hljs-string">daemons,</span> <span class="hljs-string">quorum</span> <span class="hljs-string">ceph--1,ceph--2,ceph--3</span> <span class="hljs-string">(age</span> <span class="hljs-string">49s)</span><br>    <span class="hljs-attr">mgr:</span> <span class="hljs-literal">no</span> <span class="hljs-string">daemons</span> <span class="hljs-string">active</span><br>    <span class="hljs-attr">osd: 0 osds:</span> <span class="hljs-number">0</span> <span class="hljs-string">up,</span> <span class="hljs-number">0</span> <span class="hljs-string">in</span><br><br>  <span class="hljs-attr">data:</span><br>    <span class="hljs-attr">pools:</span>   <span class="hljs-number">0</span> <span class="hljs-string">pools,</span> <span class="hljs-number">0</span> <span class="hljs-string">pgs</span><br>    <span class="hljs-attr">objects:</span> <span class="hljs-number">0</span> <span class="hljs-string">objects,</span> <span class="hljs-number">0</span> <span class="hljs-string">B</span><br>    <span class="hljs-attr">usage:</span>   <span class="hljs-number">0</span> <span class="hljs-string">B</span> <span class="hljs-string">used,</span> <span class="hljs-number">0</span> <span class="hljs-string">B</span> <span class="hljs-string">/</span> <span class="hljs-number">0</span> <span class="hljs-string">B</span> <span class="hljs-string">avail</span><br>    <span class="hljs-attr">pgs:</span><br>	<br>[<span class="hljs-string">root@ceph--1</span> <span class="hljs-string">ceph-deploy</span>]<span class="hljs-comment"># ceph-deploy mgr create ceph--1 ceph--2 ceph--3</span><br>[<span class="hljs-string">root@ceph--1</span> <span class="hljs-string">ceph-deploy</span>]<span class="hljs-comment"># ceph -s</span><br>  <span class="hljs-attr">cluster:</span><br>    <span class="hljs-attr">id:</span>     <span class="hljs-string">faa2e2c4-98bc-47c4-a5b4-a478721b7ea2</span><br>    <span class="hljs-attr">health:</span> <span class="hljs-string">HEALTH_WARN</span><br>            <span class="hljs-string">OSD</span> <span class="hljs-string">count</span> <span class="hljs-number">0</span> <span class="hljs-string">&lt;</span> <span class="hljs-string">osd_pool_default_size</span> <span class="hljs-number">3</span><br><br>  <span class="hljs-attr">services:</span><br>    <span class="hljs-attr">mon:</span> <span class="hljs-number">3</span> <span class="hljs-string">daemons,</span> <span class="hljs-string">quorum</span> <span class="hljs-string">ceph--1,ceph--2,ceph--3</span> <span class="hljs-string">(age</span> <span class="hljs-string">2m)</span><br>    <span class="hljs-attr">mgr:</span> <span class="hljs-string">ceph--1(active,</span> <span class="hljs-string">since</span> <span class="hljs-string">14m),</span> <span class="hljs-attr">standbys:</span> <span class="hljs-string">ceph--2,</span> <span class="hljs-string">ceph--3</span><br>    <span class="hljs-attr">osd: 0 osds:</span> <span class="hljs-number">0</span> <span class="hljs-string">up,</span> <span class="hljs-number">0</span> <span class="hljs-string">in</span><br><br>  <span class="hljs-attr">data:</span><br>    <span class="hljs-attr">pools:</span>   <span class="hljs-number">0</span> <span class="hljs-string">pools,</span> <span class="hljs-number">0</span> <span class="hljs-string">pgs</span><br>    <span class="hljs-attr">objects:</span> <span class="hljs-number">0</span> <span class="hljs-string">objects,</span> <span class="hljs-number">0</span> <span class="hljs-string">B</span><br>    <span class="hljs-attr">usage:</span>   <span class="hljs-number">0</span> <span class="hljs-string">B</span> <span class="hljs-string">used,</span> <span class="hljs-number">0</span> <span class="hljs-string">B</span> <span class="hljs-string">/</span> <span class="hljs-number">0</span> <span class="hljs-string">B</span> <span class="hljs-string">avail</span><br>    <span class="hljs-attr">pgs:</span><br></code></pre></td></tr></table></figure>
+<h1 id="创建osd"><a href="#创建osd" class="headerlink" title="创建osd"></a>创建osd</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@ceph--1 ceph-deploy]# ceph-deploy osd create ceph--1 --data /dev/vdb <br>[root@ceph--1 ceph-deploy]# ceph-deploy osd create ceph--2 --data /dev/vdb <br>[root@ceph--1 ceph-deploy]# ceph-deploy osd create ceph--3 --data /dev/vdb <br>[root@ceph--1 ceph-deploy]# ceph -s<br>  cluster:<br>    id:     faa2e2c4-98bc-47c4-a5b4-a478721b7ea2<br>    health: HEALTH_OK<br><br>  services:<br>    mon: 3 daemons, quorum ceph--1,ceph--2,ceph--3 (age 8m)<br>    mgr: ceph--1(active, since 20m), standbys: ceph--2, ceph--3<br>    osd: 3 osds: 3 up (since 32s), 3 in (since 32s)<br><br>  data:<br>    pools:   0 pools, 0 pgs<br>    objects: 0 objects, 0 B<br>    usage:   3.0 GiB used, 147 GiB / 150 GiB avail<br>    pgs:<br></code></pre></td></tr></table></figure>
+<h1 id="使用ceph-deploy配置ceph对象存储ceph-raw"><a href="#使用ceph-deploy配置ceph对象存储ceph-raw" class="headerlink" title="使用ceph-deploy配置ceph对象存储ceph-raw"></a>使用ceph-deploy配置ceph对象存储ceph-raw</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@ceph--1 ceph-deploy]# ceph-deploy rgw create ceph--1 ceph--2 ceph--3<br></code></pre></td></tr></table></figure>
+<h1 id="使用ceph-deploy配置ceph文件存储ceph-mds"><a href="#使用ceph-deploy配置ceph文件存储ceph-mds" class="headerlink" title="使用ceph-deploy配置ceph文件存储ceph-mds"></a>使用ceph-deploy配置ceph文件存储ceph-mds</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@ceph--1 ceph-deploy]# ceph-deploy mds create ceph--1 ceph--2 ceph--3<br>[root@ceph--1 ceph-deploy]# ceph -s<br>  cluster:<br>    id:     faa2e2c4-98bc-47c4-a5b4-a478721b7ea2<br>    health: HEALTH_OK<br><br>  services:<br>    mon: 3 daemons, quorum ceph--1,ceph--2,ceph--3 (age 17m)<br>    mgr: ceph--1(active, since 29m), standbys: ceph--2, ceph--3<br>    mds:  3 up:standby<br>    osd: 3 osds: 3 up (since 9m), 3 in (since 9m)<br>    rgw: 3 daemons active (ceph--1, ceph--2, ceph--3)<br><br>  task status:<br><br>  data:<br>    pools:   4 pools, 128 pgs<br>    objects: 187 objects, 1.2 KiB<br>    usage:   3.0 GiB used, 147 GiB / 150 GiB avail<br>    pgs:     128 active+clean<br><br>  io:<br>    client:   83 KiB/s rd, 0 B/s wr, 82 op/s rd, 54 op/s wr<br></code></pre></td></tr></table></figure>
+<h1 id="开启并设置ceph-dashboard"><a href="#开启并设置ceph-dashboard" class="headerlink" title="开启并设置ceph-dashboard"></a>开启并设置ceph-dashboard</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@ceph--1 ceph-deploy]# ceph  mgr module enable  dashboard<br>[root@ceph--1 ceph-deploy]# ceph  dashboard create-self-signed-cert<br>Self-signed certificate created<br>[root@ceph--1 ceph-deploy]# ceph config set mgr mgr/dashboard/server_addr 10.140.11.8<br>[root@ceph--1 ceph-deploy]# ceph config set mgr mgr/dashboard/server_port 8080<br>[root@ceph--1 ceph-deploy]# ceph config set mgr mgr/dashboard/ssl_server_port 8443<br>[root@ceph--1 ceph-deploy]# ceph dashboard set-login-credentials admin admin<br>******************************************************************<br>***          WARNING: this command is deprecated.              ***<br>*** Please use the ac-user-* related commands to manage users. ***<br>******************************************************************<br>Username and password updated<br>systemctl restart ceph-mgr@ceph-node1<br>[root@ceph--1 ceph-deploy]# ceph mgr services<br>&#123;<br>    &quot;dashboard&quot;: &quot;https://ceph--1:8443/&quot;<br>&#125;<br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/ceph/">ceph</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/ceph/">ceph</a>
+                    
+                      <a class="hover-with-bg" href="/tags/ceph-deploy/">ceph-deploy</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/Tekton%E5%AE%89%E8%A3%85%E5%8F%8AHello-world/">
+                        <span class="hidden-mobile">Tekton安装及Hello world</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+          clientID: 'dbe2184d2cb671f0b17f',
+          clientSecret: '7ef15fe02766a3e33886c705de13ce2df0709190',
+          repo: 'bolg_comments',
+          owner: 'lijiawang',
+          admin: ["lijiawang"],
+          id: 'a8ed66acf1e56dcacd024f4d503a7db3',
+          language: 'zh-CN',
+          labels: ["Gitalk"],
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        });
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
