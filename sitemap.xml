@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.lijiawang.org/posts/%E5%9C%A8k8s%E4%B8%8A%E9%83%A8%E7%BD%B2ingress-nginx%E5%B9%B6%E4%BD%BF%E7%94%A8/</loc>
+    
+    <lastmod>2021-01-06</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.lijiawang.org/posts/%E4%BD%BF%E7%94%A8kubeadm%E5%8D%87%E7%BA%A7kubernetes%E9%9B%86%E7%BE%A4/</loc>
     
     <lastmod>2021-01-04</lastmod>
@@ -87,13 +94,6 @@
   
   <url>
     <loc>https://www.lijiawang.org/posts/openstack-instance-vm-power-state-%E7%8A%B6%E6%80%81%E7%BD%AE%E4%B8%BA-NOSTATE/</loc>
-    
-    <lastmod>2020-12-31</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/posts/%E5%9C%A8k8s%E4%B8%8A%E9%83%A8%E7%BD%B2ingress-nginx%E5%B9%B6%E4%BD%BF%E7%94%A8/</loc>
     
     <lastmod>2020-12-31</lastmod>
     
@@ -518,13 +518,6 @@
   
   <url>
     <loc>https://www.lijiawang.org/categories/kubernetes/</loc>
-    <lastmod>2021-01-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.lijiawang.org/categories/kubernets/</loc>
     <lastmod>2021-01-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
