@@ -1,0 +1,491 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/ljw.jpeg">
+  <link rel="icon" type="image/png" href="/img/ljw.jpeg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
+  <meta name="author" content="李家旺">
+  <meta name="keywords" content="linux, python, shell, openstack">
+  <title>使用ceph提供块存储 - 李家旺</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.lijiawang.org","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":"6d475ee62d5e28c190b6d9e65318f37f","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="李家旺" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>李家旺.Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/ljw.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="使用ceph提供块存储">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-07 16:16" pubdate>
+        2021年1月7日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      23
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">使用ceph提供块存储</h1>
+            
+            <div class="markdown-body">
+              <h1 id="ceph的块存储"><a href="#ceph的块存储" class="headerlink" title="ceph的块存储"></a><code>ceph</code>的块存储</h1><h1 id="创建一个POOL"><a href="#创建一个POOL" class="headerlink" title="创建一个POOL"></a>创建一个POOL</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@ceph--1 ~]# ceph osd pool create ceph-demo 16 16<br>pool &#x27;ceph-demo&#x27; created<br>[root@ceph--1 ~]# rbd -p ceph-demo ls<br></code></pre></td></tr></table></figure>
+<h1 id="创建rbd"><a href="#创建rbd" class="headerlink" title="创建rbd"></a>创建rbd</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@ceph--1 ~]# rbd create -p ceph-demo --image rbd-demo.img --size 1G<br>[root@ceph--1 ~]# rbd -p ceph-demo ls<br>rbd-demo.img<br>[root@ceph--1 ~]# rbd create ceph-demo/rbd-demo-1.img --size 1G   # 也可以这么创建<br>[root@ceph--1 ~]# rbd -p ceph-demo ls<br>rbd-demo-1.img<br>rbd-demo.img<br></code></pre></td></tr></table></figure>
+<h1 id="将RBD映射到主机"><a href="#将RBD映射到主机" class="headerlink" title="将RBD映射到主机"></a>将RBD映射到主机</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@ceph--1 ~]# rbd -p ceph-demo ls<br>rbd-demo-1.img<br>rbd-demo.img<br>[root@ceph--1 ~]# rbd info ceph-demo/rbd-demo.img<br>rbd image &#x27;rbd-demo.img&#x27;:<br>        size 1 GiB in 256 objects<br>        order 22 (4 MiB objects)<br>        snapshot_count: 0<br>        id: 1686fe84952f<br>        block_name_prefix: rbd_data.1686fe84952f<br>        format: 2<br>        features: layering, exclusive-lock, object-map, fast-diff, deep-flatten<br>        op_features:<br>        flags:<br>        create_timestamp: Thu Jan  7 15:06:15 2021<br>        access_timestamp: Thu Jan  7 15:06:15 2021<br>        modify_timestamp: Thu Jan  7 15:06:15 2021<br>[root@ceph--1 ~]# rbd map  ceph-demo/rbd-demo.img<br>rbd: sysfs write failed<br>RBD image feature set mismatch. You can disable features unsupported by the kernel with &quot;rbd feature disable ceph-demo/rbd-demo.img object-map fast-diff deep-flatten&quot;.<br>In some cases useful info is found in syslog - try &quot;dmesg | tail&quot;.<br>rbd: map failed: (6) No such device or address<br>[root@ceph--1 ~]# rbd -p ceph-demo ls<br>rbd-demo-1.img<br>rbd-demo.img<br>[root@ceph--1 ~]# rbd feature disable ceph-demo/rbd-demo.img deep-flatten<br>[root@ceph--1 ~]# rbd feature disable ceph-demo/rbd-demo.img fast-diff<br>[root@ceph--1 ~]# rbd feature disable ceph-demo/rbd-demo.img object-map<br>[root@ceph--1 ~]# rbd feature disable ceph-demo/rbd-demo.img exclusive-lock<br>[root@ceph--1 ~]# rbd info ceph-demo/rbd-demo.img<br>rbd image &#x27;rbd-demo.img&#x27;:<br>        size 1 GiB in 256 objects<br>        order 22 (4 MiB objects)<br>        snapshot_count: 0<br>        id: 16e0aec0c2a8<br>        block_name_prefix: rbd_data.16e0aec0c2a8<br>        format: 2<br>        features: layering<br>        op_features:<br>        flags:<br>        create_timestamp: Thu Jan  7 15:18:34 2021<br>        access_timestamp: Thu Jan  7 15:18:34 2021<br>        modify_timestamp: Thu Jan  7 15:18:34 2021<br>		<br>[root@ceph--1 ~]# rbd map  ceph-demo/rbd-demo.img<br>/dev/rbd0<br>[root@ceph--1 ~]# rbd device list<br>id pool      namespace image        snap device    <br>0  ceph-demo           rbd-demo.img -    /dev/rbd0<br>[root@ceph--1 ~]# fdisk -l /dev/rbd0<br><br>Disk /dev/rbd0: 1073 MB, 1073741824 bytes, 2097152 sectors<br>Units = sectors of 1 * 512 = 512 bytes<br>Sector size (logical/physical): 512 bytes / 512 bytes<br>I/O size (minimum/optimal): 4194304 bytes / 4194304 bytes<br></code></pre></td></tr></table></figure>
+<h1 id="挂载该设备"><a href="#挂载该设备" class="headerlink" title="挂载该设备"></a>挂载该设备</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@ceph--1 ~]# mkdir /mnt/ceph-demo<br>[root@ceph--1 ~]# mkfs.ext4 /dev/rbd0<br>mke2fs 1.42.9 (28-Dec-2013)<br>Discarding device blocks: done<br>Filesystem label=<br>OS type: Linux<br>Block size=4096 (log=2)<br>Fragment size=4096 (log=2)<br>Stride=1024 blocks, Stripe width=1024 blocks<br>65536 inodes, 262144 blocks<br>13107 blocks (5.00%) reserved for the super user<br>First data block=0<br>Maximum filesystem blocks=268435456<br>8 block groups<br>32768 blocks per group, 32768 fragments per group<br>8192 inodes per group<br>Superblock backups stored on blocks:<br>        32768, 98304, 163840, 229376<br><br>Allocating group tables: done<br>Writing inode tables: done<br>Creating journal (8192 blocks): done<br>Writing superblocks and filesystem accounting information: done<br>[root@ceph--1 ~]# df -Th /dev/rbd0<br>Filesystem     Type  Size  Used Avail Use% Mounted on<br>/dev/rbd0      ext4  976M  2.6M  907M   1% /mnt/ceph-demo<br><br>[root@ceph--1 ~]# cd /mnt/ceph-demo/<br>[root@ceph--1 ceph-demo]# ls -l<br>total 16<br>drwx------ 2 root root 16384 Jan  7 15:48 lost+found<br>[root@ceph--1 ceph-demo]# cp /etc/passwd .<br>[root@ceph--1 ceph-demo]# ls<br>lost+found  passwd<br></code></pre></td></tr></table></figure>
+<h1 id="RBD扩容"><a href="#RBD扩容" class="headerlink" title="RBD扩容"></a>RBD扩容</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@ceph--1 ~]# rbd info ceph-demo/rbd-demo.img<br>rbd image &#x27;rbd-demo.img&#x27;:<br>        size 1 GiB in 256 objects<br>        order 22 (4 MiB objects)<br>        snapshot_count: 0<br>        id: 16e0aec0c2a8<br>        block_name_prefix: rbd_data.16e0aec0c2a8<br>        format: 2<br>        features: layering<br>        op_features:<br>        flags:<br>        create_timestamp: Thu Jan  7 15:18:34 2021<br>        access_timestamp: Thu Jan  7 15:18:34 2021<br>        modify_timestamp: Thu Jan  7 15:18:34 2021<br>[root@ceph--1 ~]# rbd resize ceph-demo/rbd-demo.img -s 5G  # 扩容到5G<br>Resizing image: 100% complete...done.<br>[root@ceph--1 ~]# rbd info ceph-demo/rbd-demo.img<br>rbd image &#x27;rbd-demo.img&#x27;:<br>        size 5 GiB in 1280 objects<br>        order 22 (4 MiB objects)<br>        snapshot_count: 0<br>        id: 16e0aec0c2a8<br>        block_name_prefix: rbd_data.16e0aec0c2a8<br>        format: 2<br>        features: layering<br>        op_features:<br>        flags:<br>        create_timestamp: Thu Jan  7 15:18:34 2021<br>        access_timestamp: Thu Jan  7 15:18:34 2021<br>        modify_timestamp: Thu Jan  7 15:18:34 2021<br>[root@ceph--1 ~]# df -Th /mnt/ceph-demo    # 扩容挂载点<br>Filesystem     Type  Size  Used Avail Use% Mounted on<br>/dev/rbd0      ext4  976M  2.6M  907M   1% /mnt/ceph-demo<br>[root@ceph--1 ~]# resize2fs  /dev/rbd0<br>resize2fs 1.42.9 (28-Dec-2013)<br>Filesystem at /dev/rbd0 is mounted on /mnt/ceph-demo; on-line resizing required<br>old_desc_blocks = 1, new_desc_blocks = 1<br>The filesystem on /dev/rbd0 is now 1310720 blocks long.<br>[root@ceph--1 ~]# cd /mnt/ceph-demo/<br>[root@ceph--1 ceph-demo]# ls<br>lost+found  passwd<br>[root@ceph--1 ceph-demo]# cat passwd <br><br>[root@ceph--1 ~]# df -Th /mnt/ceph-demo<br>Filesystem     Type  Size  Used Avail Use% Mounted on<br>/dev/rbd0      ext4  4.9G  4.0M  4.7G   1% /mnt/ceph-demo<br></code></pre></td></tr></table></figure>
+<h1 id="RBD数据迁移"><a href="#RBD数据迁移" class="headerlink" title="RBD数据迁移"></a>RBD数据迁移</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs shell">模拟ceph--1主机挂机或吊盘<br>[root@ceph--1 ceph-demo]# umount /mnt/ceph-demo/   # 卸载挂载分区<br>umount: /mnt/ceph-demo: target is busy.<br>        (In some cases useful info about processes that use<br>         the device is found by lsof(8) or fuser(1))<br>[root@ceph--1 ceph-demo]# fuser -mv -k /mnt/ceph-demo/  # 如果报以上错误请用该命令卸载<br>                     USER        PID ACCESS COMMAND<br>/mnt/ceph-demo:      root     kernel mount /mnt/ceph-demo<br>                     root      25679 ..c.. bash<br>[root@ceph--1 ~]# umount /mnt/ceph-demo/<br>[root@ceph--1 ~]# df -T<br>Filesystem         Type           1K-blocks    Used Available Use% Mounted on<br>devtmpfs           devtmpfs         8189812       0   8189812   0% /dev<br>tmpfs              tmpfs            8215516       0   8215516   0% /dev/shm<br>tmpfs              tmpfs            8215516   16956   8198560   1% /run<br>tmpfs              tmpfs            8215516       0   8215516   0% /sys/fs/cgroup<br>/dev/vda1          ext4            98232872 3026300  90975308   4% /<br>tmpfs              tmpfs            8215516      52   8215464   1% /var/lib/ceph/osd/ceph-0<br>tmpfs              tmpfs            1643104       0   1643104   0% /run/user/1000<br>10.140.11.8:6789:/ ceph            48599040       0  48599040   0% /mnt/cephfs<br>ceph-fuse          fuse.ceph-fuse  48599040       0  48599040   0% /mnt/ceph-fuse<br>tmpfs              tmpfs            1643104       0   1643104   0% /run/user/0<br>可以看到ceph-demo已经umount 掉了<br><span class="hljs-meta">#</span><span class="bash"> 使用ceph--2主机挂载该设备</span><br>[root@ceph--1 ceph-demo]# ssh ceph--2<br>[root@ceph--2 ~]# rbd device list<br>[root@ceph--2 ~]# rbd -p ceph-demo ls<br>rbd-demo.img<br>[root@ceph--2 ~]# rbd map ceph-demo/rbd-demo.img<br>/dev/rbd0<br>[root@ceph--2 ~]# mkdir ljw<br>[root@ceph--2 ~]# mount /dev/rbd0 /root/ljw/<br>[root@ceph--2 ljw]# df -Th /root/ljw<br>Filesystem     Type  Size  Used Avail Use% Mounted on<br>/dev/rbd0      ext4  4.9G  4.0M  4.7G   1% /root/ljw<br></code></pre></td></tr></table></figure>
+<h1 id="数据验证"><a href="#数据验证" class="headerlink" title="数据验证"></a>数据验证</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@ceph--2 ~]# cd /root/ljw/<br>[root@ceph--2 ljw]# ls<br>lost+found  passwd<br>[root@ceph--2 ljw]# cat passwd<br>[root@ceph--2 ljw]# cp /etc/fstab .<br>[root@ceph--2 ljw]# ls <br>fstab  lost+found  passwd<br><br></code></pre></td></tr></table></figure>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wdz306ling/article/details/87930133">https://blog.csdn.net/wdz306ling/article/details/87930133</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/ceph/">ceph</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/ceph/">ceph</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/%E4%BD%BF%E7%94%A8ceph%E6%8F%90%E4%BE%9B%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/">
+                        <span class="hidden-mobile">使用ceph提供文件存储</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+          clientID: 'dbe2184d2cb671f0b17f',
+          clientSecret: '7ef15fe02766a3e33886c705de13ce2df0709190',
+          repo: 'bolg_comments',
+          owner: 'lijiawang',
+          admin: ["lijiawang"],
+          id: '5625362535492e79963c50e40fd87e58',
+          language: 'zh-CN',
+          labels: ["Gitalk"],
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        });
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
