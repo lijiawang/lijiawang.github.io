@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>cephrgw与openstack keystone集成</title>
+    <link href="/posts/cephrgw%E4%B8%8Eopenstack-keystone%E9%9B%86%E6%88%90/"/>
+    <url>/posts/cephrgw%E4%B8%8Eopenstack-keystone%E9%9B%86%E6%88%90/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>OpenStack</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>ceph</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>使用ceph提供对象存储</title>
     <link href="/posts/%E4%BD%BF%E7%94%A8ceph%E6%8F%90%E4%BE%9B%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/"/>
     <url>/posts/%E4%BD%BF%E7%94%A8ceph%E6%8F%90%E4%BE%9B%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/</url>

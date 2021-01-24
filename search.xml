@@ -3,6 +3,26 @@
   
     
     <entry>
+      <title><![CDATA[cephrgw与openstack keystone集成]]></title>
+      <url>//posts/cephrgw%E4%B8%8Eopenstack-keystone%E9%9B%86%E6%88%90/</url>
+      <content type="html"></content>
+      
+        <categories>
+            
+            <category> OpenStack </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> ceph </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[使用ceph提供对象存储]]></title>
       <url>//posts/%E4%BD%BF%E7%94%A8ceph%E6%8F%90%E4%BE%9B%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/</url>
       <content type="html"><![CDATA[<h1 id="查看ceph集群状态检查rgw服务是否正常"><a href="#查看ceph集群状态检查rgw服务是否正常" class="headerlink" title="查看ceph集群状态检查rgw服务是否正常"></a>查看ceph集群状态检查rgw服务是否正常</h1><p>首先先提供一个装有ceph rgw服务的ceph集群，安装方式我就在这里不演示了，详细请见<a href="https://www.lijiawang.org/posts/ceph-deploy-%E5%AE%89%E8%A3%85ceph/">ceph-deploy安装ceph集群</a>这篇文章</p>
