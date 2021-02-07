@@ -1,0 +1,481 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/ljw.jpeg">
+  <link rel="icon" type="image/png" href="/img/ljw.jpeg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
+  <meta name="author" content="李家旺">
+  <meta name="keywords" content="linux, python, shell, openstack">
+  <title>k8s使用nfs做provisioner - 李家旺</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.lijiawang.org","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":"6d475ee62d5e28c190b6d9e65318f37f","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="李家旺" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>李家旺.Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/ljw.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="k8s使用nfs做provisioner">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-02-04 17:36" pubdate>
+        2021年2月4日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      658 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      12
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">k8s使用nfs做provisioner</h1>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p>nfs-client-provisioner 是一个Kubernetes的简易NFS的外部provisioner，本身不提供NFS，需要现有的NFS服务器提供存储<br>这里的 k8s 版本为 v1.16.9</p>
+</blockquote>
+<h1 id="准备k8s集群"><a href="#准备k8s集群" class="headerlink" title="准备k8s集群"></a>准备k8s集群</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master nfs-client]# kubectl get nodes<br>NAME         STATUS   ROLES    AGE   VERSION<br>k8s-master   Ready    master   60d   v1.19.4<br>k8s-node01   Ready    &lt;none&gt;   60d   v1.19.4<br>k8s-node02   Ready    &lt;none&gt;   60d   v1.19.4<br>k8s-node03   Ready    &lt;none&gt;   60d   v1.19.4<br>k8s-node04   Ready    &lt;none&gt;   60d   v1.19.4<br><span class="hljs-meta">#</span><span class="bash"> yum install -y nfs-utils  <span class="hljs-comment">#所有k8s节点需要装此包</span></span><br></code></pre></td></tr></table></figure>
+<h1 id="搭建NFS"><a href="#搭建NFS" class="headerlink" title="搭建NFS"></a>搭建NFS</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-nfs ~]# mkdir /data/nfs -p<br>[root@k8s-nfs ~]# yum install -y nfs-utils<br>[root@k8s-nfs ~]# vim /etc/exports<br>/data/nfs 10.62.169.0/24(rw,sync,fsid=0)<br>[root@k8s-nfs ~]# systemctl enable rpcbind.service<br>[root@k8s-nfs ~]# systemctl enable nfs-server.service<br>[root@k8s-nfs ~]# systemctl start rpcbind.service <br>[root@k8s-nfs ~]# systemctl start nfs-server.service<br>[root@k8s-nfs ~]# systemctl status rpcbind.service <br>[root@k8s-nfs ~]# systemctl status nfs-server.service<br><br><br>[root@k8s-node1 ~]# showmount -e 10.62.169.145<br>Export list for 10.62.169.145:<br>/data/nfs 10.62.169.0/24<br></code></pre></td></tr></table></figure>
+<h1 id="创建nfs-provisioner的namespaces"><a href="#创建nfs-provisioner的namespaces" class="headerlink" title="创建nfs-provisioner的namespaces"></a>创建nfs-provisioner的namespaces</h1><p>创建用于部署nfs-client-provisioner端的namespaces</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master nfs-client]# kubectl create ns nfs<br></code></pre></td></tr></table></figure>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">[root@k8s-master]#</span><span class="bash"> git <span class="hljs-built_in">clone</span> https://github.com/lijiawang/DevOps.git</span><br>[root@k8s-master ~]# cd DevOps/nfs-client/<br>[root@k8s-master nfs-client]# kubectl apply -f rbac.yaml <br>serviceaccount/nfs-client-provisioner created<br>clusterrole.rbac.authorization.k8s.io/nfs-client-provisioner-runner created<br>clusterrolebinding.rbac.authorization.k8s.io/run-nfs-client-provisioner created<br>role.rbac.authorization.k8s.io/leader-locking-nfs-client-provisioner created<br>rolebinding.rbac.authorization.k8s.io/leader-locking-nfs-client-provisioner created<br>[root@k8s-master nfs-client]# cat deployment.yaml <br>---<br>kind: Deployment<br>apiVersion: apps/v1<br>metadata:<br>  name: nfs-client-provisioner<br>  namespace: nfs<br>spec:<br>  replicas: 1<br>  selector:<br>    matchLabels:<br>      app: nfs-client-provisioner<br>  strategy:<br>    type: Recreate<br>  template:<br>    metadata:<br>      labels:<br>        app: nfs-client-provisioner<br>    spec:<br>      serviceAccountName: nfs-client-provisioner<br>      containers:<br>        - name: nfs-client-provisioner<br>          image: lijiawang/nfs-client-provisioner:latest<br>          volumeMounts:<br>            - name: nfs-client-root<br>              mountPath: /persistentvolumes<br>          env:<br>            - name: PROVISIONER_NAME<br>              value: fuseim.pri/ifs<br>            - name: NFS_SERVER<br>              value: 10.62.169.145   # 这里是NFS 服务器的地址<br>            - name: NFS_PATH<br>              value: /data/nfs       # NFS 路径<br>      volumes:<br>        - name: nfs-client-root<br>          nfs:<br>            server: 10.62.169.145<br>            path: /data/nfs<br>[root@k8s-master nfs-client]# kubectl apply -f deployment.yaml <br>deployment.apps/nfs-client-provisioner created<br>[root@k8s-master nfs-client]# kubectl apply -f class.yaml <br>storageclass.storage.k8s.io/managed-nfs-storage created<br></code></pre></td></tr></table></figure>
+<h1 id="验证nfs-client-provisioner是否安装完成"><a href="#验证nfs-client-provisioner是否安装完成" class="headerlink" title="验证nfs-client-provisioner是否安装完成"></a>验证nfs-client-provisioner是否安装完成</h1><p>``<br>[root@k8s-master nfs-client]# kubectl get pod -n nfs<br>NAME                                      READY   STATUS    RESTARTS   AGE<br>nfs-client-provisioner-64b94d544d-9fsnf   1/1     Running   0          100s<br>[root@k8s-master nfs-client]# kubectl get storageclasses<br>NAME                  PROVISIONER      RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE<br>managed-nfs-storage   fuseim.pri/ifs   Delete          Immediate           false                  5h36m</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 使用storageclasses</span><br><span class="hljs-string">```shell</span><br>[<span class="hljs-string">root@k8s-master</span> <span class="hljs-string">nfs-client</span>]<span class="hljs-comment"># cat test-pod.yml </span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">PersistentVolumeClaim</span><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">test-claim</span><br>  <span class="hljs-attr">annotations:</span><br>    <span class="hljs-attr">volume.beta.kubernetes.io/storage-class:</span> <span class="hljs-string">&quot;managed-nfs-storage&quot;</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">accessModes:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">ReadWriteMany</span><br>  <span class="hljs-attr">resources:</span><br>    <span class="hljs-attr">requests:</span><br>      <span class="hljs-attr">storage:</span> <span class="hljs-string">1Mi</span><br><span class="hljs-meta">---</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Pod</span><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">test-pod</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">containers:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">test-pod</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">lijiawang/busybox:1.24</span><br>    <span class="hljs-attr">command:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;/bin/sh&quot;</span><br>    <span class="hljs-attr">args:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;-c&quot;</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;touch /mnt/SUCCESS &amp;&amp; exit 0 || exit 1 &amp;&amp; sleep 100&quot;</span><br>    <span class="hljs-attr">volumeMounts:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">nfs-pvc</span><br>        <span class="hljs-attr">mountPath:</span> <span class="hljs-string">&quot;/mnt&quot;</span><br>  <span class="hljs-attr">restartPolicy:</span> <span class="hljs-string">&quot;Never&quot;</span><br>  <span class="hljs-attr">volumes:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">nfs-pvc</span><br>      <span class="hljs-attr">persistentVolumeClaim:</span><br>        <span class="hljs-attr">claimName:</span> <span class="hljs-string">test-claim</span><br>[<span class="hljs-string">root@k8s-master</span> <span class="hljs-string">nfs-client</span>]<span class="hljs-comment"># kubectl  apply -f test-pod.yml </span><br><span class="hljs-string">persistentvolumeclaim/test-claim</span> <span class="hljs-string">created</span><br><span class="hljs-string">pod/test-pod</span> <span class="hljs-string">created</span><br><br>[<span class="hljs-string">root@k8s-master</span> <span class="hljs-string">nfs-client</span>]<span class="hljs-comment"># kubectl get pvc</span><br><span class="hljs-string">NAME</span>         <span class="hljs-string">STATUS</span>   <span class="hljs-string">VOLUME</span>                                     <span class="hljs-string">CAPACITY</span>   <span class="hljs-string">ACCESS</span> <span class="hljs-string">MODES</span>   <span class="hljs-string">STORAGECLASS</span>          <span class="hljs-string">AGE</span><br><span class="hljs-string">test-claim</span>   <span class="hljs-string">Bound</span>    <span class="hljs-string">pvc-73ea81a1-b34d-4b0c-a374-69ca9078d378</span>   <span class="hljs-string">1Mi</span>        <span class="hljs-string">RWX</span>            <span class="hljs-string">managed-nfs-storage</span>   <span class="hljs-string">17s</span><br></code></pre></td></tr></table></figure>
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/cephrgw%E4%B8%8Eopenstack-keystone%E9%9B%86%E6%88%90/">
+                        <span class="hidden-mobile">cephrgw与openstack keystone集成</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+          clientID: 'dbe2184d2cb671f0b17f',
+          clientSecret: '7ef15fe02766a3e33886c705de13ce2df0709190',
+          repo: 'bolg_comments',
+          owner: 'lijiawang',
+          admin: ["lijiawang"],
+          id: '8d49a028241f847b268294ab259ac02a',
+          language: 'zh-CN',
+          labels: ["Gitalk"],
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        });
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
