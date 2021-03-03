@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>使用PrometheusOperator部署k8s监控</title>
+    <link href="/posts/%E4%BD%BF%E7%94%A8PrometheusOperator%E9%83%A8%E7%BD%B2k8s%E7%9B%91%E6%8E%A7/"/>
+    <url>/posts/%E4%BD%BF%E7%94%A8PrometheusOperator%E9%83%A8%E7%BD%B2k8s%E7%9B%91%E6%8E%A7/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>ETCD日常操作</title>
     <link href="/posts/ETCD%E6%97%A5%E5%B8%B8%E6%93%8D%E4%BD%9C/"/>
     <url>/posts/ETCD%E6%97%A5%E5%B8%B8%E6%93%8D%E4%BD%9C/</url>
@@ -431,9 +444,9 @@
     
     <tags>
       
-      <tag>openstack</tag>
-      
       <tag>ceph</tag>
+      
+      <tag>openstack</tag>
       
     </tags>
     
@@ -612,9 +625,9 @@
     
     <tags>
       
-      <tag>shell</tag>
-      
       <tag>Linux</tag>
+      
+      <tag>shell</tag>
       
     </tags>
     

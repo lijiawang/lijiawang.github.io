@@ -3,6 +3,14 @@
   
     
     <entry>
+      <title><![CDATA[使用PrometheusOperator部署k8s监控]]></title>
+      <url>//posts/%E4%BD%BF%E7%94%A8PrometheusOperator%E9%83%A8%E7%BD%B2k8s%E7%9B%91%E6%8E%A7/</url>
+      <content type="html"></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[ETCD日常操作]]></title>
       <url>//posts/ETCD%E6%97%A5%E5%B8%B8%E6%93%8D%E4%BD%9C/</url>
       <content type="html"><![CDATA[<h1 id="准备kubeadm构建的k8s集群"><a href="#准备kubeadm构建的k8s集群" class="headerlink" title="准备kubeadm构建的k8s集群"></a>准备kubeadm构建的k8s集群</h1><p>本环境是用kubeadm搭建的k8s和etcd环境</p>
@@ -800,9 +808,9 @@
         
         <tags>
             
-            <tag> openstack </tag>
-            
             <tag> ceph </tag>
+            
+            <tag> openstack </tag>
             
         </tags>
         
@@ -1213,9 +1221,9 @@
         
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> shell </tag>
             
         </tags>
         
