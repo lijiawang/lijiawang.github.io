@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/ljw.jpeg">
+  <link rel="icon" type="image/png" href="/img/ljw.jpeg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="不看官网不足以熟练，不懂源码不足以精通">
+  <meta name="author" content="李家旺">
+  <meta name="keywords" content="linux, python, shell, openstack">
+  <title>使用Kube-Prometheus部署k8s监控 - 李家旺</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.lijiawang.org","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":"6d475ee62d5e28c190b6d9e65318f37f","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="李家旺" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>李家旺.Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/ljw.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="使用Kube-Prometheus部署k8s监控">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-03-02 21:47" pubdate>
+        2021年3月2日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      34
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">使用Kube-Prometheus部署k8s监控</h1>
+            
+            <div class="markdown-body">
+              <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="在k8s中部署Prometheus监控的方法"><a href="#在k8s中部署Prometheus监控的方法" class="headerlink" title="在k8s中部署Prometheus监控的方法"></a>在k8s中部署Prometheus监控的方法</h2><p>通常在k8s中部署prometheus监控可以采取的方法有以下三种：</p>
+<ol>
+<li>通过yaml手动部署</li>
+<li>operator部署</li>
+<li>通过helm chart部署</li>
+</ol>
+<h2 id="kube-prometheus和Prometheus-Operator的关系"><a href="#kube-prometheus和Prometheus-Operator的关系" class="headerlink" title="kube-prometheus和Prometheus Operator的关系"></a>kube-prometheus和Prometheus Operator的关系</h2><p>prometheus-operator官方地址：<a target="_blank" rel="noopener" href="https://github.com/prometheus-operator/prometheus-operator">https://github.com/prometheus-operator/prometheus-operator</a><br>kube-prometheus官方地址：<a target="_blank" rel="noopener" href="https://github.com/prometheus-operator/kube-prometheus">https://github.com/prometheus-operator/kube-prometheus</a></p>
+<p>两个项目的关系：前者只包含了Prometheus Operator，后者既包含了Prometheus Operator，又包含了Prometheus相关组件的部署及常用的Prometheus自定义监控，具体包含下面的组件</p>
+<p>The Prometheus Operator：创建CRD自定义的资源对象<br>Highly available Prometheus：创建高可用的Prometheus<br>Highly available Alertmanager：创建高可用的告警组件<br>Prometheus node-exporter：创建主机的监控组件<br>Prometheus Adapter for Kubernetes Metrics APIs：创建自定义监控的指标工具（例如可以通过nginx的request来进行应用的自动伸缩）<br>kube-state-metrics：监控k8s相关资源对象的状态指标<br>Grafana：进行图像展示</p>
+<h2 id="为什么用Prometheus-Operator"><a href="#为什么用Prometheus-Operator" class="headerlink" title="为什么用Prometheus Operator"></a>为什么用Prometheus Operator</h2><p>Prometheus Operator的本职就是一组用户自定义的CRD资源以及Controller的实现，Prometheus Operator负责监听这些自定义资源的变化，并且根据这些资源的定义自动化的完成如Prometheus Server自身以及配置的自动化管理工作。以下是Prometheus Operator的架构图</p>
+<h1 id="准备k8s环境"><a href="#准备k8s环境" class="headerlink" title="准备k8s环境"></a>准备k8s环境</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master ~]# kubectl version -o yaml<br>clientVersion:<br>  buildDate: &quot;2020-11-11T13:17:17Z&quot;<br>  compiler: gc<br>  gitCommit: d360454c9bcd1634cf4cc52d1867af5491dc9c5f<br>  gitTreeState: clean<br>  gitVersion: v1.19.4<br>  goVersion: go1.15.2<br>  major: &quot;1&quot;<br>  minor: &quot;19&quot;<br>  platform: linux/amd64<br>serverVersion:<br>  buildDate: &quot;2020-11-11T13:09:17Z&quot;<br>  compiler: gc<br>  gitCommit: d360454c9bcd1634cf4cc52d1867af5491dc9c5f<br>  gitTreeState: clean<br>  gitVersion: v1.19.4<br>  goVersion: go1.15.2<br>  major: &quot;1&quot;<br>  minor: &quot;19&quot;<br>  platform: linux/amd64<br>[root@k8s-master ~]# kubectl get nodes<br>NAME         STATUS   ROLES    AGE   VERSION<br>k8s-master   Ready    master   83d   v1.19.4<br>k8s-node01   Ready    &lt;none&gt;   83d   v1.19.4<br>k8s-node02   Ready    &lt;none&gt;   83d   v1.19.4<br>k8s-node03   Ready    &lt;none&gt;   83d   v1.19.4<br>k8s-node04   Ready    &lt;none&gt;   83d   v1.19.4<br>[root@k8s-master ~]# kubectl get cs<br>NAME                 STATUS    MESSAGE             ERROR<br>controller-manager   Healthy   ok                  <br>scheduler            Healthy   ok                  <br>etcd-0               Healthy   &#123;&quot;health&quot;:&quot;true&quot;&#125; <br>[root@k8s-master ~]# kubectl get sc<br>NAME                  PROVISIONER      RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE<br>managed-nfs-storage   fuseim.pri/ifs   Delete          Immediate           false                  23d <br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> git <span class="hljs-built_in">clone</span> https://github.com/prometheus-operator/kube-prometheus.git</span><br>[root@k8s-master ~]# cd kube-prometheus/<br>[root@k8s-master kube-prometheus]# git checkout release-0.7<br>[root@k8s-master kube-prometheus]# git branch<br>  main<br>* release-0.7<br></code></pre></td></tr></table></figure>
+<h1 id="添加CRD"><a href="#添加CRD" class="headerlink" title="添加CRD"></a>添加CRD</h1><p>部署完成后，会创建一个名为monitoring的 namespace，所以资源对象对将部署在改命名空间下面</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master manifests]# pwd<br>/root/kube-prometheus/manifests<br>[root@k8s-master manifests]# kubectl apply -f setup/<br>[root@k8s-master manifests]# kubectl get crd |grep coreos<br>alertmanagerconfigs.monitoring.coreos.com             2021-03-02T05:45:05Z<br>alertmanagers.monitoring.coreos.com                   2021-03-02T05:45:05Z<br>podmonitors.monitoring.coreos.com                     2021-03-02T05:45:05Z<br>probes.monitoring.coreos.com                          2021-03-02T05:45:05Z<br>prometheuses.monitoring.coreos.com                    2021-03-02T05:45:05Z<br>prometheusrules.monitoring.coreos.com                 2021-03-02T05:45:06Z<br>servicemonitors.monitoring.coreos.com                 2021-03-02T05:45:06Z<br>thanosrulers.monitoring.coreos.com                    2021-03-02T05:45:06Z<br></code></pre></td></tr></table></figure>
+<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master manifests]# pwd<br>/root/kube-prometheus/manifests<br>[root@k8s-master manifests]# kubectl apply -f .<br>[root@k8s-master manifests]# kubectl get pod -n monitoring <br>NAME                                   READY   STATUS    RESTARTS   AGE<br>alertmanager-main-0                    2/2     Running   0          76s<br>alertmanager-main-1                    2/2     Running   0          76s<br>alertmanager-main-2                    2/2     Running   0          76s<br>grafana-f8cd57fcf-l6d7g                1/1     Running   0          74s<br>kube-state-metrics-587bfd4f97-kqhss    3/3     Running   0          74s<br>node-exporter-6z2g2                    2/2     Running   0          75s<br>node-exporter-ckwh6                    2/2     Running   0          75s<br>node-exporter-dl56x                    2/2     Running   0          75s<br>node-exporter-ftt58                    2/2     Running   0          75s<br>node-exporter-gq626                    2/2     Running   0          75s<br>prometheus-adapter-69b8496df6-rrs56    1/1     Running   0          75s<br>prometheus-k8s-0                       2/2     Running   1          75s<br>prometheus-k8s-1                       2/2     Running   1          75s<br>prometheus-operator-7649c7454f-fwgd2   2/2     Running   0          88s<br>[root@k8s-master manifests]# kubectl get svc -n monitoring    # 检查SVC<br>NAME                    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE<br>alertmanager-main       ClusterIP   10.96.184.62    &lt;none&gt;        9093/TCP                     107s<br>alertmanager-operated   ClusterIP   None            &lt;none&gt;        9093/TCP,9094/TCP,9094/UDP   107s<br>grafana                 NodePort    10.98.138.229   &lt;none&gt;        3000:30100/TCP               106s<br>kube-state-metrics      ClusterIP   None            &lt;none&gt;        8443/TCP,9443/TCP            106s<br>node-exporter           ClusterIP   None            &lt;none&gt;        9100/TCP                     106s<br>prometheus-adapter      ClusterIP   10.107.27.129   &lt;none&gt;        443/TCP                      106s<br>prometheus-k8s          NodePort    10.99.142.87    &lt;none&gt;        9090:30200/TCP               106s<br>prometheus-operated     ClusterIP   None            &lt;none&gt;        9090/TCP                     106s<br>prometheus-operator     ClusterIP   None            &lt;none&gt;        8443/TCP                     2m<br></code></pre></td></tr></table></figure>
+<h1 id="解决ControllerManager、Scheduler监控问题"><a href="#解决ControllerManager、Scheduler监控问题" class="headerlink" title="解决ControllerManager、Scheduler监控问题"></a>解决ControllerManager、Scheduler监控问题</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master manifests]# cat prometheus-kube-controller-manager-service.yaml <br>apiVersion: v1<br>kind: Service<br>metadata:<br>  name: kube-controller-manager<br>  namespace: kube-system<br>  labels:<br>    k8s-app: kube-controller-manager<br>spec:<br>  selector:<br>    component: kube-controller-manager<br>  ports:<br>  - name: https-metrics<br>    port: 10257<br>    targetPort: 10257<br>    protocol: TCP<br>---<br>apiVersion: v1<br>kind: Endpoints<br>metadata:<br>  name: kube-controller-manager<br>  namespace: kube-system<br>  labels:<br>    k8s-app: kube-controller-manager<br>subsets:<br>- addresses:<br>  - ip: 10.62.169.145   # 此ip为k8s-master的ip地址<br>  ports:<br>    - name: https-metrics<br>      port: 10257<br>      protocol: TCP<br><br>[root@k8s-master manifests]# kubectl apply -f prometheus-kube-controller-manager-service.yaml<br></code></pre></td></tr></table></figure>
+<p>修改kube-controller-manager监听地址</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">[root@k8s-<span class="hljs-keyword">master</span> <span class="hljs-title">manifests</span>]<span class="hljs-comment"># vim /etc/kubernetes/manifests/kube-controller-manager.yaml</span><br>...<br><span class="hljs-keyword">spec</span>:<br>  containers:<br>  - command:<br>    - kube-controller-manager<br>    - --<span class="hljs-attr">allocate-node-cidrs=</span><span class="hljs-literal">true</span><br>    - --<span class="hljs-attr">authentication-kubeconfig=</span>/etc/kubernetes/controller-manager.conf<br>    - --<span class="hljs-attr">authorization-kubeconfig=</span>/etc/kubernetes/controller-manager.conf<br>    - --<span class="hljs-attr">bind-address=</span><span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span><br>...<br>[root@k8s-<span class="hljs-keyword">master</span> <span class="hljs-title">manifests</span>]<span class="hljs-comment"># netstat -lntup|grep kube-contro</span><br>tcp6       <span class="hljs-number">0</span>      <span class="hljs-number">0</span> :::<span class="hljs-number">10252</span>                :::*                    LISTEN      <span class="hljs-number">21186</span>/kube-controll <br>tcp6       <span class="hljs-number">0</span>      <span class="hljs-number">0</span> :::<span class="hljs-number">10257</span>                :::*                    LISTEN      <span class="hljs-number">21186</span>/kube-controll<br></code></pre></td></tr></table></figure>
+<p>同理给kube-scheduler创建对应的SVC和Endpoints，修改监听地址</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master manifests]# cat prometheus-kube-scheduler-service.yaml <br>apiVersion: v1<br>kind: Service<br>metadata:<br>  namespace: kube-system<br>  name: kube-scheduler<br>  labels:<br>    k8s-app: kube-scheduler<br>spec:<br>  selector:<br>    component: kube-scheduler<br>  ports:<br>  - name: http-metrics<br>    port: 10259<br>    targetPort: 10259<br>    protocol: TCP<br>---<br>apiVersion: v1<br>kind: Endpoints<br>metadata:<br>  name: kube-scheduler<br>  namespace: kube-system<br>  labels:<br>    k8s-app: kube-scheduler<br>subsets:<br>- addresses:<br>  - ip: 10.62.169.145<br>  ports:<br>    - name: https-metrics<br>      port: 10259<br>      protocol: TCP<br>	  <br>[root@k8s-master manifests]# kubectl apply -f prometheus-kube-scheduler-service.yaml<br></code></pre></td></tr></table></figure>
+<p>修改kube-controller-manager监听地址</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master manifests]# vim /etc/kubernetes/manifests/kube-scheduler.yaml<br>...<br>spec:<br>  containers:<br>  - command:<br>    - kube-scheduler<br>    - --authentication-kubeconfig=/etc/kubernetes/scheduler.conf<br>    - --authorization-kubeconfig=/etc/kubernetes/scheduler.conf<br>    - --bind-address=0.0.0.0<br>...<br>[root@k8s-master manifests]# netstat -lntup|grep kube-sche<br>tcp6       0      0 :::10251                :::*                    LISTEN      20672/kube-schedule <br>tcp6       0      0 :::10259                :::*                    LISTEN      20672/kube-schedule <br></code></pre></td></tr></table></figure>
+<h1 id="关闭Watchdog报警"><a href="#关闭Watchdog报警" class="headerlink" title="关闭Watchdog报警"></a>关闭Watchdog报警</h1><p>Watchdog报警是一个正常的报警，这个告警的作用是：如果alermanger或者prometheus本身挂掉了就发不出告警了，因此一般会采用另一个监控来监控prometheus，或者自定义一个持续不断的告警通知，哪一天这个告警通知不发了，说明监控出现问题了。prometheus operator已经考虑了这一点，本身携带一个watchdog，作为对自身的监控<br>如果需要关闭，删除或注释掉Watchdog部分</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master manifests]# vim prometheus-rules.yaml   # 注释以下内存<br>...<br>  - name: general.rules<br>    rules:<br>    - alert: TargetDown<br>      annotations:<br>        message: &#x27;&#123;&#123; printf &quot;%.4g&quot; $value &#125;&#125;% of the &#123;&#123; $labels.job &#125;&#125;/&#123;&#123; $labels.service &#125;&#125; targets in &#123;&#123; $labels.namespace &#125;&#125; namespace are down.&#x27;<br>      expr: 100 * (count(up == 0) BY (job, namespace, service) / count(up) BY (job, namespace, service)) &gt; 10<br>      for: 10m<br>      labels:<br>        severity: warning<br><span class="hljs-meta">#</span><span class="bash">    - alert: Watchdog</span><br><span class="hljs-meta">#</span><span class="bash">      annotations:</span><br><span class="hljs-meta">#</span><span class="bash">        message: |</span><br><span class="hljs-meta">#</span><span class="bash">          This is an alert meant to ensure that the entire alerting pipeline is functional.</span><br><span class="hljs-meta">#</span><span class="bash">          This alert is always firing, therefore it should always be firing <span class="hljs-keyword">in</span> Alertmanager</span><br><span class="hljs-meta">#</span><span class="bash">          and always fire against a receiver. There are integrations with various notification</span><br><span class="hljs-meta">#</span><span class="bash">          mechanisms that send a notification when this alert is not firing. For example the</span><br><span class="hljs-meta">#</span><span class="bash">          <span class="hljs-string">&quot;DeadMansSnitch&quot;</span> integration <span class="hljs-keyword">in</span> PagerDuty.</span><br><span class="hljs-meta">#</span><span class="bash">      expr: vector(1)</span><br><span class="hljs-meta">#</span><span class="bash">      labels:</span><br><span class="hljs-meta">#</span><span class="bash">        severity: none</span><br>...<br>[root@k8s-master manifests]# kubectl apply -f prometheus-rules.yaml<br></code></pre></td></tr></table></figure>
+<h1 id="再次登录prometheus界面"><a href="#再次登录prometheus界面" class="headerlink" title="再次登录prometheus界面"></a>再次登录prometheus界面</h1><h1 id="PrometheusOperator为什么要数据持久化"><a href="#PrometheusOperator为什么要数据持久化" class="headerlink" title="PrometheusOperator为什么要数据持久化"></a>PrometheusOperator为什么要数据持久化</h1><p>增加prometheus数据持久化，是因为在日常中如果重启Prometheus Pod后，会发现之前的数据不见了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master manifests]# kubectl get pod prometheus-k8s-0 -n monitoring -o yaml<br>...<br>    volumeMounts:<br>    - mountPath: /etc/prometheus/config_out<br>      name: config-out<br>      readOnly: true<br>    - mountPath: /prometheus<br>      name: prometheus-k8s-db<br>...<br>  volumes:<br>...<br>  - emptyDir: &#123;&#125;<br>    name: prometheus-k8s-db<br>...<br></code></pre></td></tr></table></figure>
+<p>可以看到 Prometheus 的数据目录 /prometheus 实际上是通过 emptyDir 进行挂载的，我们知道 emptyDir 挂载的数据的生命周期和 Pod 生命周期一致的，所以如果 Pod 挂掉了，数据也就丢失了，这也就是为什么我们重建 Pod 后之前的数据就没有了的原因</p>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>这里我使用nfs后端创建StorageClass对象，创建的nfs-client-provisioner方式请看 <a href="https://www.lijiawang.org/posts/k8s%E4%BD%BF%E7%94%A8nfs%E5%81%9Aprovisioner/">https://www.lijiawang.org/posts/k8s%E4%BD%BF%E7%94%A8nfs%E5%81%9Aprovisioner/</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master manifests]# kubectl get storageclasses # 提前准备storageclasses<br>NAME                  PROVISIONER      RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE<br>managed-nfs-storage   fuseim.pri/ifs   Delete          Immediate           false                  23d<br>[root@k8s-master manifests]# vim prometheus-prometheus.yaml<br>...<br>spec:<br>  serviceAccountName: prometheus-k8s<br>  serviceMonitorNamespaceSelector: &#123;&#125;<br>  serviceMonitorSelector: &#123;&#125;<br>  version: v2.22.1<br>  retention: 3d<br>  storage:<br>    volumeClaimTemplate:<br>      spec:<br>        storageClassName: managed-nfs-storage<br>        resources:<br>          requests:<br>            storage: 5Gi<br>[root@k8s-master manifests]# kubectl apply -f prometheus-prometheus.yaml<br></code></pre></td></tr></table></figure>
+<p>查看pvc,pv,pod的状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master manifests]# kubectl get pvc,pv -n monitoring  |grep prometheus<br>persistentvolumeclaim/prometheus-k8s-db-prometheus-k8s-0   Bound    pvc-c6f133ea-c524-48a8-91a2-f7534446f831   5Gi        RWO            managed-nfs-storage   43m<br>persistentvolumeclaim/prometheus-k8s-db-prometheus-k8s-1   Bound    pvc-f4ce8966-6529-4d85-9562-ea4ad8d62e6e   5Gi        RWO            managed-nfs-storage   43m<br>persistentvolume/pvc-c6f133ea-c524-48a8-91a2-f7534446f831   5Gi        RWO            Delete           Bound    monitoring/prometheus-k8s-db-prometheus-k8s-0   managed-nfs-storage            43m<br>persistentvolume/pvc-f4ce8966-6529-4d85-9562-ea4ad8d62e6e   5Gi        RWO            Delete           Bound    monitoring/prometheus-k8s-db-prometheus-k8s-1   managed-nfs-storage            43m<br>[root@k8s-master manifests]# kubectl get pod -n monitoring |grep prometheus-k8s<br>prometheus-k8s-0                       2/2     Running   1          45m<br>prometheus-k8s-1                       2/2     Running   1          45m<br></code></pre></td></tr></table></figure>
+<h1 id="验证Prometheus-Pod-的数据目录关联到一个-PVC-对象上了"><a href="#验证Prometheus-Pod-的数据目录关联到一个-PVC-对象上了" class="headerlink" title="验证Prometheus Pod 的数据目录关联到一个 PVC 对象上了"></a>验证Prometheus Pod 的数据目录关联到一个 PVC 对象上了</h1><p>现在我们再去看 Prometheus Pod 的数据目录就可以看到是关联到一个 PVC 对象上了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master manifests]# kubectl get pod prometheus-k8s-0 -n monitoring -o yaml<br>...<br>    volumeMounts:<br>    - mountPath: /etc/prometheus/config_out<br>      name: config-out<br>      readOnly: true<br>    - mountPath: /etc/prometheus/certs<br>      name: tls-assets<br>      readOnly: true<br>    - mountPath: /prometheus<br>      name: prometheus-k8s-db<br>...<br>  volumes:<br>...<br>  - name: prometheus-k8s-db<br>    persistentVolumeClaim:<br>      claimName: prometheus-k8s-db-prometheus-k8s-0<br>...<br></code></pre></td></tr></table></figure>
+<p>即使我们的 Pod 挂掉了，数据也不会丢失了！</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/ETCD%E6%97%A5%E5%B8%B8%E6%93%8D%E4%BD%9C/">
+                        <span class="hidden-mobile">ETCD日常操作</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+          clientID: 'dbe2184d2cb671f0b17f',
+          clientSecret: '7ef15fe02766a3e33886c705de13ce2df0709190',
+          repo: 'bolg_comments',
+          owner: 'lijiawang',
+          admin: ["lijiawang"],
+          id: '0f79cb0e2c764aaaea2466b40be4889b',
+          language: 'zh-CN',
+          labels: ["Gitalk"],
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        });
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
